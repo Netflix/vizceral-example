@@ -1,0 +1,17 @@
+.filter-control {
+  padding: 5px 10px 5px 10px;
+  border-bottom: 1px solid var(--colorBorderLines);
+  width: 100%;
+}
+
+.filter-control span {
+  padding-right: 5px;
+}
+
+.filter-controls-panel div, .filter-controls-panel input[type=range] {
+  display: inline-block;
+}
+
+.filter-controls-panel input[type=checkbox] {
+  padding: 0 3px 0 3px;
+}

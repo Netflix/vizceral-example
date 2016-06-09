@@ -1,0 +1,102 @@
+/* Node Details
+-------------------------------------------------- */
+.node-details {
+  background-color: rgb(57, 57, 57);
+  border: 1px solid var(--colorBorderLines);
+  border-radius: 3px;
+  width: 350px;
+  /*height: 100%;*/
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  bottom: 25px;
+}
+
+.node-details-collapsed {
+  width: 0;
+}
+
+.node-details-title {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--colorNormal);
+  border-bottom: 1px solid var(--colorBorderLines);
+}
+
+.node-details-description {
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.node-details-close {
+  font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+  content: "\e114";
+  font-size: 12px;
+  position:absolute;
+  top: 6px;
+  right: 10px;
+  padding: 10px 5px 0 10px;
+  cursor: pointer;
+}
+
+.node-details-subpanel .panel-group .panel {
+  border-left: 0;
+  border-right: 0;
+}
+
+.node-details-subpanel .panel-title {
+  height: 18px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.node-details-subpanel .panel-title .badge {
+  margin-top: -3px;
+}
+
+.metric {
+  color: var(--colorText);
+}
+
+.metric-title {
+  color: var(--colorText);
+}
+
+.metric-query {
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.table-container > .table > thead > tr > th {
+  padding: 0;
+  border-bottom: none;
+}
+
+.connection-list .table-container {
+  max-height: 200px;
+  overflow: auto;
+}
+
+.table-header > .table > thead > tr > th {
+  padding: 5px;
+}
+
+.react-bs-container .table-header {
+  height: 30px;
+}
+
+.react-bs-container .table-container > table {
+  margin-top: -25px !important;
+}
+
+.table-container > table > tbody > tr > td {
+  line-height: 20px !important;
+}
+
+.zoom-icon {
+  font-size: 16px;
+  color: var(--colorText);
+  padding-left: 5px;
+}
