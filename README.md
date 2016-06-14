@@ -1,3 +1,5 @@
+![](https://raw.githubusercontent.com/Netflix/vizceral/master/logo.png)
+
 # Vizceral Example
 This is a sample application using the [React wrapper](https://github.com/Netflix/vizceral-react) around the [vizceral](https://github.com/Netflix/vizceral) graph.
 For more details about using vizceral in your own projects with your own data, refer to the above repositories.
