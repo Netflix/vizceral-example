@@ -2,22 +2,24 @@
 import _ from 'lodash';
 import React from 'react';
 import numeral from 'numeral';
+import { FlexTable, FlexColumn, SortDirection } from 'react-virtualized';
+import 'react-virtualized/styles.css';
 
-const nameFormatter = function (cell, row) {
+const nameRenderer = function (data) {
   let className = 'glyphicon glyphicon-warning-sign';
-  const mostSevereNotice = row.notices && row.notices.length > 0 && _.maxBy(row.notices, notice => notice.severity);
+  const mostSevereNotice = data.rowData.notices && data.rowData.notices.length > 0 && _.maxBy(data.rowData.notices, notice => notice.severity);
   if (mostSevereNotice) {
     className += ` severity${mostSevereNotice.severity}`;
   }
 
   const styles = {
     paddingLeft: '5px',
-    opacity: row.disabled ? 0.3 : undefined
+    opacity: data.rowData.disabled ? 0.3 : undefined
   };
 
   return (
-    <span className={row.className} style={{ color: row.color }}>
-      {cell}
+    <span className={data.rowData.className} style={{ color: data.rowData.color }}>
+      {data.cellData}
       {
         mostSevereNotice ?
         <span style={styles} className={className} />
@@ -26,11 +28,36 @@ const nameFormatter = function (cell, row) {
     </span>);
 };
 
+const errorRenderer = function (data) {
+  return (
+    <span className={data.rowData.className} data-error-rate={data.rowData.errorRate} style={{ color: data.rowData.color }} title={`${numeral(data.rowData.errors || 0).format('0.[00]')} / ${numeral(data.rowData.total || 0).format('0.[00]')}`}>{numeral(data.rowData.errorRate || 0).format('0.[00]%')}</span>
+  );
+};
+
+const sorters = {
+  name: (a, b) => {
+    if (a.disabled && !b.disabled) { return 1; }
+    if (!a.disabled && b.disabled) { return -1; }
+    if (a.name < b.name) { return 1; }
+    if (a.name > b.name) { return -1; }
+    return 0;
+  },
+  errorRate: (a, b) => {
+    if (a.disabled && !b.disabled) { return 1; }
+    if (!a.disabled && b.disabled) { return -1; }
+    if (a.errorRate < b.errorRate) { return 1; }
+    if (a.errorRate > b.errorRate) { return -1; }
+    return 0;
+  }
+};
+
 class ConnectionList extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      connections: props.connections
+      connections: props.connections,
+      sortBy: 'errorRate',
+      sortDirection: SortDirection.ASC
     };
   }
 
@@ -41,17 +68,19 @@ class ConnectionList extends React.Component {
   }
 
   render () {
+    const headerHeight = 30;
+    let estimatedRowHeight = 25;
+    const maxTableHeight = 300;
     const connectionRows = this.state.connections.map(connection => {
-      const errors = connection.getErrorVolume();
-      const total = connection.getTotalVolume();
+      const errors = connection.getVolume('danger');
+      const total = connection.getVolumeTotal();
       const disabled = !connection.isVisible();
 
       const classNames = [];
       if (disabled) {
         classNames.push('disabled');
       } else {
-        const severity = connection.score;
-        if (severity) { classNames.push(`severity${severity}`); }
+        if (connection.class) { classNames.push(`color-${connection.class}`); }
       }
 
       return {
@@ -63,35 +92,42 @@ class ConnectionList extends React.Component {
         disabled: disabled,
         notices: connection.notices
       };
-    }).sort((a, b) => {
-      // Sort by error rate
-      if (a.errorRate > b.errorRate) return -1;
-      if (a.errorRate < b.errorRate) return 1;
-      return 0;
     });
+
+    connectionRows.sort(sorters[this.state.sortBy]);
+    if (this.state.sortDirection !== SortDirection.ASC) { _.reverse(connectionRows); }
+
+    if (this.refs.flexTable && this.refs.flexTable.props.estimatedRowSize) {
+      estimatedRowHeight = this.refs.flexTable.props.estimatedRowSize - 4;
+    }
+    const tableHeight = Math.min(maxTableHeight, estimatedRowHeight * connectionRows.length + headerHeight);
+
 
     return (
       connectionRows.length > 0 ?
       <div className="connection-list">
-        <table class="table table-condensed" ref="connectionTable">
-          <thead>
-            <tr>
-              <th data-unsortable="true" data-sort="serviceName">Cluster</th>
-              <th data-sort="errorRate">Error Rate</th>
-            </tr>
-          </thead>
-          <tbody>
-            {connectionRows.map(row =>
-              <tr key={row.name}>
-                <td>{nameFormatter(row.name, row)}</td>
-                <td><span className={row.className} data-error-rate={row.errorRate} style={{ color: row.color }} title={`${numeral(row.errors || 0).format('0.[00]')} / ${numeral(row.total || 0).format('0.[00]')}`}>{numeral(row.errorRate || 0).format('0.[00]%')}</span></td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <FlexTable
+          ref="flexTable"
+          width={300}
+          height={tableHeight}
+          headerHeight={headerHeight}
+          rowHeight={25}
+          rowCount={connectionRows.length}
+          rowGetter={({ index }) => connectionRows[index]}
+          sortBy={this.state.sortBy}
+          sortDirection={this.state.sortDirection}
+          sort={this.sort}
+        >
+          <FlexColumn label="Cluster" dataKey="name" cellRenderer={nameRenderer} width={220} />
+          <FlexColumn label="Errors" dataKey="errorRate" cellRenderer={errorRenderer} width={70}/>
+        </FlexTable>
       </div>
       : <span>None.</span>
     );
+  }
+
+  sort = ({ sortBy, sortDirection }) => {
+    this.setState({ sortBy, sortDirection });
   }
 }
 

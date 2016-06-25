@@ -9,9 +9,6 @@ export default {
 
     UPDATE_FILTER: null,
     RESET_FILTERS: null,
-    CLEAR_FILTERS: null,
-
-    UPDATE_EXCLUDED_EDGE_NODES: null,
-    CLEAR_EXCLUDED_EDGE_NODES: null
+    CLEAR_FILTERS: null
   })
 };

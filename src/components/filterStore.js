@@ -20,7 +20,7 @@ const store = {
     rps: {
       name: 'rps',
       type: 'connection',
-      passes: (object, value) => object.volume.total >= value,
+      passes: (object, value) => object.volumeTotal >= value,
       value: -1
     }
   },

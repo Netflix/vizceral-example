@@ -3,13 +3,11 @@ import _ from 'lodash';
 import React from 'react';
 import keypress from 'keypress.js';
 import request from 'superagent';
-
 import Vizceral from 'vizceral-react';
 require('vizceral-react/dist/vizceral.css');
 
 import Breadcrumbs from './breadcrumbs';
 import DisplayOptions from './displayOptions';
-import EdgeNodeTable from './edgeNodeTable';
 import FilterControls from './filterControls';
 import NodeDetails from './nodeDetails';
 import LoadingCover from './loadingCover';
@@ -19,8 +17,6 @@ import UpdateStatus from './updateStatus';
 
 import filterActions from './filterActions';
 import filterStore from './filterStore';
-import trafficActions from './trafficActions';
-import trafficStore from './trafficStore';
 
 const listener = new keypress.Listener();
 
@@ -32,8 +28,8 @@ function animate (time) {
 }
 requestAnimationFrame(animate);
 
-const Console = console;
-const nodeDetailsSidePanelWidth = 400;
+const panelWidth = 400;
+
 
 class TrafficFlow extends React.Component {
   constructor (props) {
@@ -42,8 +38,7 @@ class TrafficFlow extends React.Component {
       currentView: [],
       selectedChart: undefined,
       displayOptions: {
-        showLabels: true,
-        showEdgeTable: false
+        showLabels: true
       },
       labelDimensions: {},
       appliedFilters: filterStore.getChangedFilters(),
@@ -56,11 +51,10 @@ class TrafficFlow extends React.Component {
         visible: -1
       },
       trafficData: {},
-      excludedEdgeNodes: trafficStore.getExcludedEdgeNodes().keySeq().toArray(),
       regionUpdateStatus: [],
       timeOffset: 0
     };
-    this.traffic = {};
+    this.traffic = { nodes: [], connections: [] };
     this.nodeDetailsPanelOffset = 0;
 
     // Browser history support
@@ -82,7 +76,6 @@ class TrafficFlow extends React.Component {
   }
 
   viewChanged = data => {
-    trafficActions.emptyExcludedEdgeNodes();
     this.setState({ currentView: data.view, currentGraph: data.graph, nodeFocused: undefined, nodeHighlighted: undefined, searchTerm: '', matches: { total: -1, visible: -1 } });
   }
 
@@ -100,7 +93,7 @@ class TrafficFlow extends React.Component {
     this.setState({ focusedNode: node });
   }
 
-  regionContextSizeChanged = dimensions => {
+  nodeContextSizeChanged = dimensions => {
     this.setState({ labelDimensions: dimensions });
   }
 
@@ -110,20 +103,7 @@ class TrafficFlow extends React.Component {
       .end((err, res) => {
         if (res && res.status === 200) {
           this.traffic.clientUpdateTime = Date.now();
-          const regions = res.body.regions;
-          const regionNames = Object.keys(regions);
-          // Set the regions to render
-          this.setRegions(regionNames);
-
-          // Fake latencies to get the data to show the loading regions
-          let mult = 1;
-
-          _.each(regionNames, region => {
-            const data = {};
-            data[region] = regions[region];
-            _.delay(() => this.updateData({ regions: data }), 750 * mult);
-            mult++;
-          });
+          this.updateData(res.body);
         }
       });
   }
@@ -137,38 +117,23 @@ class TrafficFlow extends React.Component {
         currentView.push(pathArray[2]);
       }
     }
-
     this.setState({ currentView: currentView });
   }
 
   componentDidMount () {
+    // Check the location bar for any direct routing information
     this.checkRoute();
     this.beginSampleData();
 
     // Listen for changes to the stores
     filterStore.addChangeListener(this.filtersChanged);
-    trafficStore.addChangeListener(this.trafficStoreChanged);
-  }
-
-  setRegions (regions) {
-    this.traffic.regions = this.traffic.regions || {};
-    _.each(regions, region => {
-      this.traffic.regions[region] = this.traffic.regions[region] || {};
-    });
-
-    this.updateData(this.traffic, this.state.excludedEdgeNodes);
   }
 
   componentWillUnmount () {
     filterStore.removeChangeListener(this.filtersChanged);
-    trafficStore.removeChangeListener(this.trafficStoreChanged);
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    if (nextState.excludedEdgeNodes !== this.state.excludedEdgeNodes) {
-      this.updateData(this.traffic, nextState.excludedEdgeNodes);
-    }
-
     if (!this.state.currentView || this.state.currentView[0] !== nextState.currentView[0] ||
         this.state.currentView[1] !== nextState.currentView[1]) {
       const titleArray = (nextState.currentView || []).slice(0);
@@ -187,35 +152,40 @@ class TrafficFlow extends React.Component {
     return true;
   }
 
-  updateData (newTraffic, excludedEdgeNodes) {
-    excludedEdgeNodes = excludedEdgeNodes || this.state.excludedEdgeNodes;
-    const traffic = { regions: {} };
-    if (this.traffic) {
-      _.each(this.traffic.regions, (data, region) => {
-        traffic.regions[region] = data;
-      });
-    }
+  updateData (newTraffic) {
+    this.traffic.name = newTraffic.name;
+    this.traffic.renderer = newTraffic.renderer;
 
     let modified = false;
-    if (newTraffic && newTraffic.regions) {
+    if (newTraffic) {
       modified = true;
-      Console.info(`Updated regional traffic data received for ${Object.keys(newTraffic.regions).join(',')}.`);
       // Update the traffic graphs with the new state
-      _.each(newTraffic.regions, (regionData, regionName) => {
-        traffic.regions[regionName] = regionData;
+      _.each(newTraffic.nodes, node => {
+        const existingNodeIndex = _.findIndex(this.traffic.nodes, { name: node.name });
+        if (existingNodeIndex !== -1) {
+          this.traffic.nodes[existingNodeIndex] = node;
+        } else {
+          this.traffic.nodes.push(node);
+        }
       });
-      this.traffic = traffic;
+      _.each(newTraffic.connections, connection => {
+        const existingConnectionIndex = _.findIndex(this.traffic.connections, { source: connection.source, target: connection.target });
+        if (existingConnectionIndex !== -1) {
+          this.traffic.connections[existingConnectionIndex] = connection;
+        } else {
+          this.traffic.connections.push(connection);
+        }
+      });
     }
 
     if (modified) {
       this.setState({
-        regionUpdateStatus: _.map(this.traffic.regions, (regionData, region) => {
-          const updated = regionData.updated;
-          return { region: region, updated: updated };
+        regionUpdateStatus: _.map(_.filter(this.traffic.nodes, n => n.name !== 'INTERNET'), node => {
+          const updated = node.updated;
+          return { region: node.name, updated: updated };
         }),
         timeOffset: newTraffic.clientUpdateTime - newTraffic.serverUpdateTime,
-        trafficData: this.traffic,
-        excludedEdgeNodes: excludedEdgeNodes
+        trafficData: _.cloneDeep(this.traffic)
       });
     }
   }
@@ -254,7 +224,7 @@ class TrafficFlow extends React.Component {
     // If there is a selected node, deselect the node
     if (this.isSelectedNode()) {
       this.setState({ currentView: [this.state.currentView[0]] });
-    } else if (this.isFocusedNode()) {
+    } else {
       // If there is just a detailed node, remove the detailed node.
       this.setState({ focusedNode: undefined, highlightedNode: undefined });
     }
@@ -275,10 +245,6 @@ class TrafficFlow extends React.Component {
         filterActions.clearFilters();
       }
     }
-  }
-
-  trafficStoreChanged = () => {
-    this.setState({ excludedEdgeNodes: trafficStore.getExcludedEdgeNodes().keySeq().toArray() });
   }
 
   locatorChanged = value => {
@@ -327,7 +293,6 @@ class TrafficFlow extends React.Component {
         <div className="service-traffic-map">
           <div style={{ position: 'absolute', top: '0px', right: !!nodeToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
             <Vizceral traffic={this.state.trafficData}
-                      excludedEdgeNodes={this.state.excludedEdgeNodes}
                       view={this.state.currentView}
                       showLabels={this.state.displayOptions.showLabels}
                       filters={this.state.filters}
@@ -336,18 +301,14 @@ class TrafficFlow extends React.Component {
                       nodeHighlighted={this.nodeHighlighted}
                       rendered={this.rendered}
                       nodeFocused={this.nodeFocused}
-                      regionContextSizeChanged={this.regionContextSizeChanged}
+                      nodeContextSizeChanged={this.nodeContextSizeChanged}
                       matchesFound={this.matchesFound}
                       match={this.state.searchTerm}
             />
           </div>
           {
             !!nodeToShowDetails &&
-            <NodeDetails node={nodeToShowDetails} nodeSelected={nodeView} region={this.state.currentView[0]} width={nodeDetailsSidePanelWidth} zoomCallback={this.zoomCallback} closeCallback={this.detailsClosed} />
-          }
-          {
-            (globalView && this.state.displayOptions.showEdgeTable) &&
-            <EdgeNodeTable regionGraphs={this.state.graphs.regions} />
+            <NodeDetails node={nodeToShowDetails} nodeSelected={nodeView} region={this.state.currentView[0]} width={panelWidth} zoomCallback={this.zoomCallback} closeCallback={this.detailsClosed} />
           }
           <LoadingCover show={showLoadingCover} />
         </div>
