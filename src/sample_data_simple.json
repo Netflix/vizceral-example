@@ -1,0 +1,98 @@
+{
+  "renderer": "global",
+  "name": "edge",
+  "nodes": [
+    {
+      "renderer": "region",
+      "name": "INTERNET",
+      "updated": 1466838417510,
+      "nodes": [
+      ],
+      "class": "normal"
+    },
+    {
+      "renderer": "region",
+      "name": "us-east-1",
+      "maxVolume": 50000,
+      "class": "normal",
+      "updated": 1466838546805,
+      "nodes": [
+        {
+          "name": "INTERNET",
+          "class": "normal"
+        },
+        {
+          "name": "proxy-prod",
+          "metadata": {
+            "streaming": true
+          },
+          "class": "normal"
+        }
+      ],
+      "connections": [
+        {
+          "source": "INTERNET",
+          "metadata": {
+            "streaming": true
+          },
+          "metrics": {
+            "danger": 0.646,
+            "normal": 31.12
+          },
+          "class": "normal"
+        },
+        {
+          "source": "INTERNET",
+          "metadata": {
+            "streaming": true
+          },
+          "metrics": {
+            "danger": 0.582,
+            "normal": 218.972
+          },
+          "class": "normal"
+        },
+        {
+          "source": "INTERNET",
+          "metadata": {
+            "streaming": true
+          },
+          "metrics": {
+            "normal": 11.072
+          },
+          "class": "normal"
+        },
+        {
+          "source": "INTERNET",
+          "target": "proxy-prod",
+          "metadata": {
+            "streaming": true
+          },
+          "metrics": {
+            "danger": 116.524,
+            "normal": 15598.906
+          },
+          "status": {
+            "danger": 281.33,
+            "normal": 65364.56
+          },
+          "class": "normal"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "source": "INTERNET",
+      "target": "us-east-1",
+      "metrics": {
+        "normal": 26037.626,
+        "danger": 92.37
+      },
+      "notices": [
+
+      ],
+      "class": "normal"
+    }
+  ]
+}

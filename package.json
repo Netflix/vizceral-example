@@ -36,7 +36,7 @@
     "source-sans-pro": "^2.0.10",
     "superagent": "^2.0.0",
     "tween.js": "^16.3.4",
-    "vizceral-react": "^2.0.1",
+    "vizceral-react": "^2.0.2",
     "webfontloader": "^1.6.24"
   },
   "devDependencies": {

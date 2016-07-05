@@ -98,7 +98,7 @@ class TrafficFlow extends React.Component {
   }
 
   beginSampleData () {
-    request.get('sample_data.json')
+    request.get('sample_data_simple.json')
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (res && res.status === 200) {
@@ -155,6 +155,7 @@ class TrafficFlow extends React.Component {
   updateData (newTraffic) {
     this.traffic.name = newTraffic.name;
     this.traffic.renderer = newTraffic.renderer;
+    this.traffic.maxVolume = newTraffic.maxVolume;
 
     let modified = false;
     if (newTraffic) {
