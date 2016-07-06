@@ -8,7 +8,7 @@
     "lint": "eslint src --ext .js --ext .jsx",
     "copy:fonts": "cpx \"./node_modules/source-sans-pro/**/*\" ./dist/fonts",
     "copy:json": "cpx \"./src/*.json\" ./dist",
-    "dev-server": "webpack-dev-server --content-base dist/ --history-api-fallback",
+    "dev-server": "webpack-dev-server --host=0.0.0.0 --content-base dist/ --history-api-fallback",
     "dev": "npm-run-all clean --parallel copy:* dev-server",
     "validate": "npm ls"
   },
