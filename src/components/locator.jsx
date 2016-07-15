@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-require('./locator.css');
+import './locator.css';
 
 const style = {
   display: 'inline-block',

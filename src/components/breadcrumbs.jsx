@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 
-require('./breadcrumbs.css');
+import './breadcrumbs.css';
 
 class Breadcrumbs extends React.Component {
   constructor (props) {

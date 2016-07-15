@@ -20,17 +20,12 @@ class DisplayOptions extends React.Component {
 
   render () {
     const showLabels = this.state.showLabels;
-    const showEdgeTable = this.state.showEdgeTable;
 
     return (
       <div>
         <div>
           <input type="checkbox" name="showLabels" value="labels" checked={showLabels} onChange={() => this.changeState({ showLabels: !showLabels })}/>
           <span style={{ cursor: 'default' }} onClick={() => this.changeState({ showLabels: !showLabels })}>Show Labels</span>
-        </div>
-        <div>
-          <input type="checkbox" name="showEdgeTable" value="edgeTable" checked={showEdgeTable} onChange={() => this.changeState({ showEdgeTable: !showEdgeTable })}/>
-          <span style={{ cursor: 'default' }} onClick={() => this.changeState({ showEdgeTable: !showEdgeTable })}>Show Edge Table</span>
         </div>
       </div>
     );

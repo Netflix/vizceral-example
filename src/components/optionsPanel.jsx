@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 
-require('./optionsPanel.css');
+import './optionsPanel.css';
 
 class OptionsPanel extends React.Component {
   constructor (props) {

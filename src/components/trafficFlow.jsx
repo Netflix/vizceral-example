@@ -1,10 +1,11 @@
 'use strict';
 import _ from 'lodash';
 import React from 'react';
+import TWEEN from 'tween.js'; // Start TWEEN updates for sparklines and loading screen fading out
 import keypress from 'keypress.js';
 import request from 'superagent';
 import Vizceral from 'vizceral-react';
-require('vizceral-react/dist/vizceral.css');
+import 'vizceral-react/dist/vizceral.css';
 
 import Breadcrumbs from './breadcrumbs';
 import DisplayOptions from './displayOptions';
@@ -20,8 +21,6 @@ import filterStore from './filterStore';
 
 const listener = new keypress.Listener();
 
-// Start TWEEN updates for sparklines and loading screen fading out
-import TWEEN from 'tween.js';
 function animate (time) {
   requestAnimationFrame(animate);
   TWEEN.update(time);
@@ -52,7 +51,10 @@ class TrafficFlow extends React.Component {
       },
       trafficData: {},
       regionUpdateStatus: [],
-      timeOffset: 0
+      timeOffset: 0,
+      modes: {
+        detailedNode: 'volume'
+      }
     };
     this.traffic = { nodes: [], connections: [] };
     this.nodeDetailsPanelOffset = 0;
@@ -155,7 +157,6 @@ class TrafficFlow extends React.Component {
   updateData (newTraffic) {
     this.traffic.name = newTraffic.name;
     this.traffic.renderer = newTraffic.renderer;
-    this.traffic.maxVolume = newTraffic.maxVolume;
 
     let modified = false;
     if (newTraffic) {
@@ -164,6 +165,7 @@ class TrafficFlow extends React.Component {
       _.each(newTraffic.nodes, node => {
         const existingNodeIndex = _.findIndex(this.traffic.nodes, { name: node.name });
         if (existingNodeIndex !== -1) {
+          node.updated = node.updated || this.traffic.nodes[existingNodeIndex].updated;
           this.traffic.nodes[existingNodeIndex] = node;
         } else {
           this.traffic.nodes.push(node);
@@ -305,6 +307,7 @@ class TrafficFlow extends React.Component {
                       nodeContextSizeChanged={this.nodeContextSizeChanged}
                       matchesFound={this.matchesFound}
                       match={this.state.searchTerm}
+                      modes={this.state.modes}
             />
           </div>
           {

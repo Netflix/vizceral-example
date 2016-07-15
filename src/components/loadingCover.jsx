@@ -3,9 +3,9 @@
 import React from 'react';
 import TWEEN from 'tween.js';
 
-require('./loadingCover.css');
+import './loadingCover.css';
 
-const logo = require('url!./vizceral-mark.png');
+const logo = require('url!./vizceral-mark.png'); // eslint-disable-line import/no-extraneous-dependencies
 
 const helperStyles = {
   display: 'inline-block',

@@ -1,10 +1,11 @@
 'use strict';
 
-import NodeDetailsSubpanel from './nodeDetailsSubpanel';
-import ConnectionList from './connectionList';
 import React from 'react';
 
-require('./nodeDetails.css');
+import ConnectionList from './connectionList';
+import NodeDetailsSubpanel from './nodeDetailsSubpanel';
+
+import './nodeDetails.css';
 
 class NodeDetails extends React.Component {
   constructor (props) {

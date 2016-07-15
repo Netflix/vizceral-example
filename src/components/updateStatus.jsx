@@ -3,7 +3,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
-require('./updateStatus.css');
+import './updateStatus.css';
 
 function msToTimeAgo (ms) {
   if (!ms) { return 'Unknown'; }

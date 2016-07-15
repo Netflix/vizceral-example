@@ -100,7 +100,7 @@ class ConnectionList extends React.Component {
     if (this.refs.flexTable && this.refs.flexTable.props.estimatedRowSize) {
       estimatedRowHeight = this.refs.flexTable.props.estimatedRowSize - 4;
     }
-    const tableHeight = Math.min(maxTableHeight, estimatedRowHeight * connectionRows.length + headerHeight);
+    const tableHeight = Math.min(maxTableHeight, (estimatedRowHeight * connectionRows.length) + headerHeight);
 
 
     return (

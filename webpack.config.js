@@ -1,4 +1,6 @@
+/* globals __dirname process */
 'use strict';
+var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -6,7 +8,7 @@ module.exports = {
   devtool: 'source-map',
   entry: './src/app.jsx',
   output: {
-    path: 'dist',
+    path: path.join(__dirname, 'dist'),
 		publicPath: '/',
     filename: 'vizceral.[hash].bundle.js'
   },
@@ -37,6 +39,9 @@ module.exports = {
       // This is required by many jquery plugins
       jQuery: 'jquery',
       $: 'jquery'
+    }),
+    new webpack.DefinePlugin({
+      __HIDE_DATA__: !!process.env.HIDE_DATA
     }),
     new HtmlWebpackPlugin({
       title: 'Vizceral',

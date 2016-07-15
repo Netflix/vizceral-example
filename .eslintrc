@@ -7,7 +7,7 @@
   },
   "parser": "babel-eslint",
   "extends": [
-    "airbnb/base"
+    "airbnb-base"
   ],
   "ecmaFeatures": {
     "modules": false,
