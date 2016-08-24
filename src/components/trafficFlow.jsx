@@ -294,7 +294,7 @@ class TrafficFlow extends React.Component {
           </div>
         </div>
         <div className="service-traffic-map">
-          <div style={{ position: 'absolute', top: '0px', right: !!nodeToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
+          <div style={{ position: 'absolute', top: '0px', right: nodeToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
             <Vizceral traffic={this.state.trafficData}
                       view={this.state.currentView}
                       showLabels={this.state.displayOptions.showLabels}

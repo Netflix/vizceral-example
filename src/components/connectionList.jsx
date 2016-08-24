@@ -79,8 +79,8 @@ class ConnectionList extends React.Component {
       const classNames = [];
       if (disabled) {
         classNames.push('disabled');
-      } else {
-        if (connection.class) { classNames.push(`color-${connection.class}`); }
+      } else if (connection.class) {
+        classNames.push(`color-${connection.class}`);
       }
 
       return {
