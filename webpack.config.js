@@ -14,8 +14,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.jsx', '.js'],
-    modulesDirectories: ['node_modules']
+    modulesDirectories: ['node_modules'],
+    fallback: path.join(__dirname, 'node_modules')
   },
+  resolveLoader: { fallback: path.join(__dirname, 'node_modules') },
   module: {
     loaders: [
       {
