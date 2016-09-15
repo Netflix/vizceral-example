@@ -140,11 +140,11 @@ class TrafficFlow extends React.Component {
     this.fetchData();
 
     setTimeout(() => {
-      this.fetchData()
+      this.fetchData();
     }, 60 * 1000);
     // Listen for changes to the stores
     filterStore.addChangeListener(this.filtersChanged);
-  };
+  }
 
   componentWillUnmount () {
     filterStore.removeChangeListener(this.filtersChanged);
