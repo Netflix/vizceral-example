@@ -122,17 +122,17 @@ class TrafficFlow extends React.Component {
     this.setState({ currentView: currentView });
   }
 
-fetchData () {
+  fetchData () {
     request.get('http://192.168.33.10:7880/vizc')
       .set('Accept', 'application/json')
       .end((req, res) => {
-      if (res && res.status == 200) {
-        var body = JSON.parse(res.text);
-        this.traffic.clientUpdateTime = Date.now();
-        this.updateData(body);
-      }
-  });
-}
+        if (res && res.status === 200) {
+          const body = JSON.parse(res.text);
+          this.traffic.clientUpdateTime = Date.now();
+          this.updateData(body);
+        }
+      });
+  }
 
   componentDidMount () {
     // Check the location bar for any direct routing information
@@ -144,7 +144,7 @@ fetchData () {
     }, 60 * 1000);
     // Listen for changes to the stores
     filterStore.addChangeListener(this.filtersChanged);
-  }
+  };
 
   componentWillUnmount () {
     filterStore.removeChangeListener(this.filtersChanged);
