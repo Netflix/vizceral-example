@@ -1,6 +1,6 @@
-/* Node Details
+/* Details Panel
 -------------------------------------------------- */
-.node-details {
+.details-panel {
   background-color: rgb(57, 57, 57);
   border: 1px solid var(--colorBorderLines);
   border-radius: 3px;
@@ -12,11 +12,11 @@
   bottom: 25px;
 }
 
-.node-details-collapsed {
+.details-panel-collapsed {
   width: 0;
 }
 
-.node-details-title {
+.details-panel-title {
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 21px;
@@ -25,12 +25,16 @@
   border-bottom: 1px solid var(--colorBorderLines);
 }
 
-.node-details-description {
+.details-panel-subtitle {
+  margin-left: -10px;
+}
+
+.details-panel-description {
   padding-top: 5px;
   padding-bottom: 10px;
 }
 
-.node-details-close {
+.details-panel-close {
   font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
   content: "\e114";
   font-size: 12px;
@@ -41,18 +45,18 @@
   cursor: pointer;
 }
 
-.node-details-subpanel .panel-group .panel {
+.details-panel-subpanel .panel-group .panel {
   border-left: 0;
   border-right: 0;
 }
 
-.node-details-subpanel .panel-title {
+.details-panel-subpanel .panel-title {
   height: 18px;
   font-size: 16px;
   font-weight: 600;
 }
 
-.node-details-subpanel .panel-title .badge {
+.details-panel-subpanel .panel-title .badge {
   margin-top: -3px;
 }
 
@@ -74,9 +78,13 @@
   border-bottom: none;
 }
 
-.connection-list .table-container {
+.connection-list .table-container, .cluster-list .table-container {
   max-height: 200px;
   overflow: auto;
+}
+
+.connection-list .FlexTable__row:focus {
+  outline:0;
 }
 
 .table-header > .table > thead > tr > th {

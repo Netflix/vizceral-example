@@ -38,7 +38,7 @@ class UpdateStatus extends React.Component {
 
   updateFreshness (status) {
     const currentTime = Date.now() - this.props.baseOffset;
-    _.each(status, s => {
+    _.each(status, (s) => {
       s.fresh = currentTime - (s.updated || 0) < this.props.warnThreshold;
     });
     return status;

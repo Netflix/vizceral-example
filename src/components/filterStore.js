@@ -61,7 +61,7 @@ class FilterStore extends EventEmitter {
     super();
     this.requests = {};
 
-    AppDispatcher.register(payload => {
+    AppDispatcher.register((payload) => {
       const action = payload.action;
       switch (action.actionType) {
       case AppConstants.ActionTypes.UPDATE_FILTER:
@@ -116,7 +116,7 @@ class FilterStore extends EventEmitter {
   }
 
   updateFilters (filters) {
-    Object.keys(filters).forEach(filter => {
+    Object.keys(filters).forEach((filter) => {
       store.filters[filter].value = filters[filter];
     });
   }

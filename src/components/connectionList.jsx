@@ -71,7 +71,7 @@ class ConnectionList extends React.Component {
     const headerHeight = 30;
     let estimatedRowHeight = 25;
     const maxTableHeight = 300;
-    const connectionRows = this.state.connections.map(connection => {
+    const connectionRows = this.state.connections.map((connection) => {
       const errors = connection.getVolume('danger');
       const total = connection.getVolumeTotal();
       const disabled = !connection.isVisible();
