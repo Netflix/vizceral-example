@@ -32,12 +32,11 @@ requestAnimationFrame(animate);
 
 const panelWidth = 400;
 
-
 class TrafficFlow extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      currentView: [],
+      currentView: undefined,
       redirectedFrom: undefined,
       selectedChart: undefined,
       displayOptions: {
@@ -63,8 +62,6 @@ class TrafficFlow extends React.Component {
         detailedNode: 'volume'
       }
     };
-    this.traffic = { nodes: [], connections: [] };
-    this.nodeDetailsPanelOffset = 0;
 
     // Browser history support
     window.addEventListener('popstate', event => this.handlePopState(event.state));
@@ -108,18 +105,7 @@ class TrafficFlow extends React.Component {
     this.setState({ labelDimensions: dimensions });
   }
 
-  beginSampleData () {
-    request.get('sample_data.json')
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        if (res && res.status === 200) {
-          this.traffic.clientUpdateTime = Date.now();
-          this.updateData(res.body);
-        }
-      });
-  }
-
-  checkRoute () {
+  checkInitialRoute () {
     // Check the location bar for any direct routing information
     const pathArray = window.location.pathname.split('/');
     const currentView = [];
@@ -134,9 +120,20 @@ class TrafficFlow extends React.Component {
     this.setState({ currentView: currentView, objectToHighlight: parsedQuery.highlighted });
   }
 
+  beginSampleData () {
+    this.traffic = { nodes: [], connections: [] };
+    request.get('sample_data.json')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        if (res && res.status === 200) {
+          this.traffic.clientUpdateTime = Date.now();
+          this.updateData(res.body);
+        }
+      });
+  }
+
   componentDidMount () {
-    // Check the location bar for any direct routing information
-    this.checkRoute();
+    this.checkInitialRoute();
     this.beginSampleData();
 
     // Listen for changes to the stores
@@ -236,8 +233,8 @@ class TrafficFlow extends React.Component {
 
   zoomCallback = () => {
     const currentView = _.clone(this.state.currentView);
-    if (currentView.length === 1) {
-      currentView.push(this.state.foucsedNode.name);
+    if (currentView.length === 1 && this.state.focusedNode) {
+      currentView.push(this.state.focusedNode.name);
     } else if (currentView.length === 2) {
       currentView.pop();
     }
@@ -344,7 +341,7 @@ class TrafficFlow extends React.Component {
           </div>
         </div>
         <div className="service-traffic-map">
-          <div style={{ position: 'absolute', top: '0px', right: nodeToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
+          <div style={{ position: 'absolute', top: '0px', right: nodeToShowDetails || connectionToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
             <Vizceral traffic={this.state.trafficData}
                       view={this.state.currentView}
                       showLabels={this.state.displayOptions.showLabels}
