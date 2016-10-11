@@ -1,4 +1,5 @@
 'use strict';
+
 import keymirror from 'keymirror';
 
 export default {

@@ -1,4 +1,5 @@
 'use strict';
+
 import React from 'react';
 
 class DisplayOptions extends React.Component {

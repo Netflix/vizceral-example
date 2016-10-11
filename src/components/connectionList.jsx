@@ -1,8 +1,9 @@
 'use strict';
+
 import _ from 'lodash';
 import React from 'react';
 import numeral from 'numeral';
-import { FlexTable, FlexColumn, SortDirection } from 'react-virtualized';
+import { Table, Column, SortDirection } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 
 const nameRenderer = function (data) {
@@ -106,7 +107,7 @@ class ConnectionList extends React.Component {
     return (
       connectionRows.length > 0 ?
       <div className="connection-list">
-        <FlexTable
+        <Table
           ref="flexTable"
           width={300}
           height={tableHeight}
@@ -118,9 +119,9 @@ class ConnectionList extends React.Component {
           sortDirection={this.state.sortDirection}
           sort={this.sort}
         >
-          <FlexColumn label="Cluster" dataKey="name" cellRenderer={nameRenderer} width={220} />
-          <FlexColumn label="Errors" dataKey="errorRate" cellRenderer={errorRenderer} width={70}/>
-        </FlexTable>
+          <Column label="Cluster" dataKey="name" cellRenderer={nameRenderer} width={220} />
+          <Column label="Errors" dataKey="errorRate" cellRenderer={errorRenderer} width={70}/>
+        </Table>
       </div>
       : <span>None.</span>
     );

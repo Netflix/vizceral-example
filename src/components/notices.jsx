@@ -1,4 +1,5 @@
 'use strict';
+
 import React from 'react';
 
 class Notices extends React.Component {

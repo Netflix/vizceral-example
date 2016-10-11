@@ -236,22 +236,22 @@ body > .container {
   border-bottom: 1px solid var(--colorBorderLines);
 }
 
-.FlexTable__headerColumn:first-of-type, .FlexTable__rowColumn:first-of-type {
+.ReactVirtualized__Table__headerColumn:first-of-type, .ReactVirtualized__Table__rowColumn:first-of-type {
      margin-left: 0 !important;
 }
 
-.FlexTable__headerColumn:focus, .FlexTable__Grid:focus {
+.ReactVirtualized__Table__headerColumn:focus, .ReactVirtualized__Table__Grid:focus {
   outline: none;
 }
-.FlexTable__row {
+.ReactVirtualized__Table__row {
   border-bottom: 1px solid var(--colorBorderLines);
 }
 
-.FlexTable__headerColumn:last-of-type, .FlexTable__rowColumn:last-of-type {
+.ReactVirtualized__Table__headerColumn:last-of-type, .ReactVirtualized__Table__rowColumn:last-of-type {
   margin-right: 0 !important;
 }
 
-.FlexTable__headerRow {
+.ReactVirtualized__Table__headerRow {
   text-transform: none !important;
   border-bottom: 2px solid;
 }
