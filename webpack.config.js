@@ -22,7 +22,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude: ['node_modules'],
         loader: 'babel'
       },
       { test: /\.woff2?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff' },
