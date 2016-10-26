@@ -1,0 +1,7 @@
+.physics-options > div {
+    white-space: nowrap;
+}
+.physics-options > div > label {
+    display: inline-block;
+    width: 160px;
+}
