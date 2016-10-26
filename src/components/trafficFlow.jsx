@@ -58,6 +58,7 @@ class TrafficFlow extends React.Component {
           mass: 1
         }
       },
+      
       labelDimensions: {},
       appliedFilters: filterStore.getChangedFilters(),
       filters: filterStore.getFiltersArray(),
