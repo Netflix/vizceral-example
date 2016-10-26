@@ -1,42 +1,42 @@
-'use strict';
+  'use strict';
 
-import React from 'react';
+  import React from 'react';
 
-import './locator.css';
+  import './locator.css';
 
-const style = {
-  display: 'inline-block',
-  position: 'relative'
-};
+  const style = {
+    display: 'inline-block',
+    position: 'relative'
+  };
 
-const listStyle = {
-  display: 'inline-block',
-  position: 'relative',
-  paddingRight: '5px'
-};
+  const listStyle = {
+    display: 'inline-block',
+    position: 'relative',
+    paddingRight: '5px'
+  };
 
-class Locator extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-  locatorChanged (value) {
-    this.props.changeCallback(value);
-  }
-
-  clearFilterClicked () {
-    if (this.props.clearFilterCallback) {
-      this.props.clearFilterCallback();
+  class Locator extends React.Component {
+    constructor (props) {
+      super(props);
+      this.state = {
+      };
     }
-  }
 
-  render () {
-    const totalServices = this.props.matches.totalMatches > -1 ? this.props.matches.totalMatches : this.props.matches.total;
-    const filteredServices = totalServices - (this.props.matches.visibleMatches > -1 ? this.props.matches.visibleMatches : this.props.matches.visible);
+    locatorChanged (value) {
+      this.props.changeCallback(value);
+    }
 
-    return (
+    clearFilterClicked () {
+      if (this.props.clearFilterCallback) {
+        this.props.clearFilterCallback();
+      }
+    }
+
+    render () {
+      const totalServices = this.props.matches.totalMatches > -1 ? this.props.matches.totalMatches : this.props.matches.total;
+      const filteredServices = totalServices - (this.props.matches.visibleMatches > -1 ? this.props.matches.visibleMatches : this.props.matches.visible);
+
+      return (
       <div style={style}>
         <div style={listStyle}>{totalServices} services / {filteredServices} filtered &nbsp;
           { filteredServices > 0 ?
@@ -50,19 +50,19 @@ class Locator extends React.Component {
         </div>
       </div>
     );
-  }
+    }
 }
 
-Locator.propTypes = {
-  searchTerm: React.PropTypes.string.isRequired,
-  changeCallback: React.PropTypes.func.isRequired,
-  clearFilterCallback: React.PropTypes.func,
-  matches: React.PropTypes.shape({
-    total: React.PropTypes.number,
-    totalMatches: React.PropTypes.number,
-    visible: React.PropTypes.number,
-    visibleMatches: React.PropTypes.number
-  })
-};
+  Locator.propTypes = {
+    searchTerm: React.PropTypes.string.isRequired,
+    changeCallback: React.PropTypes.func.isRequired,
+    clearFilterCallback: React.PropTypes.func,
+    matches: React.PropTypes.shape({
+      total: React.PropTypes.number,
+      totalMatches: React.PropTypes.number,
+      visible: React.PropTypes.number,
+      visibleMatches: React.PropTypes.number
+    })
+  };
 
-export default Locator;
+  export default Locator;

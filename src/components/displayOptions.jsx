@@ -20,7 +20,6 @@ class DisplayOptions extends React.Component {
 
   render () {
     const showLabels = this.state.showLabels;
-
     return (
       <div>
         <div>

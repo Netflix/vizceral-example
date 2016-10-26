@@ -11,6 +11,7 @@ import request from 'superagent';
 
 import Breadcrumbs from './breadcrumbs';
 import DisplayOptions from './displayOptions';
+import PhysicsOptions from './physicsOptions';
 import FilterControls from './filterControls';
 import DetailsPanelConnection from './detailsPanelConnection';
 import DetailsPanelNode from './detailsPanelNode';
@@ -23,6 +24,9 @@ import filterActions from './filterActions';
 import filterStore from './filterStore';
 
 const listener = new keypress.Listener();
+
+const Console = console;
+const hasOwnPropF = Object.prototype.hasOwnProperty;
 
 function animate (time) {
   requestAnimationFrame(animate);
@@ -41,6 +45,18 @@ class TrafficFlow extends React.Component {
       selectedChart: undefined,
       displayOptions: {
         showLabels: true
+      },
+      currentGraph_physicsOptions: {
+        isEnabled: true,
+        viscousDragCoefficient: 0.2,
+        hooksSprings: {
+          restLength: 50,
+          springConstant: 0.2,
+          dampingConstant: 0.1
+        },
+        particles: {
+          mass: 1
+        }
       },
       labelDimensions: {},
       appliedFilters: filterStore.getChangedFilters(),
@@ -63,6 +79,7 @@ class TrafficFlow extends React.Component {
       }
     };
 
+    this.vizcReactComp = null;
     // Browser history support
     window.addEventListener('popstate', event => this.handlePopState(event.state));
 
@@ -82,8 +99,52 @@ class TrafficFlow extends React.Component {
     this.setState({ currentView: state.selected, objectToHighlight: state.highlighted });
   }
 
+  vizcReactCompIsMountedChanged (vizcComp) {
+    this.vizcReactComp = vizcComp;
+    // let fIsInit = !hasOwnPropF.call(this.state, "currentGraph");
+    // let deferredInitState = null;
+    // if (fIsInit && vizcComp !== null) {
+    //   let cg = vizcComp.vizceral.currentGraph;
+    //   if (cg == null) cg = null;
+    //   let cg_po = null;
+    //   if (cg !== null) {
+    //     if (deferredInitState === null) deferredInitState = {};
+    //     deferredInitState.currentGraph = cg;
+    //     cg_po = cg.getPhysicsOptions();
+    //   }
+    //   if (cg_po !== null) {
+    //     if (deferredInitState === null) deferredInitState = {};
+    //     deferredInitState.currentGraph_physicsOptions = cg_po;
+    //   }
+    // }
+    // if (deferredInitState !== null) {
+    //   Console.debug("TrafficFlow.jsx vizcReactCompIsMountedChanged setState: deferred state initialization", deferredInitState);
+    //   this.setState(deferredInitState);
+    // }
+  }
+
   viewChanged = (data) => {
-    this.setState({ currentView: data.view, currentGraph: data.graph, searchTerm: '', matches: { total: -1, visible: -1 }, redirectedFrom: data.redirectedFrom });
+    const changedState = {
+      currentView: data.view,
+      searchTerm: '',
+      matches: { total: -1, visible: -1 },
+      redirectedFrom: data.redirectedFrom
+    };
+    let flag = false;
+    if (hasOwnPropF.call(data, 'graph')) {
+      let oldCurrentGraph = this.state.currentGraph;
+      if (oldCurrentGraph == null) oldCurrentGraph = null;
+      let newCurrentGraph = data.graph;
+      if (newCurrentGraph == null) newCurrentGraph = null;
+      if (oldCurrentGraph !== newCurrentGraph) {
+        flag = true;
+        changedState.currentGraph = newCurrentGraph;
+        const o = newCurrentGraph === null ? null : newCurrentGraph.getPhysicsOptions();
+        changedState.currentGraph_physicsOptions = o;
+      }
+    }
+    Console.debug('TrafficFlow.jsx viewChanged: ', data, changedState, flag);
+    this.setState(changedState);
   }
 
   objectHighlighted = (highlightedObject) => {
@@ -246,6 +307,16 @@ class TrafficFlow extends React.Component {
     this.setState({ displayOptions: displayOptions });
   }
 
+  physicsOptionsChanged = (physicsOptions) => {
+    this.setState({ currentGraph_physicsOptions: physicsOptions });
+    let currentGraph = this.state.currentGraph;
+    if (currentGraph == null) currentGraph = null;
+    Console.debug('TrafficFlow.jsx physicsOptionsChanged: ', physicsOptions, currentGraph, this.vizcReactComp);
+    if (currentGraph !== null) {
+      currentGraph.setPhysicsOptions(physicsOptions);
+    }
+  }
+
   navigationCallback = (newNavigationState) => {
     this.setState({ currentView: newNavigationState });
   }
@@ -338,6 +409,7 @@ class TrafficFlow extends React.Component {
             { (!globalView && matches) && <Locator changeCallback={this.locatorChanged} searchTerm={this.state.searchTerm} matches={matches} clearFilterCallback={this.filtersCleared} /> }
             <OptionsPanel title="Filters"><FilterControls /></OptionsPanel>
             <OptionsPanel title="Display"><DisplayOptions options={this.state.displayOptions} changedCallback={this.displayOptionsChanged} /></OptionsPanel>
+            <OptionsPanel title="Physics"><PhysicsOptions options={this.state.currentGraph_physicsOptions} changedCallback={this.physicsOptionsChanged}/></OptionsPanel>
           </div>
         </div>
         <div className="service-traffic-map">
@@ -356,6 +428,7 @@ class TrafficFlow extends React.Component {
                       matchesFound={this.matchesFound}
                       match={this.state.searchTerm}
                       modes={this.state.modes}
+                      ref={comp => this.vizcReactCompIsMountedChanged(comp)}
             />
           </div>
           {
