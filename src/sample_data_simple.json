@@ -16,10 +16,12 @@
       "nodes": [
         {
           "name": "INTERNET",
+          "renderer": "focused",
           "class": "normal"
         },
         {
           "name": "proxy-prod",
+          "renderer": "focused",
           "class": "normal"
         }
       ],

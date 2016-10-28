@@ -46,8 +46,6 @@ class TrafficFlow extends React.Component {
       labelDimensions: {},
       appliedFilters: filterStore.getChangedFilters(),
       filters: filterStore.getFiltersArray(),
-      graphs: { regions: {} },
-      renderedGraphs: {},
       searchTerm: '',
       matches: {
         total: -1,
@@ -90,16 +88,6 @@ class TrafficFlow extends React.Component {
   objectHighlighted = (highlightedObject) => {
     // need to set objectToHighlight for diffing on the react component. since it was already highlighted here, it will be a noop
     this.setState({ highlightedObject: highlightedObject, objectToHighlight: highlightedObject ? highlightedObject.getName() : undefined, searchTerm: '', matches: { total: -1, visible: -1 }, redirectedFrom: undefined });
-  }
-
-  rendered = (data) => {
-    const renderedGraphs = _.clone(this.state.renderedGraphs);
-    renderedGraphs[data.name] = data.rendered;
-    this.setState({ renderedGraphs: renderedGraphs });
-  }
-
-  nodeFocused = (node) => {
-    this.setState({ focusedNode: node });
   }
 
   nodeContextSizeChanged = (dimensions) => {
@@ -221,13 +209,6 @@ class TrafficFlow extends React.Component {
     }
   }
 
-  isFocusedNode () {
-    return !this.isSelectedNode()
-      && this.state.currentView
-      && this.state.currentView[0] !== undefined
-      && this.state.focusedNode !== undefined;
-  }
-
   isSelectedNode () {
     return this.state.currentView && this.state.currentView[1] !== undefined;
   }
@@ -282,16 +263,8 @@ class TrafficFlow extends React.Component {
     this.setState({ searchTerm: value });
   }
 
-  chartChanged = (chartName) => {
-    this.setState({ selectedChart: chartName });
-  }
-
   matchesFound = (matches) => {
     this.setState({ matches: matches });
-  }
-
-  graphsUpdated = (graphs) => {
-    this.setState({ graphs: graphs });
   }
 
   nodeClicked = (node) => {
@@ -311,9 +284,10 @@ class TrafficFlow extends React.Component {
   render () {
     const globalView = this.state.currentView && this.state.currentView.length === 0;
     const nodeView = !globalView && this.state.currentView && this.state.currentView[1] !== undefined;
-    const nodeToShowDetails = this.state.focusedNode || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
+    let nodeToShowDetails = this.state.currentGraph && this.state.currentGraph.type === 'focused' ? this.state.currentGraph.focusedNode : undefined;
+    nodeToShowDetails = nodeToShowDetails || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
     const connectionToShowDetails = this.state.highlightedObject && this.state.highlightedObject.type === 'connection' ? this.state.highlightedObject : undefined;
-    const showLoadingCover = !!(this.state.currentView && this.state.currentView[0] && !this.state.renderedGraphs[this.state.currentView[0]]);
+    const showLoadingCover = !this.state.currentGraph;
 
     let matches;
     if (this.state.currentGraph) {
@@ -347,11 +321,8 @@ class TrafficFlow extends React.Component {
                       view={this.state.currentView}
                       showLabels={this.state.displayOptions.showLabels}
                       filters={this.state.filters}
-                      graphsUpdated={this.graphsUpdated}
                       viewChanged={this.viewChanged}
                       objectHighlighted={this.objectHighlighted}
-                      rendered={this.rendered}
-                      nodeFocused={this.nodeFocused}
                       nodeContextSizeChanged={this.nodeContextSizeChanged}
                       objectToHighlight={this.state.objectToHighlight}
                       matchesFound={this.matchesFound}
