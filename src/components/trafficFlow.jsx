@@ -9,6 +9,7 @@ import keypress from 'keypress.js';
 import queryString from 'query-string';
 import request from 'superagent';
 
+import './trafficFlow.css';
 import Breadcrumbs from './breadcrumbs';
 import DisplayOptions from './displayOptions';
 import PhysicsOptions from './physicsOptions';
@@ -58,7 +59,7 @@ class TrafficFlow extends React.Component {
           mass: 1
         }
       },
-      
+
       labelDimensions: {},
       appliedFilters: filterStore.getChangedFilters(),
       filters: filterStore.getFiltersArray(),
@@ -92,6 +93,21 @@ class TrafficFlow extends React.Component {
         this.setState({ currentView: this.state.currentView.slice(0, -1) });
       }
     });
+
+    this._timerId = setInterval(() => this._onTimerTick(), 10000);
+  }
+
+  _onTimerTick () {
+    let graph = this.state.currentGraph;
+    if (graph == null) return;
+    let nodes = graph.nodes;
+    let nodeNames = _.keys(nodes);
+    let posData = {};
+    for (let i = 0, n = nodeNames.length; i < n; i++) {
+      let node = nodes[nodeNames[i]];
+      posData[nodeNames[i]] = [ node.position.x, node.position.y ];
+    }
+    Console.log('Position data: ', JSON.stringify(posData));
   }
 
   handlePopState () {
@@ -375,6 +391,14 @@ class TrafficFlow extends React.Component {
     }
   }
 
+  resetLayoutButtonClicked = () => {
+    const g = this.state.currentGraph;
+    Console.debug(this.state.currentGraph);
+    if (g != null) {
+      g._relayout();
+    }
+  }
+
   dismissAlert = () => {
     this.setState({ redirectedFrom: undefined });
   }
@@ -411,6 +435,7 @@ class TrafficFlow extends React.Component {
             <OptionsPanel title="Filters"><FilterControls /></OptionsPanel>
             <OptionsPanel title="Display"><DisplayOptions options={this.state.displayOptions} changedCallback={this.displayOptionsChanged} /></OptionsPanel>
             <OptionsPanel title="Physics"><PhysicsOptions options={this.state.currentGraph_physicsOptions} changedCallback={this.physicsOptionsChanged}/></OptionsPanel>
+            <a role="button" className="reset-layout-link" onClick={this.resetLayoutButtonClicked}>Reset Layout</a>
           </div>
         </div>
         <div className="service-traffic-map">
