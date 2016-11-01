@@ -60,6 +60,27 @@ class TrafficFlow extends React.Component {
       timeOffset: 0,
       modes: {
         detailedNode: 'volume'
+      },
+      styles: {
+          colorText: 'rgb(214, 214, 214)',
+          colorTextDisabled: 'rgb(129, 129, 129)',
+          colorTraffic: {
+            normal: 'rgb(186, 213, 237)',
+            normalDonut: 'rgb(255, 91, 91)',
+            warning: 'rgb(268, 185, 73)',
+            danger: 'rgb(184, 36, 36)',
+          },
+          colorNormalDimmed: 'rgb(101, 117, 128)',
+          colorBackgroundDark: 'rgb(35, 35, 35)',
+          colorLabelBorder: 'rgb(16, 17, 18)',
+          colorLabelText: 'rgb(0, 0, 0)',
+          colorDonutInternalColor: 'rgb(35, 35, 35)',
+          colorDonutInternalColorHighlighted: 'rgb(0, 255, 255)',
+          colorConnectionLine: 'rgb(91, 91, 91)',
+          colorPageBackground: 'rgb(45, 45, 45)',
+          colorPageBackgroundTransparent: 'rgba(45, 45, 45, 0)',
+          colorBorderLines: 'rgb(137, 137, 137)',
+          colorArcBackground: 'rgb(60, 60, 60)'
       }
     };
 
@@ -357,6 +378,7 @@ class TrafficFlow extends React.Component {
                       matchesFound={this.matchesFound}
                       match={this.state.searchTerm}
                       modes={this.state.modes}
+                      styles={this.state.styles}
             />
           </div>
           {
