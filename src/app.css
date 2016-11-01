@@ -52,13 +52,13 @@ body > .container {
 }
 
 .navbar-brand {
-  color: #fff !important;
+  color: 'red' !important;
   font-weight: 200;
-  text-shadow: 0 1px 1px #333;
+  /*text-shadow: 0 1px 1px #333;*/
 }
 
 .navbar-text {
-  color: #fff !important;
+  color: #326de6!important;
   font-weight: 200;
 }
 
@@ -86,6 +86,7 @@ body > .container {
   bottom: 0;
   left: 0;
   right: 0;
+  background-color: gray;
 }
 
 .hidden {
@@ -97,22 +98,22 @@ body > .container {
 }
 
 :root, .vizceral {
-  --colorText: rgb(214, 214, 214);
-  --colorTextDisabled: rgb(129, 129, 129);
+  --colorText: rgb(50, 109, 230);
+  --colorTextDisabled: rgb(50, 109, 230);
   --colorNormal: rgb(186, 213, 237);
   --colorWarning: rgb(268, 185, 73);
-  --colorDanger: rgb(184, 36, 36);
-  --colorNormalDimmed: rgb(101, 117, 128);
+  --colorDanger: rgb(50, 109, 230);
+  --colorNormalDimmed: rgb(50, 109, 230);
   --colorBackgroundDark: rgb(35, 35, 35);
-  --colorNormalDonut: rgb(91, 91, 91);
+  --colorNormalDonut: rgb(50, 109, 230);
   --colorLabelBorder: rgb(16, 17, 18);
   --colorLabelText: rgb(0, 0, 0);
   --colorDonutInternalColor: rgb(35, 35, 35);
-  --colorDonutInternalColorHighlighted: rgb(255, 255, 255);
+  --colorDonutInternalColorHighlighted: rgb(0, 255, 255);
   --colorConnectionLine: rgb(91, 91, 91);
   --colorPageBackground: rgb(45, 45, 45);
   --colorPageBackgroundTransparent: rgba(45, 45, 45, 0);
-  --colorBorderLines: rgb(137, 137, 137);
+  --colorBorderLines: rgb(50, 109, 230);
 }
 
 /* Subheader
@@ -121,7 +122,8 @@ body > .container {
   padding: 6px 15px 0 15px;
   color: var(--colorBorderLines);
   height: 45px;
-  border-bottom: 1px solid var(--colorBorderLines);
+  border-bottom: 2px solid var(--colorBorderLines);
+  background-color: white;
 }
 
 .subheader > div {

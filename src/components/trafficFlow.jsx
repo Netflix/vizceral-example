@@ -340,6 +340,7 @@ class TrafficFlow extends React.Component {
             <OptionsPanel title="Display"><DisplayOptions options={this.state.displayOptions} changedCallback={this.displayOptionsChanged} /></OptionsPanel>
           </div>
         </div>
+        <div><h1> sdwedfew</h1></div>
         <div className="service-traffic-map">
           <div style={{ position: 'absolute', top: '0px', right: nodeToShowDetails || connectionToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
             <Vizceral traffic={this.state.trafficData}
