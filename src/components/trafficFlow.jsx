@@ -98,14 +98,14 @@ class TrafficFlow extends React.Component {
   }
 
   _onTimerTick () {
-    let graph = this.state.currentGraph;
+    const graph = this.state.currentGraph;
     if (graph == null) return;
-    let nodes = graph.nodes;
-    let nodeNames = _.keys(nodes);
-    let posData = {};
+    const nodes = graph.nodes;
+    const nodeNames = _.keys(nodes);
+    const posData = {};
     for (let i = 0, n = nodeNames.length; i < n; i++) {
-      let node = nodes[nodeNames[i]];
-      posData[nodeNames[i]] = [ node.position.x, node.position.y ];
+      const node = nodes[nodeNames[i]];
+      posData[nodeNames[i]] = [node.position.x, node.position.y];
     }
     Console.log('Position data: ', JSON.stringify(posData));
   }
