@@ -62,25 +62,25 @@ class TrafficFlow extends React.Component {
         detailedNode: 'volume'
       },
       styles: {
-          colorText: 'rgb(214, 214, 214)', // ????
-          colorTextDisabled: 'rgb(129, 129, 129)',// ????
-          colorTraffic: {
-            normal: 'rgb(226, 89, 20)', // Traffic + Labels + %
-            normalDonut: 'rgb(204, 30, 247)', //Color1 outside Donut
-            warning: 'rgb(238, 244, 6)', // ????
-            danger: 'rgb(238, 244, 6)', //inside Cluster, danger
-          },
-          colorNormalDimmed: 'rgb( 6, 247, 201)', //text: TOTAL RPS, ERROR RATE 
-          colorBackgroundDark: 'rgb(160, 202, 234)', //????
-          colorLabelBorder: 'rgb(160, 202, 0)', //???
-          colorLabelText: 'rgb(160, 202, 234)', //Color text inside labels + inside cluster circles
-          colorDonutInternalColor: 'rgb(160, 202, 234)', //Color inside donuts
-          colorDonutInternalColorHighlighted: 'rgb(18, 255, 97)', //???
-          colorConnectionLine: 'rgb(18, 255, 97)', // Lines in Clutser from INTERNET outside
-          colorPageBackground: 'rgb(242, 59, 116)', // Color 2 outside donut
-          colorPageBackgroundTransparent: 'rgba(0, 0, 0, 0.8)',  //????
-          colorBorderLines: 'rgb(193, 193, 72)', //???
-          colorArcBackground: 'rgb(193, 193, 72)'  //???
+        colorText: 'rgb(214, 214, 214)', // ????
+        colorTextDisabled: 'rgb(129, 129, 129)', // ????
+        colorTraffic: {
+          normal: 'rgb(1, 31, 56)', // Traffic + Labels + %
+          normalDonut: 'rgb(50, 109, 230)', // Color1 outside Donut
+          warning: 'rgb(129, 21, 255)', // ????
+          danger: 'rgb(129, 21, 255)', //inside Cluster, danger
+        },
+        colorNormalDimmed: 'rgb( 6, 247, 201)', // text: TOTAL RPS, ERROR RATE
+        colorBackgroundDark: 'rgb(160, 202, 234)', // ????
+        colorLabelBorder: 'rgb(160, 202, 0)', // ???
+        colorLabelText: 'rgb(160, 202, 234)', // Color text inside labels + inside cluster circles
+        colorDonutInternalColor: 'rgb(200, 200, 200)', // Color inside donuts
+        colorDonutInternalColorHighlighted: 'rgb(18, 255, 97)', // ???
+        colorConnectionLine: 'rgb(6, 247, 201)', // Lines in Clutser from INTERNET outside
+        colorPageBackground: 'rgb(68, 68, 68)', // Color 2 outside donut
+        colorPageBackgroundTransparent: 'rgba(0, 0, 0, 0.8)',  // ????
+        colorBorderLines: 'rgb(193, 193, 72)', // ???
+        colorArcBackground: 'rgb(193, 193, 72)'  // ???
       }
     };
 
