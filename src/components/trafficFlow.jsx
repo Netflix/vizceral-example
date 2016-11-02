@@ -62,25 +62,25 @@ class TrafficFlow extends React.Component {
         detailedNode: 'volume'
       },
       styles: {
-          colorText: 'rgb(214, 214, 214)',
-          colorTextDisabled: 'rgb(129, 129, 129)',
+          colorText: 'rgb(214, 214, 214)', // ????
+          colorTextDisabled: 'rgb(129, 129, 129)',// ????
           colorTraffic: {
-            normal: 'rgb(186, 213, 237)',
-            normalDonut: 'rgb(255, 91, 91)',
-            warning: 'rgb(268, 185, 73)',
-            danger: 'rgb(184, 36, 36)',
+            normal: 'rgb(226, 89, 20)', // Traffic + Labels + %
+            normalDonut: 'rgb(204, 30, 247)', //Color1 outside Donut
+            warning: 'rgb(238, 244, 6)', // ????
+            danger: 'rgb(238, 244, 6)', //inside Cluster, danger
           },
-          colorNormalDimmed: 'rgb(101, 117, 128)',
-          colorBackgroundDark: 'rgb(35, 35, 35)',
-          colorLabelBorder: 'rgb(16, 17, 18)',
-          colorLabelText: 'rgb(0, 0, 0)',
-          colorDonutInternalColor: 'rgb(35, 35, 35)',
-          colorDonutInternalColorHighlighted: 'rgb(0, 255, 255)',
-          colorConnectionLine: 'rgb(91, 91, 91)',
-          colorPageBackground: 'rgb(45, 45, 45)',
-          colorPageBackgroundTransparent: 'rgba(45, 45, 45, 0)',
-          colorBorderLines: 'rgb(137, 137, 137)',
-          colorArcBackground: 'rgb(60, 60, 60)'
+          colorNormalDimmed: 'rgb( 6, 247, 201)', //text: TOTAL RPS, ERROR RATE 
+          colorBackgroundDark: 'rgb(160, 202, 234)', //????
+          colorLabelBorder: 'rgb(160, 202, 0)', //???
+          colorLabelText: 'rgb(160, 202, 234)', //Color text inside labels + inside cluster circles
+          colorDonutInternalColor: 'rgb(160, 202, 234)', //Color inside donuts
+          colorDonutInternalColorHighlighted: 'rgb(18, 255, 97)', //???
+          colorConnectionLine: 'rgb(18, 255, 97)', // Lines in Clutser from INTERNET outside
+          colorPageBackground: 'rgb(242, 59, 116)', // Color 2 outside donut
+          colorPageBackgroundTransparent: 'rgba(0, 0, 0, 0.8)',  //????
+          colorBorderLines: 'rgb(193, 193, 72)', //???
+          colorArcBackground: 'rgb(193, 193, 72)'  //???
       }
     };
 

@@ -6,7 +6,7 @@ html {
 body {
     background-color: var(--colorPageBackground);
     color: var(--colorText);
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Roboto Slab', serif;
     font-weight: 400;
     font-style: normal;
     height: 100%;
@@ -43,6 +43,12 @@ body > .container {
     width: 100%;
 }
 
+img{
+  max-height: 50px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
 .container .text-muted {
     margin: 20px 0;
 }
@@ -52,14 +58,20 @@ body > .container {
 }
 
 .navbar-brand {
-  color: 'red' !important;
+  color: rgb(0, 0, 0)!important;
   font-weight: 200;
+
   /*text-shadow: 0 1px 1px #333;*/
 }
 
 .navbar-text {
-  color: #326de6!important;
+  color: white!important;
   font-weight: 200;
+}
+
+.navbar-inverse{
+  border-color: white;
+  height: 50px;
 }
 
 /* Feedback
@@ -86,7 +98,7 @@ body > .container {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: gray;
+  background-color: white;
 }
 
 .hidden {
@@ -98,22 +110,22 @@ body > .container {
 }
 
 :root, .vizceral {
-  --colorText: rgb(50, 109, 230);
-  --colorTextDisabled: rgb(50, 109, 230);
-  --colorNormal: rgb(186, 213, 237);
-  --colorWarning: rgb(268, 185, 73);
-  --colorDanger: rgb(50, 109, 230);
-  --colorNormalDimmed: rgb(50, 109, 230);
-  --colorBackgroundDark: rgb(35, 35, 35);
-  --colorNormalDonut: rgb(50, 109, 230);
-  --colorLabelBorder: rgb(16, 17, 18);
-  --colorLabelText: rgb(0, 0, 0);
-  --colorDonutInternalColor: rgb(35, 35, 35);
-  --colorDonutInternalColorHighlighted: rgb(0, 255, 255);
-  --colorConnectionLine: rgb(91, 91, 91);
-  --colorPageBackground: rgb(45, 45, 45);
-  --colorPageBackgroundTransparent: rgba(45, 45, 45, 0);
-  --colorBorderLines: rgb(50, 109, 230);
+  --colorText: rgb(0, 0, 0);  /*Inside cluster, after click on some circle*/  
+  --colorTextDisabled: rgb(6, 247, 0);   /*????*/ 
+  --colorNormal: rgb(50, 109, 230);   /*word "Global"+ inside filter+ inside cluster Title(after click on some circle)*/ 
+  --colorWarning: rgb(109,109,109);  /*Arrow next to the word "Global")*/
+  --colorDanger: rgb(226, 89, 20);  
+  --colorNormalDimmed: rgb(1, 31, 56); /*Text color (filer, display)*/
+  --colorBackgroundDark: rgb(35, 35, 35); /*????*/ 
+  --colorNormalDonut: rgb(255, 255, 255);  /*BC first nav-bar*/
+  --colorLabelBorder: rgb(226, 89, 20);  /*????*/ 
+  --colorLabelText: rgb(226, 89, 20);  /*????*/ 
+  --colorDonutInternalColor: rgb(226, 89, 20);  /*????*/ 
+  --colorDonutInternalColorHighlighted: rgb(0, 255, 255); 
+  --colorConnectionLine: rgb(0, 0, 0);  /*????*/ 
+  --colorPageBackground: rgb(255, 255, 255);   /*????*/ 
+  --colorPageBackgroundTransparent: rgb(255, 255, 255);  /*????*/ 
+  --colorBorderLines: rgb(6, 247, 201);  /*Line under second nav-bar + Colors in filter,display*/
 }
 
 /* Subheader
@@ -201,6 +213,7 @@ body > .container {
   padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 10px;
+  background-color: white;
 }
 
 .panel-default > .panel-heading {
@@ -209,12 +222,14 @@ body > .container {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-left-width: 0;
+  background-color: rgb(150,234,218);
 }
 
 .panel-default > .panel-body,
 .panel-group .panel-heading + .panel-collapse > .panel-body {
   border-top-color: var(--colorBorderLines);
   padding-left: 17px;
+
 }
 
 .panel-body {
@@ -233,6 +248,11 @@ body > .container {
   border-left: 0;
   border-right: 0;
 }
+.details-panel {
+    background-color: white;
+    border: 1px solid var(--colorBorderLines);
+    
+    }
 
 .panel-group:last-of-type .panel:last-of-type {
   border-bottom: 1px solid var(--colorBorderLines);
