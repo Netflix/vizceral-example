@@ -172,7 +172,7 @@ class TrafficFlow extends React.Component {
         this.state.highlightedObject !== nextState.highlightedObject) {
       const titleArray = (nextState.currentView || []).slice(0);
       titleArray.unshift('Vizceral');
-      //document.title = titleArray.join(' / ');
+      // document.title = titleArray.join(' / ');
 
       if (this.poppedState) {
         this.poppedState = false;
