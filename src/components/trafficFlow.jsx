@@ -63,21 +63,21 @@ class TrafficFlow extends React.Component {
       },
       styles: {
         colorText: 'rgb(214, 214, 214)', // ????
-        colorTextDisabled: 'rgb(129, 129, 129)', // ????
+        colorTextDisabled: 'rgb( 1, 31, 56)', // ????
         colorTraffic: {
-          normal: 'rgb(1, 31, 56)', // Traffic + Labels + %
-          normalDonut: 'rgb(50, 109, 230)', // Color1 outside Donut
-          warning: 'rgb(129, 21, 255)', // ????
+          normal: 'rgb(6, 247, 201)', // Traffic + Labels + %
+          normalDonut: 'rgb(56, 247, 201)', // Color1 outside Donut
+          warning: 'rgb(238, 244, 6)', // in Cluster- warning triangle
           danger: 'rgb(129, 21, 255)', //inside Cluster, danger
         },
-        colorNormalDimmed: 'rgb( 6, 247, 201)', // text: TOTAL RPS, ERROR RATE
-        colorBackgroundDark: 'rgb(160, 202, 234)', // ????
-        colorLabelBorder: 'rgb(160, 202, 0)', // ???
-        colorLabelText: 'rgb(160, 202, 234)', // Color text inside labels + inside cluster circles
-        colorDonutInternalColor: 'rgb(200, 200, 200)', // Color inside donuts
+        colorNormalDimmed: 'rgb( 50, 109, 230)', // text: TOTAL RPS, ERROR RATE
+        colorBackgroundDark: 'rgb( 1, 31, 56)', // ????
+        colorLabelBorder: 'rgb( 1, 31, 56)', // ???
+        colorLabelText: 'rgb( 1, 31, 56)', // Color text inside labels + inside cluster circles
+        colorDonutInternalColor: 'rgb(1, 31, 56)', // Color inside donuts
         colorDonutInternalColorHighlighted: 'rgb(18, 255, 97)', // ???
-        colorConnectionLine: 'rgb(6, 247, 201)', // Lines in Clutser from INTERNET outside
-        colorPageBackground: 'rgb(68, 68, 68)', // Color 2 outside donut
+        colorConnectionLine: 'rgb(160, 202, 234)', // Lines in Clutser from INTERNET outside
+        colorPageBackground: 'rgb(1, 31, 56)', // Color 2 outside donut
         colorPageBackgroundTransparent: 'rgba(0, 0, 0, 0.8)',  // ????
         colorBorderLines: 'rgb(193, 193, 72)', // ???
         colorArcBackground: 'rgb(193, 193, 72)'  // ???
@@ -172,7 +172,7 @@ class TrafficFlow extends React.Component {
         this.state.highlightedObject !== nextState.highlightedObject) {
       const titleArray = (nextState.currentView || []).slice(0);
       titleArray.unshift('Vizceral');
-      document.title = titleArray.join(' / ');
+      //document.title = titleArray.join(' / ');
 
       if (this.poppedState) {
         this.poppedState = false;

@@ -60,6 +60,7 @@ img{
 .navbar-brand {
   color: rgb(0, 0, 0)!important;
   font-weight: 200;
+  padding: 0;
 
   /*text-shadow: 0 1px 1px #333;*/
 }
@@ -71,7 +72,35 @@ img{
 
 .navbar-inverse{
   border-color: white;
+  background-color: white;
   height: 50px;
+
+   background: red; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left, #326de6 , #06f7c9); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #326de6 , #06f7c9); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right,#326de6 , #06f7c9); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #326de6 , #06f7c9); /* Standard syntax (must be last) */
+
+
+    
+}
+img{
+  max-height: 40px;
+}
+
+a{
+  color: rgb(1, 31, 56);
+  font-weight: bold;
+  padding-right: 10px;
+
+}
+.navbar-header p{
+  display: inline-block;
+  padding-top: 15px;
+  padding-left: 40px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 /* Feedback
@@ -98,7 +127,7 @@ img{
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: white;
+  background-color: rgb(1, 31, 56);
 }
 
 .hidden {
