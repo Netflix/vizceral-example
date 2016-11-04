@@ -81,7 +81,6 @@ class TrafficFlow extends React.Component {
       }
     };
 
-    this.vizcReactComp = null;
     // Browser history support
     window.addEventListener('popstate', event => this.handlePopState(event.state));
 
@@ -116,30 +115,6 @@ class TrafficFlow extends React.Component {
     this.setState({ currentView: state.selected, objectToHighlight: state.highlighted });
   }
 
-  vizcReactCompIsMountedChanged (vizcComp) {
-    this.vizcReactComp = vizcComp;
-    // let fIsInit = !hasOwnPropF.call(this.state, "currentGraph");
-    // let deferredInitState = null;
-    // if (fIsInit && vizcComp !== null) {
-    //   let cg = vizcComp.vizceral.currentGraph;
-    //   if (cg == null) cg = null;
-    //   let cg_po = null;
-    //   if (cg !== null) {
-    //     if (deferredInitState === null) deferredInitState = {};
-    //     deferredInitState.currentGraph = cg;
-    //     cg_po = cg.getPhysicsOptions();
-    //   }
-    //   if (cg_po !== null) {
-    //     if (deferredInitState === null) deferredInitState = {};
-    //     deferredInitState.currentGraph_physicsOptions = cg_po;
-    //   }
-    // }
-    // if (deferredInitState !== null) {
-    //   Console.debug("TrafficFlow.jsx vizcReactCompIsMountedChanged setState: deferred state initialization", deferredInitState);
-    //   this.setState(deferredInitState);
-    // }
-  }
-
   viewChanged = (data) => {
     const changedState = {
       currentView: data.view,
@@ -160,7 +135,6 @@ class TrafficFlow extends React.Component {
         changedState.currentGraph_physicsOptions = o;
       }
     }
-    Console.debug('TrafficFlow.jsx viewChanged: ', data, changedState, flag);
     this.setState(changedState);
   }
 
@@ -328,7 +302,6 @@ class TrafficFlow extends React.Component {
     this.setState({ currentGraph_physicsOptions: physicsOptions });
     let currentGraph = this.state.currentGraph;
     if (currentGraph == null) currentGraph = null;
-    Console.debug('TrafficFlow.jsx physicsOptionsChanged: ', physicsOptions, currentGraph, this.vizcReactComp);
     if (currentGraph !== null) {
       currentGraph.setPhysicsOptions(physicsOptions);
     }
@@ -393,7 +366,6 @@ class TrafficFlow extends React.Component {
 
   resetLayoutButtonClicked = () => {
     const g = this.state.currentGraph;
-    Console.debug(this.state.currentGraph);
     if (g != null) {
       g._relayout();
     }
@@ -454,7 +426,6 @@ class TrafficFlow extends React.Component {
                       matchesFound={this.matchesFound}
                       match={this.state.searchTerm}
                       modes={this.state.modes}
-                      ref={comp => this.vizcReactCompIsMountedChanged(comp)}
             />
           </div>
           {
