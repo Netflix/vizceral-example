@@ -85,6 +85,10 @@ class TrafficFlow extends React.Component {
     this.setState({ currentView: data.view, currentGraph: data.graph, searchTerm: '', matches: { total: -1, visible: -1 }, redirectedFrom: data.redirectedFrom });
   }
 
+  viewUpdated = () => {
+    this.setState({});
+  }
+
   objectHighlighted = (highlightedObject) => {
     // need to set objectToHighlight for diffing on the react component. since it was already highlighted here, it will be a noop
     this.setState({ highlightedObject: highlightedObject, objectToHighlight: highlightedObject ? highlightedObject.getName() : undefined, searchTerm: '', matches: { total: -1, visible: -1 }, redirectedFrom: undefined });
@@ -322,6 +326,7 @@ class TrafficFlow extends React.Component {
                       showLabels={this.state.displayOptions.showLabels}
                       filters={this.state.filters}
                       viewChanged={this.viewChanged}
+                      viewUpdated={this.viewUpdated}
                       objectHighlighted={this.objectHighlighted}
                       nodeContextSizeChanged={this.nodeContextSizeChanged}
                       objectToHighlight={this.state.objectToHighlight}
