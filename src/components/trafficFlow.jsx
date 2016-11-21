@@ -1,6 +1,8 @@
 'use strict';
 import _ from 'lodash';
 import { Alert } from 'react-bootstrap';
+import { DateTimeFormatter, ChronoUnit, ZonedDateTime, ZoneOffset, ZoneId } from 'js-joda';
+import { DateTime_floorToGranularity } from '../dateTimeUtil';
 import React from 'react';
 import TWEEN from 'tween.js'; // Start TWEEN updates for sparklines and loading screen fading out
 import Vizceral from 'vizceral-react';
@@ -10,7 +12,9 @@ import queryString from 'query-string';
 import request from 'superagent';
 
 import './trafficFlow.css';
+import { dateTimeSlider as DateTimeSliderConstants, backendUrl } from '../appConstants';
 import Breadcrumbs from './breadcrumbs';
+import DateTimeSlider from './dateTimeSlider';
 import DisplayOptions from './displayOptions';
 import PhysicsOptions from './physicsOptions';
 import FilterControls from './filterControls';
@@ -27,7 +31,8 @@ import filterStore from './filterStore';
 const listener = new keypress.Listener();
 
 const Console = console;
-const hasOwnPropF = Object.prototype.hasOwnProperty;
+const isFiniteAfterCoerceToDouble = isFinite;
+const hasOwnPropFunc = Object.prototype.hasOwnProperty;
 
 function animate (time) {
   requestAnimationFrame(animate);
@@ -35,15 +40,39 @@ function animate (time) {
 }
 requestAnimationFrame(animate);
 
+function formatUtcAsLocalDateTime(zdt) {
+  let zdt2 = zdt.withZoneSameInstant(ZoneId.SYSTEM).toLocalDateTime();
+  let str = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(zdt2);
+  let end = str.length - 3;
+  let tindex = end - 6;
+  return str.substring(2, tindex) + " " + str.substring(tindex + 1, end);
+}
+
 const panelWidth = 400;
 
 class TrafficFlow extends React.Component {
   constructor (props) {
     super(props);
+
+    // Initialize DateTime slider defaults
+    let zdt_now = ZonedDateTime.now(ZoneOffset.UTC);
+    const selectionGranuInMins = DateTimeSliderConstants.selectionGranularityInMinutes;
+    let dtSlider_maxExcl = DateTime_floorToGranularity(zdt_now, selectionGranuInMins);
+    let dtSlider_val = zdt_maxExcl.minus(Duration.ofMinutes(selectionGranuInMins));
+    let dtSlider_min = dtSlider_maxExcl.minus(DateTimeSliderConstants.timeBetweenMinAndMaxExcl);
+    // The first time we retrieve which chunks of data are available successfully we want to initialize the date time slider to the newest (last) available bucket/chunk.
+    this._dtSlider_initValueOnNextPoll = true;
     this.state = {
       currentView: undefined,
       redirectedFrom: undefined,
       selectedChart: undefined,
+      dateTimeSlider: {
+        min: dtSlider_min,
+        maxExcl: dtSlider_maxExcl,
+        selectionGranularityInMinutes: selectionGranuInMins,
+        startOfDangerTime: dtSlider_min,
+        value: dtSlider_val,
+      },
       displayOptions: {
         showLabels: true
       },
@@ -80,12 +109,16 @@ class TrafficFlow extends React.Component {
         detailedNode: 'volume'
       }
     };
-
+    this._beginSampleDataRequest = null;
+    // A reference to the DateTime slider, used to call DateTimeSlider.updateLayout when the window resizes. 
+    this._dateTimeSlider = null;
     // Browser history support
     window.addEventListener('popstate', event => this.handlePopState(event.state));
+    window.addEventListener('resize', e => this._windowOnResize(e), false);
 
     // Keyboard interactivity
     listener.simple_combo('esc', () => {
+      // TODO: cancel dragging of the date time slider if it is dragging!
       if (this.state.detailedNode) {
         this.setState({ detailedNode: undefined });
       } else if (this.state.currentView.length > 0) {
@@ -93,23 +126,70 @@ class TrafficFlow extends React.Component {
       }
     });
 
-    this._timerId = setInterval(() => this._onTimerTick(), 10000);
+    this._pollForNewlyAvailableChunksOfHistoricalData();
+    this.beginSampleData();
+  }
+
+  _setDateTimeSlider(dateTimeSlider) {
+    this._dateTimeSlider = dateTimeSlider;
+  }
+
+  _windowOnResize(e) {
+    if (this._dateTimeSlider !== null) {
+      this._dateTimeSlider.updateLayout();
+    }
   }
 
   _onTimerTick () {
-    const graph = this.state.currentGraph;
-    if (graph == null) return;
-    const nodes = graph.nodes;
-    const nodeNames = _.keys(nodes);
-    const posData = {};
-    for (let i = 0, n = nodeNames.length; i < n; i++) {
-      const node = nodes[nodeNames[i]];
-      posData[nodeNames[i]] = [node.position.x, node.position.y];
-    }
-    Console.log('Position data: ', JSON.stringify(posData));
+    this._pollForNewlyAvailableChunksOfHistoricalData();
+  }
+
+  _pollForNewlyAvailableChunksOfHistoricalData() {
+    let backendUrl = AppConstants.backendUrl;
+    let url = backendUrl + 'last-bucket';
+    request.get(url)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        // We should consider implementing retries here, or giving the user feedback on an error: 
+        // "An unknown error occured. This might be a network connectivity issue. Please try again later."
+        if (err) {
+          Console.error(err);
+        }
+        if (res && res.body) {
+          let dtstr_startOfLastBucket = res.body.dt;
+          // dtstr_startOfLastBucket may be null, which means the backend does not have any chunks/buckets of data, and there is no last one
+          if (dtstr_startOfLastBucket) {
+            zdt_startOfLastBucket = ZonedDateTime_parse(dtstr_startOfLastBucket, "yyyy-MM-d' 'HH:mm:ssXXX");
+            zdt_startOfDangerTime = zdt_startOfLastBucket.plus(AppConstants.dateTimeSlider.selectionGranularityInMinutes, ChronoUnit.MINUTES);
+          } else {
+            // If no data is available, then any window of time is invalid and is displayed with the 'danger' color
+            zdt_startOfDangerTime = this.state.dateTimeSlider.min;
+          }
+
+          let dtSlider_initValue = this._dtSlider_initValueOnNextPoll;
+          this._dtSlider_initValueOnNextPoll = false;
+          let newState = {
+              dateTimeSlider: {
+                startOfDangerTime: zdt_startOfDangerTime,
+              },
+            };
+          if (dtSlider_initValue) {
+            let v = zdt_startOfDangerTime.minus(AppConstants.dateTimeSlider.selectionGranularityInMinutes, ChronoUnit.MINUTES);
+            // We would really want to hide the handle, or 'disable' the slider until the backend has scraped at least one chunk of 
+            // historical data, but this case never really occurs.
+            // For now we just ignore this situation.
+            if (this.state.dateTimeSlider.min.compareTo(v) <= 0) {
+              newState.dateTimeSlider.value = v;
+            }
+          }
+          this.setState(newState);
+        }
+      });
   }
 
   handlePopState () {
+    // TODO: store the selected date time in history, but don't spam the history log with every change.
+    // Probably a solution based on the query string is better.
     const state = window.history.state || {};
     this.poppedState = true;
     this.setState({ currentView: state.selected, objectToHighlight: state.highlighted });
@@ -123,7 +203,7 @@ class TrafficFlow extends React.Component {
       redirectedFrom: data.redirectedFrom
     };
     let flag = false;
-    if (hasOwnPropF.call(data, 'graph')) {
+    if (hasOwnPropFunc.call(data, 'graph')) {
       let oldCurrentGraph = this.state.currentGraph;
       if (oldCurrentGraph == null) oldCurrentGraph = null;
       let newCurrentGraph = data.graph;
@@ -173,27 +253,50 @@ class TrafficFlow extends React.Component {
   }
 
   beginSampleData () {
+    if (this._beginSampleDataRequest !== null) {
+      this._beginSampleDataRequest.abort();
+      this._beginSampleDataRequest = null;
+    }
     this.traffic = { nodes: [], connections: [] };
-    request.get('sample_data.json')
+    let selectedDateTime = this.state.selectedDateTime;
+    let s = selectedDateTime.toLocalDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    let backendUrl = AppConstants.backendUrl;
+    let url = backendUrl + 'bucket?dt=' + s + '.000Z';
+    this._beginSampleDataRequest = request.get(url)
       .set('Accept', 'application/json')
       .end((err, res) => {
+        this._beginSampleDataRequest = null;
         if (res && res.status === 200) {
           this.traffic.clientUpdateTime = Date.now();
           this.updateData(res.body);
+        } else {
+          Console.error("No data available for that time or an error occured: ", res ? res.status : '<status ???>', err, res);
         }
       });
   }
 
   componentDidMount () {
     this.checkInitialRoute();
-    this.beginSampleData();
+    // this.beginSampleData();
+    this._timerId = setInterval(this._onTimerTick.bind(this), 300000);
 
     // Listen for changes to the stores
     filterStore.addChangeListener(this.filtersChanged);
   }
 
   componentWillUnmount () {
+    if (this._timerId !== null) {
+      clearInterval(this._timerId);
+      this._timerId = null;
+    }
     filterStore.removeChangeListener(this.filtersChanged);
+  }
+
+  setState (newState) {
+    if (newState.hasOwnProperty("selectedDateTime")) {
+      this._onSelectedDateTimeChanged(newState.selectedDateTime);
+    }
+    super.setState(newState);
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -222,52 +325,91 @@ class TrafficFlow extends React.Component {
   }
 
   updateData (newTraffic) {
-    const updatedTraffic = {
-      name: newTraffic.name,
-      renderer: newTraffic.renderer,
-      nodes: [],
-      connections: []
-    };
+    // const updatedTraffic = {
+    //   name: newTraffic.name,
+    //   renderer: newTraffic.renderer,
+    //   nodes: [],
+    //   connections: []
+    // };
 
-    _.each(this.state.trafficData.nodes, node => updatedTraffic.nodes.push(node));
-    _.each(this.state.trafficData.connections, connection => updatedTraffic.connections.push(connection));
+    // _.each(this.state.trafficData.nodes, node => updatedTraffic.nodes.push(node));
+    // _.each(this.state.trafficData.connections, connection => updatedTraffic.connections.push(connection));
 
-    let modified = false;
-    if (newTraffic) {
-      modified = true;
-      // Update the traffic graphs with the new state
-      _.each(newTraffic.nodes, (node) => {
-        const existingNodeIndex = _.findIndex(updatedTraffic.nodes, { name: node.name });
-        if (existingNodeIndex !== -1) {
-          if (node.nodes && node.nodes.length > 0) {
-            node.updated = node.updated || updatedTraffic.nodes[existingNodeIndex].updated;
-            updatedTraffic.nodes[existingNodeIndex] = node;
-          }
-        } else {
-          updatedTraffic.nodes.push(node);
+    // let modified = false;
+    // if (newTraffic) {
+    //   modified = true;
+    //   // Update the traffic graphs with the new state
+    //   _.each(newTraffic.nodes, (node) => {
+    //     const existingNodeIndex = _.findIndex(updatedTraffic.nodes, { name: node.name });
+    //     if (existingNodeIndex !== -1) {
+    //       if (node.nodes && node.nodes.length > 0) {
+    //         node.updated = node.updated || updatedTraffic.nodes[existingNodeIndex].updated;
+    //         updatedTraffic.nodes[existingNodeIndex] = node;
+    //       }
+    //     } else {
+    //       updatedTraffic.nodes.push(node);
+    //     }
+    //   });
+    //   _.each(newTraffic.connections, (connection) => {
+    //     const existingConnectionIndex = _.findIndex(updatedTraffic.connections, { source: connection.source, target: connection.target });
+    //     if (existingConnectionIndex !== -1) {
+    //       updatedTraffic.connections[existingConnectionIndex] = connection;
+    //     } else {
+    //       updatedTraffic.connections.push(connection);
+    //     }
+    //   });
+    // }
+
+    // if (modified) {
+    // const regionUpdateStatus = _.map(_.filter(updatedTraffic.nodes, n => n.name !== 'INTERNET'), (node) => {
+    //   const updated = node.updated;
+    //   return { region: node.name, updated: updated };
+    // });
+    // const lastUpdatedTime = _.max(_.map(regionUpdateStatus, 'updated'));
+    // this.setState({
+    //   regionUpdateStatus: regionUpdateStatus,
+    //   timeOffset: newTraffic.clientUpdateTime - newTraffic.serverUpdateTime,
+    //   lastUpdatedTime: lastUpdatedTime,
+    //   trafficData: updatedTraffic
+    // });
+    // }
+    let nodes = newTraffic.nodes;
+    let lastUpdatedTime = null;
+    let fError = false;
+    let regionUpdateStatus = [];
+    for (let i = 0, n = nodes.length; i < n; i++) {
+      let node = nodes[i];
+      if (node == null || !hasOwnPropFunc.call(node, "name") || typeof node.name !== "string") {
+        Console.error("The root graph of the new traffic data has a null or undefined node or it does not have a 'name' own property. NOTE: the name of a node is required and must be a string");
+        continue;
+      }
+      if (node.name === "INTERNET") continue;
+      let updated = null;
+      if (hasOwnPropFunc.call(node, "updated")) {
+        updated = node.updated;
+        if (typeof updated !== "number" || !isFiniteAfterCoerceToDouble(updated)) {
+          updated = null;
         }
-      });
-      _.each(newTraffic.connections, (connection) => {
-        const existingConnectionIndex = _.findIndex(updatedTraffic.connections, { source: connection.source, target: connection.target });
-        if (existingConnectionIndex !== -1) {
-          updatedTraffic.connections[existingConnectionIndex] = connection;
-        } else {
-          updatedTraffic.connections.push(connection);
-        }
-      });
+      }
+      if (updated === null) {
+        Console.error("The root graph of the new traffic data has is missing a property named 'updated' or its value is not a finite number");
+        continue;
+      }
+      regionUpdateStatus.push({ region: node.name, updated: updated });
+      if (lastUpdatedTime === null || lastUpdatedTime < updated) {
+        lastUpdatedTime = updated;
+      }
     }
-
-    if (modified) {
-      const regionUpdateStatus = _.map(_.filter(updatedTraffic.nodes, n => n.name !== 'INTERNET'), (node) => {
-        const updated = node.updated;
-        return { region: node.name, updated: updated };
-      });
-      const lastUpdatedTime = _.max(_.map(regionUpdateStatus, 'updated'));
+    if (lastUpdatedTime === null) {
+      lastUpdatedTime = Date.now();
+      Console.error("The root graph of the new traffic data is empty (not counting the node named 'INTERNET'): making up a value to reduce the chance of crashing", newTraffic);
+    }
+    if (!fError) {
       this.setState({
         regionUpdateStatus: regionUpdateStatus,
         timeOffset: newTraffic.clientUpdateTime - newTraffic.serverUpdateTime,
         lastUpdatedTime: lastUpdatedTime,
-        trafficData: updatedTraffic
+        trafficData: newTraffic
       });
     }
   }
@@ -380,7 +522,7 @@ class TrafficFlow extends React.Component {
     const nodeView = !globalView && this.state.currentView && this.state.currentView[1] !== undefined;
     const nodeToShowDetails = this.state.focusedNode || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
     const connectionToShowDetails = this.state.highlightedObject && this.state.highlightedObject.type === 'connection' ? this.state.highlightedObject : undefined;
-    const showLoadingCover = !!(this.state.currentView && this.state.currentView[0] && !this.state.renderedGraphs[this.state.currentView[0]]);
+    //const showLoadingCover = !!(this.state.currentView && this.state.currentView[0] && !this.state.renderedGraphs[this.state.currentView[0]]);
 
     let matches;
     if (this.state.currentGraph) {
@@ -402,6 +544,9 @@ class TrafficFlow extends React.Component {
         <div className="subheader">
           <Breadcrumbs rootTitle="global" navigationStack={this.state.currentView || []} navigationCallback={this.navigationCallback} />
           <UpdateStatus status={this.state.regionUpdateStatus} baseOffset={this.state.timeOffset} warnThreshold={180000} />
+          <span className="selected-formatted-date-time">
+            Showing data from {formatUtcAsLocalDateTime(this.state.selectedDateTime)} to {formatUtcAsLocalDateTime(this.state.selectedDateTime.plus(5, ChronoUnit.MINUTES))}
+          </span>
           <div style={{ float: 'right', paddingTop: '4px' }}>
             { (!globalView && matches) && <Locator changeCallback={this.locatorChanged} searchTerm={this.state.searchTerm} matches={matches} clearFilterCallback={this.filtersCleared} /> }
             <OptionsPanel title="Filters"><FilterControls /></OptionsPanel>
@@ -409,6 +554,17 @@ class TrafficFlow extends React.Component {
             <OptionsPanel title="Physics"><PhysicsOptions options={this.state.currentGraph_physicsOptions} changedCallback={this.physicsOptionsChanged}/></OptionsPanel>
             <a role="button" className="reset-layout-link" onClick={this.resetLayoutButtonClicked}>Reset Layout</a>
           </div>
+        </div>
+        <div className="date-time-slider-container">
+          <DateTimeSlider
+            ref={(c) => this._setDateTimeSlider(c)}
+            value={this.state.selectedDateTime}
+            min={this.state.dateTimeSlider.value}
+            startOfDangerTime={this.state.dateTimeSlider.startOfDangerTime}
+            maxExcl={this.state.dateTimeSlider.maxExcl}
+            selectionGranularityInMinutes={this.state.dateTimeSlider.selectionGranularityInMinutes}
+            selectedValueChanged={(oldValue, newValue) => this.setState({ selectedDateTime: newValue })}>
+          </DateTimeSlider>
         </div>
         <div className="service-traffic-map">
           <div style={{ position: 'absolute', top: '0px', right: nodeToShowDetails || connectionToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
@@ -448,7 +604,7 @@ class TrafficFlow extends React.Component {
                                     nodeClicked={node => this.nodeClicked(node)}
             />
           }
-          <LoadingCover show={showLoadingCover} />
+          {/*<LoadingCover show={showLoadingCover} />*/}
         </div>
       </div>
     );

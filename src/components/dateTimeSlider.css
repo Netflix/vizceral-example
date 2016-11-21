@@ -1,0 +1,29 @@
+.date-time-slider {
+  padding: 5px 5px 17px 5px;
+  position: relative;
+}
+.date-time-slider .track {
+  height: 20px;
+  cursor: pointer;
+  position: relative;
+}
+.date-time-slider canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.date-time-slider .handle {
+  height: 100%;
+  position: absolute;
+  left: 30%;
+  top: 0;
+  background-color: var(--colorNormal);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.date-time-slider .handle.is-dragging,
+.date-time-slider .handle:hover {
+  background-color: var(--colorWarning);
+}

@@ -2,11 +2,17 @@
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
+import Promise from 'bluebird';
 import React from 'react'; // eslint-disable-line no-unused-vars
 import ReactDOM from 'react-dom';
 import WebFont from 'webfontloader';
 import TrafficFlow from './components/trafficFlow';
 import './app.css';
+
+// Used in backendWithHistory.js
+Promise.config({
+  cancellation: true
+});
 
 function fontsActive () {
   ReactDOM.render(

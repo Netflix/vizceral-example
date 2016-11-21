@@ -1,9 +1,9 @@
 html {
-    position: relative;
     min-height: 100%;
     height:100%;
 }
 body {
+    position: relative;
     background-color: var(--colorPageBackground);
     color: var(--colorText);
     font-family: 'Source Sans Pro', sans-serif;
@@ -32,7 +32,7 @@ body {
 -------------------------------------------------- */
 body > .container {
     position: absolute;
-    top: 50px;
+    top: 51px;
     padding-left: 0;
     padding-right: 0;
     margin-left: 0;
@@ -82,7 +82,7 @@ body > .container {
 
 .service-traffic-map {
   position: absolute;
-  top: 45px;
+  top: 87px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -118,7 +118,7 @@ body > .container {
 /* Subheader
 -------------------------------------------------- */
 .subheader {
-  padding: 6px 15px 0 15px;
+  padding: 5px 15px 0 15px;
   color: var(--colorBorderLines);
   height: 45px;
   border-bottom: 1px solid var(--colorBorderLines);
@@ -126,6 +126,10 @@ body > .container {
 
 .subheader > div {
   display: inline-block;
+}
+
+.date-time-slider-container {
+  height: 45px;
 }
 
 /* STEPPER */
