@@ -83,7 +83,7 @@
   overflow: auto;
 }
 
-.connection-list .FlexTable__row:focus {
+.connection-list .ReactVirtualized__Table__row:focus {
   outline:0;
 }
 

@@ -1,8 +1,9 @@
 'use strict';
+
 import _ from 'lodash';
 import React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { FlexTable, FlexColumn, SortDirection } from 'react-virtualized';
+import { Table, Column, SortDirection } from 'react-virtualized';
 import numeral from 'numeral';
 import 'react-virtualized/styles.css';
 
@@ -125,7 +126,7 @@ class ClusterList extends React.Component {
     return (
       clusterRows.length > 0 ?
       <div className="cluster-list">
-        <FlexTable
+        <Table
           ref="flexTable"
           width={300}
           height={tableHeight}
@@ -137,11 +138,11 @@ class ClusterList extends React.Component {
           sortDirection={this.state.sortDirection}
           sort={this.sort}
         >
-          <FlexColumn label="Name" dataKey="name" cellRenderer={nameRenderer} width={220} />
-          <FlexColumn label="Errors" dataKey="errorRate" cellRenderer={errorRenderer} width={82}/>
-          <FlexColumn label="Total" dataKey="totalPercent" cellRenderer={totalRenderer} width={70}/>
-          <FlexColumn label="" dataKey="name" cellRenderer={this.linkRenderer} width={50}/>
-        </FlexTable>
+          <Column label="Name" dataKey="name" cellRenderer={nameRenderer} width={220} />
+          <Column label="Errors" dataKey="errorRate" cellRenderer={errorRenderer} width={82}/>
+          <Column label="Total" dataKey="totalPercent" cellRenderer={totalRenderer} width={70}/>
+          <Column label="" dataKey="name" cellRenderer={this.linkRenderer} width={50}/>
+        </Table>
       </div>
       : <span>None.</span>
     );

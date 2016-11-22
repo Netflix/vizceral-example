@@ -1,4 +1,5 @@
 'use strict';
+
 import React from 'react';
 import filterStore from './filterStore';
 import filterActions from './filterActions';

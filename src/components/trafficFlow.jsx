@@ -1,4 +1,5 @@
 'use strict';
+
 import _ from 'lodash';
 import { Alert } from 'react-bootstrap';
 import { ChronoUnit, DateTimeFormatter, Duration, ZonedDateTime, ZoneOffset, ZoneId } from 'js-joda';
@@ -111,8 +112,6 @@ class TrafficFlow extends React.Component {
       labelDimensions: {},
       appliedFilters: filterStore.getChangedFilters(),
       filters: filterStore.getFiltersArray(),
-      graphs: { regions: {} },
-      renderedGraphs: {},
       searchTerm: '',
       matches: {
         total: -1,
@@ -266,16 +265,6 @@ class TrafficFlow extends React.Component {
   objectHighlighted = (highlightedObject) => {
     // need to set objectToHighlight for diffing on the react component. since it was already highlighted here, it will be a noop
     this.setState({ highlightedObject: highlightedObject, objectToHighlight: highlightedObject ? highlightedObject.getName() : undefined, searchTerm: '', matches: { total: -1, visible: -1 }, redirectedFrom: undefined });
-  }
-
-  rendered = (data) => {
-    const renderedGraphs = _.clone(this.state.renderedGraphs);
-    renderedGraphs[data.name] = data.rendered;
-    this.setState({ renderedGraphs: renderedGraphs });
-  }
-
-  nodeFocused = (node) => {
-    this.setState({ focusedNode: node });
   }
 
   nodeContextSizeChanged = (dimensions) => {
@@ -455,13 +444,6 @@ class TrafficFlow extends React.Component {
     }
   }
 
-  isFocusedNode () {
-    return !this.isSelectedNode()
-      && this.state.currentView
-      && this.state.currentView[0] !== undefined
-      && this.state.focusedNode !== undefined;
-  }
-
   isSelectedNode () {
     return this.state.currentView && this.state.currentView[1] !== undefined;
   }
@@ -525,16 +507,8 @@ class TrafficFlow extends React.Component {
     this.setState({ searchTerm: value });
   }
 
-  chartChanged = (chartName) => {
-    this.setState({ selectedChart: chartName });
-  }
-
   matchesFound = (matches) => {
     this.setState({ matches: matches });
-  }
-
-  graphsUpdated = (graphs) => {
-    this.setState({ graphs: graphs });
   }
 
   nodeClicked = (node) => {
@@ -596,10 +570,10 @@ class TrafficFlow extends React.Component {
   render () {
     const globalView = this.state.currentView && this.state.currentView.length === 0;
     const nodeView = !globalView && this.state.currentView && this.state.currentView[1] !== undefined;
-    const nodeToShowDetails = this.state.focusedNode || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
+    let nodeToShowDetails = this.state.currentGraph && this.state.currentGraph.type === 'focused' ? this.state.currentGraph.focusedNode : undefined;
+    nodeToShowDetails = nodeToShowDetails || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
     const connectionToShowDetails = this.state.highlightedObject && this.state.highlightedObject.type === 'connection' ? this.state.highlightedObject : undefined;
-    //const showLoadingCover = !!(this.state.currentView && this.state.currentView[0] && !this.state.renderedGraphs[this.state.currentView[0]]);
-
+    const showLoadingCover = this.state.isHistoryChunkAvailabilityLoading || !this.state.currentGraph;
     let matches;
     if (this.state.currentGraph) {
       matches = {
@@ -667,15 +641,12 @@ class TrafficFlow extends React.Component {
           <div style={{ position: 'absolute', top: '0px', right: nodeToShowDetails || connectionToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
             <Vizceral allowDraggingOfNodes={this.state.displayOptions.allowDraggingOfNodes}
                       filters={this.state.filters}
-                      graphsUpdated={this.graphsUpdated}
                       match={this.state.searchTerm}
                       matchesFound={this.matchesFound}
                       modes={this.state.modes}
                       objectHighlighted={this.objectHighlighted}
                       objectToHighlight={this.state.objectToHighlight}
                       nodeContextSizeChanged={this.nodeContextSizeChanged}
-                      nodeFocused={this.nodeFocused}
-                      rendered={this.rendered}
                       showLabels={this.state.displayOptions.showLabels}
                       traffic={this.state.trafficData}
                       view={this.state.currentView}
@@ -702,7 +673,7 @@ class TrafficFlow extends React.Component {
                                     nodeClicked={node => this.nodeClicked(node)}
             />
           }
-          {/*<LoadingCover show={showLoadingCover} />*/}
+          <LoadingCover show={showLoadingCover} />
         </div>
       </div>
     );
