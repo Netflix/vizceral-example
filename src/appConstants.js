@@ -12,12 +12,7 @@ const AppConstants = {
     UPDATE_FILTER: null,
     RESET_FILTERS: null,
     CLEAR_FILTERS: null
-  }),
-  backendUrl: 'http://localhost:9998/',
-  dateTimeSlider: {
-    timeBetweenMinAndMaxExcl: Duration.ofHours(24),
-    selectionGranularityInMinutes: 5
-  }
+  })
 };
 
 exports.AppConstants = AppConstants;

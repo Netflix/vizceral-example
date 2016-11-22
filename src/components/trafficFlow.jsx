@@ -2,9 +2,6 @@
 
 import _ from 'lodash';
 import { Alert } from 'react-bootstrap';
-import { ChronoUnit, DateTimeFormatter, Duration, ZonedDateTime, ZoneOffset, ZoneId } from 'js-joda';
-import { DateTime_floorToGranularity, ZonedDateTime_parse } from '../dateTimeUtil';
-import Promise from 'bluebird';
 import React from 'react';
 import TWEEN from 'tween.js'; // Start TWEEN updates for sparklines and loading screen fading out
 import Vizceral from 'vizceral-react';
@@ -14,10 +11,7 @@ import queryString from 'query-string';
 import request from 'superagent';
 
 import './trafficFlow.css';
-import { AppConstants } from '../appConstants';
-import { Backend } from '../data/backend';
 import Breadcrumbs from './breadcrumbs';
-import DateTimeSlider from './dateTimeSlider';
 import DisplayOptions from './displayOptions';
 import PhysicsOptions from './physicsOptions';
 import FilterControls from './filterControls';
@@ -43,58 +37,18 @@ function animate (time) {
 }
 requestAnimationFrame(animate);
 
-function formatUtcAsLocalDateTime(zdt) {
-  let zdt2 = zdt.withZoneSameInstant(ZoneId.SYSTEM).toLocalDateTime();
-  let str = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(zdt2);
-  let end = str.length - 3;
-  let tindex = end - 6;
-  return str.substring(2, tindex) + " " + str.substring(tindex + 1, end);
-}
-
 const panelWidth = 400;
-
-function getBackendFromProps(props) {
-  if (hasOwnPropFunc.call(props, "backend")) {
-    let backend = props.backend;
-    if (backend != null) {
-      if (backend instanceof Backend) {
-        return backend;
-      }
-      Console.error('The property \'backend\' of React component TrafficFlow must be an instance of Backend (unless it is null or undefined), the unexpected value is: ', backend);
-    }
-    return null;
-  }
-  return undefined;
-}
 
 class TrafficFlow extends React.Component {
   constructor (props) {
     super(props);
 
-    // Initialize DateTime slider defaults
-    let zdt_now = ZonedDateTime.now(ZoneOffset.UTC);
-    const selectionGranuInMins = AppConstants.dateTimeSlider.selectionGranularityInMinutes;
-    let dtSlider_maxExcl = DateTime_floorToGranularity(zdt_now, selectionGranuInMins);
-    let dtSlider_val = dtSlider_maxExcl.minus(Duration.ofMinutes(selectionGranuInMins));
-    let dtSlider_min = dtSlider_maxExcl.minus(AppConstants.dateTimeSlider.timeBetweenMinAndMaxExcl);
-    // The first time we retrieve which chunks of data are available successfully we want to initialize the date time slider to the newest (last) available bucket/chunk.
-    
     this.state = {
       currentView: undefined,
       redirectedFrom: undefined,
       selectedChart: undefined,
-      dateTimeSlider: {
-        min: dtSlider_min,
-        maxExcl: dtSlider_maxExcl,
-        selectionGranularityInMinutes: selectionGranuInMins,
-        startOfDangerTime: dtSlider_min,
-        value: dtSlider_val,
-      },
-      isDateTimeSliderCollapsedAuto: true,
-      isHistoryChunkAvailabilityLoading: false,
       displayOptions: {
         allowDraggingOfNodes: false,
-        dateTimeSliderVisibility: 'auto',
         showLabels: true
       },
       currentGraph_physicsOptions: {
@@ -127,19 +81,10 @@ class TrafficFlow extends React.Component {
         detailedNode: 'volume'
       }
     };
-    this._updateValueIfChunkAvailabilityBecomesKnown = true;
-    this._onBackendHistoryChunkAvailabilityChanged_func = this._onBackendHistoryChunkAvailabilityChanged.bind(this);
-    this._dataChunkPromise = null;
-    this._backend = getBackendFromProps(props);
-    if (this._backend === undefined) this._backend = null;
-    
-    // A reference to the DateTime slider, used to call DateTimeSlider.updateLayout when the window resizes. 
-    this._dateTimeSlider = null;
     
     // Browser history support
     window.addEventListener('popstate', event => this.handlePopState(event.state));
-    window.addEventListener('resize', e => this._windowOnResize(e), false);
-
+    
     // Keyboard interactivity
     listener.simple_combo('esc', () => {
       // TODO: cancel dragging of the date time slider if it is dragging!
@@ -150,85 +95,6 @@ class TrafficFlow extends React.Component {
       }
     });
     this._onNewBackend(this.state);
-  }
-  
-  _onBackendHistoryChunkAvailabilityChanged() {
-    let newState = {};
-    if (this._updateNewStateWithHistoryChunkAvailability(newState)) {
-      this.setState(newState); 
-    }
-  }
-  
-  componentWillReceiveProps (nextProps) {
-    let newBackend = getBackendFromProps(nextProps);
-    if (newBackend !== undefined) {
-      if (newBackend === this._backend) return;
-      if (this._backend !== null) {
-        this._backend.off('historyChunkAvailabilityChanged', this._onBackendHistoryChunkAvailabilityChanged_func);
-        Console.warn('TODO clean up resources used by old backend when changing backends');
-      }
-      this._backend = newBackend;
-      let newState = {};
-      this._onNewBackend(newState);
-      this.setState(newState);
-    }
-  }
-  
-  _onNewBackend(newState) {
-    newState.isDateTimeSliderCollapsedAuto = this._backend === null || !this._backend.supportsHistory();
-    if (this._backend !== null) {
-      this._backend.on('historyChunkAvailabilityChanged', this._onBackendHistoryChunkAvailabilityChanged_func);
-    }
-    this._updateNewStateWithHistoryChunkAvailability(newState);    
-    this._beginRetrieveDataChunk();
-  }
-
-  _updateNewStateWithHistoryChunkAvailability(newState) {
-    let zdt_dtSlider_startOfDangerTime;  
-    if (this._backend !== null && this._backend.supportsHistory()) {
-      let zdt_startOfLastChunk = this._backend.getHistoryChunkAvailability();
-      if (zdt_startOfLastChunk == null || zdt_startOfLastChunk.compareTo(this.state.dateTimeSlider.min) < 0) {
-        zdt_dtSlider_startOfDangerTime = this.state.dateTimeSlider.min; 
-      } else {
-        let selectionGranuInMins = AppConstants.dateTimeSlider.selectionGranularityInMinutes;
-        zdt_dtSlider_startOfDangerTime = zdt_startOfLastChunk.plus(selectionGranuInMins, ChronoUnit.MINUTES);
-        if (this.state.dateTimeSlider.maxExcl.compareTo(zdt_dtSlider_startOfDangerTime) < 0) {
-          zdt_dtSlider_startOfDangerTime = this.state.dateTimeSlider.maxExcl;
-        }
-      }
-    } else {
-      zdt_dtSlider_startOfDangerTime = this.state.dateTimeSlider.maxExcl;
-    }
-    let flag1 = false;
-    if (!this.state.dateTimeSlider.startOfDangerTime.equals(zdt_dtSlider_startOfDangerTime)) {
-      if (!hasOwnPropFunc.call(newState, "dateTimeSlider")) {
-        newState.dateTimeSlider = _.clone(this.state.dateTimeSlider);
-      }
-      newState.dateTimeSlider.startOfDangerTime = zdt_dtSlider_startOfDangerTime;
-      flag1 = true;
-    }
-    let isHistoryChunkAvailabilityLoading = false;
-    if (this._backend !== null && this._backend.supportsHistory()) {
-        let zdt_startOfLastChunk = this._backend.getHistoryChunkAvailability();
-        if (zdt_startOfLastChunk === undefined) {
-          isHistoryChunkAvailabilityLoading = true;
-        }
-    }
-    let flag2 = this.state.isHistoryChunkAvailabilityLoading !== isHistoryChunkAvailabilityLoading;
-    if (flag2) {
-      newState.isHistoryChunkAvailabilityLoading = isHistoryChunkAvailabilityLoading;
-    }
-    return flag1 || flag2;
-  }
-
-  _setDateTimeSlider(dateTimeSlider) {
-    this._dateTimeSlider = dateTimeSlider;
-  }
-
-  _windowOnResize(e) {
-    if (this._dateTimeSlider !== null) {
-      this._dateTimeSlider.updateLayout();
-    }
   }
 
   handlePopState () {
@@ -286,38 +152,6 @@ class TrafficFlow extends React.Component {
     this.setState({ currentView: currentView, objectToHighlight: parsedQuery.highlighted });
   }
 
-  _beginRetrieveDataChunk () {
-    if (this._dataChunkPromise !== null) {
-      this._dataChunkPromise.cancel();
-      this._dataChunkPromise = null;
-    }
-    let dataChunkPromise;
-    if (this._backend !== null) {
-      if (this._backend.supportsHistory()) {
-        let zdt_chunkTime = this.state.dateTimeSlider.value;
-        dataChunkPromise = this._backend.getHistoryChunk(zdt_chunkTime);
-      } else {
-        dataChunkPromise = this._backend.getLatestChunk();
-      }
-      dataChunkPromise = dataChunkPromise.catch(error => {
-        Console.error('Could not retrieve a chunk of data: ', error);
-        return { 
-          nodes: [], 
-          connections: [] 
-        };
-      });
-    } else {
-      dataChunkPromise = Promise.resolve({ 
-        nodes: [], 
-        connections: [] 
-      });
-    }
-    this._dataChunkPromise = dataChunkPromise.then(dataChunk => {
-      this._dataChunkPromise = null;
-      this.updateData(dataChunk);
-    });
-  }
-
   componentDidMount () {
     this.checkInitialRoute();
 
@@ -355,93 +189,7 @@ class TrafficFlow extends React.Component {
   }
 
   updateData (newTraffic) {
-    // const updatedTraffic = {
-    //   name: newTraffic.name,
-    //   renderer: newTraffic.renderer,
-    //   nodes: [],
-    //   connections: []
-    // };
-
-    // _.each(this.state.trafficData.nodes, node => updatedTraffic.nodes.push(node));
-    // _.each(this.state.trafficData.connections, connection => updatedTraffic.connections.push(connection));
-
-    // let modified = false;
-    // if (newTraffic) {
-    //   modified = true;
-    //   // Update the traffic graphs with the new state
-    //   _.each(newTraffic.nodes, (node) => {
-    //     const existingNodeIndex = _.findIndex(updatedTraffic.nodes, { name: node.name });
-    //     if (existingNodeIndex !== -1) {
-    //       if (node.nodes && node.nodes.length > 0) {
-    //         node.updated = node.updated || updatedTraffic.nodes[existingNodeIndex].updated;
-    //         updatedTraffic.nodes[existingNodeIndex] = node;
-    //       }
-    //     } else {
-    //       updatedTraffic.nodes.push(node);
-    //     }
-    //   });
-    //   _.each(newTraffic.connections, (connection) => {
-    //     const existingConnectionIndex = _.findIndex(updatedTraffic.connections, { source: connection.source, target: connection.target });
-    //     if (existingConnectionIndex !== -1) {
-    //       updatedTraffic.connections[existingConnectionIndex] = connection;
-    //     } else {
-    //       updatedTraffic.connections.push(connection);
-    //     }
-    //   });
-    // }
-
-    // if (modified) {
-    // const regionUpdateStatus = _.map(_.filter(updatedTraffic.nodes, n => n.name !== 'INTERNET'), (node) => {
-    //   const updated = node.updated;
-    //   return { region: node.name, updated: updated };
-    // });
-    // const lastUpdatedTime = _.max(_.map(regionUpdateStatus, 'updated'));
-    // this.setState({
-    //   regionUpdateStatus: regionUpdateStatus,
-    //   timeOffset: newTraffic.clientUpdateTime - newTraffic.serverUpdateTime,
-    //   lastUpdatedTime: lastUpdatedTime,
-    //   trafficData: updatedTraffic
-    // });
-    // }
-    let nodes = newTraffic.nodes;
-    let lastUpdatedTime = null;
-    let fError = false;
-    let regionUpdateStatus = [];
-    for (let i = 0, n = nodes.length; i < n; i++) {
-      let node = nodes[i];
-      if (node == null || !hasOwnPropFunc.call(node, "name") || typeof node.name !== "string") {
-        Console.error("The root graph of the new traffic data has a null or undefined node or it does not have a 'name' own property. NOTE: the name of a node is required and must be a string");
-        continue;
-      }
-      if (node.name === "INTERNET") continue;
-      let updated = null;
-      if (hasOwnPropFunc.call(node, "updated")) {
-        updated = node.updated;
-        if (typeof updated !== "number" || !isFiniteAfterCoerceToDouble(updated)) {
-          updated = null;
-        }
-      }
-      if (updated === null) {
-        Console.error("The root graph of the new traffic data has is missing a property named 'updated' or its value is not a finite number");
-        continue;
-      }
-      regionUpdateStatus.push({ region: node.name, updated: updated });
-      if (lastUpdatedTime === null || lastUpdatedTime < updated) {
-        lastUpdatedTime = updated;
-      }
-    }
-    if (lastUpdatedTime === null) {
-      lastUpdatedTime = Date.now();
-      Console.error("The root graph of the new traffic data is empty (not counting the node named 'INTERNET'): making up a value to reduce the chance of crashing", newTraffic);
-    }
-    if (!fError) {
-      this.setState({
-        regionUpdateStatus: regionUpdateStatus,
-        timeOffset: newTraffic.clientUpdateTime - newTraffic.serverUpdateTime,
-        lastUpdatedTime: lastUpdatedTime,
-        trafficData: newTraffic
-      });
-    }
+   
   }
 
   isSelectedNode () {
@@ -528,43 +276,8 @@ class TrafficFlow extends React.Component {
     }
   }
 
-  _onDateTimeSliderValueChanged(newValue) {
-    let newDTSliderState = _.clone(this.state.dateTimeSlider);
-    newDTSliderState.value = newValue;
-    this._beginRetrieveDataChunk();
-    this.setState({ dateTimeSlider: newDTSliderState });
-  }
-
   dismissAlert = () => {
     this.setState({ redirectedFrom: undefined });
-  }
-
-  setState(newState) {
-    let historyChunkAvailabilityBecomesKnown = hasOwnPropFunc.call(newState, "isHistoryChunkAvailabilityLoading") && 
-      !newState.isHistoryChunkAvailabilityLoading && 
-      this.state.isHistoryChunkAvailabilityLoading;
-    if (historyChunkAvailabilityBecomesKnown && this._updateValueIfChunkAvailabilityBecomesKnown) {
-      if (this._backend !== null && this._backend.supportsHistory()) {
-        let newDTSliderState = hasOwnPropFunc.call(newState, "dateTimeSlider") 
-          ? newState.dateTimeSlider
-          : undefined;
-        let min = newDTSliderState !== undefined ? newDTSliderState.min : this.state.dateTimeSlider.min;
-        let maxExcl = newDTSliderState !== undefined ? newDTSliderState.maxExcl : this.state.dateTimeSlider.maxExcl;
-        let zdt_startOfLastChunk = this._backend.getHistoryChunkAvailability();
-        if (min.compareTo(zdt_startOfLastChunk) <= 0 && zdt_startOfLastChunk.compareTo(maxExcl) < 0) {
-          if (newDTSliderState === undefined) {
-            newDTSliderState = _.clone(this.state.dateTimeSlider);
-            newState.dateTimeSlider = newDTSliderState;
-          }
-          newDTSliderState.value = zdt_startOfLastChunk;
-        }
-      } 
-      this._updateValueIfChunkAvailabilityBecomesKnown = false;
-    }
-    super.setState(newState);
-    if (historyChunkAvailabilityBecomesKnown) {
-      this._beginRetrieveDataChunk();
-    }
   }
 
   render () {
@@ -583,26 +296,6 @@ class TrafficFlow extends React.Component {
         visible: this.state.currentGraph.nodeCounts.visible
       };
     }
-    const selectedDateTime = this.state.dateTimeSlider.value;
-    let isDateTimeSliderCollapsed;
-    let dateTimeSliderVisibility = this.state.displayOptions.dateTimeSliderVisibility;
-    switch (dateTimeSliderVisibility) {
-      case 'auto':  
-        isDateTimeSliderCollapsed = this.state.isDateTimeSliderCollapsedAuto;
-        break;
-      case 'collapsed':
-        isDateTimeSliderCollapsed = true;
-        break;
-      case 'visible':
-        isDateTimeSliderCollapsed = false;
-        break;
-      default:
-        Console.warn('displayOptions.dateTimeSliderVisibility was expected to be one of [\'auto\', \'collapsed\', \'visible\'], but got: ', dateTimeSliderVisibility);
-        isDateTimeSliderCollapsed = true;
-        break;
-    }
-    const serviceTrafficMapTop = 87 - (isDateTimeSliderCollapsed ? 45 : 0);
-
     return (
       <div className="vizceral-container">
         { this.state.redirectedFrom ?
@@ -612,12 +305,7 @@ class TrafficFlow extends React.Component {
         : undefined }
         <div className="subheader">
           <Breadcrumbs rootTitle="global" navigationStack={this.state.currentView || []} navigationCallback={this.navigationCallback} />
-          <div style={{display: isDateTimeSliderCollapsed ? 'inline-block': 'none'}}>
-            <UpdateStatus status={this.state.regionUpdateStatus} baseOffset={this.state.timeOffset} warnThreshold={180000} />
-          </div>
-          <span className="selected-formatted-date-time" style={{ padding: '0 7px', display: isDateTimeSliderCollapsed ? 'none' : '' }}>
-            Showing data from {formatUtcAsLocalDateTime(selectedDateTime)} to {formatUtcAsLocalDateTime(selectedDateTime.plus(5, ChronoUnit.MINUTES))}
-          </span>
+          <UpdateStatus status={this.state.regionUpdateStatus} baseOffset={this.state.timeOffset} warnThreshold={180000} />
           <div style={{ float: 'right', paddingTop: '4px' }}>
             { (!globalView && matches) && <Locator changeCallback={this.locatorChanged} searchTerm={this.state.searchTerm} matches={matches} clearFilterCallback={this.filtersCleared} /> }
             <OptionsPanel title="Filters"><FilterControls /></OptionsPanel>
@@ -626,18 +314,7 @@ class TrafficFlow extends React.Component {
             <a role="button" className="reset-layout-link" onClick={this.resetLayoutButtonClicked}>Reset Layout</a>
           </div>
         </div>
-        <div className="date-time-slider-container" style={{display: isDateTimeSliderCollapsed ? 'none' : ''}}>
-          <DateTimeSlider
-            ref={(c) => this._setDateTimeSlider(c)}
-            value={this.state.dateTimeSlider.value}
-            min={this.state.dateTimeSlider.min}
-            startOfDangerTime={this.state.dateTimeSlider.startOfDangerTime}
-            maxExcl={this.state.dateTimeSlider.maxExcl}
-            selectionGranularityInMinutes={this.state.dateTimeSlider.selectionGranularityInMinutes}
-            selectedValueChanged={(oldValue, newValue) => this._onDateTimeSliderValueChanged(newValue)}>
-          </DateTimeSlider>
-        </div>
-        <div className="service-traffic-map" style={{ top: serviceTrafficMapTop + 'px'}}>
+        <div className="service-traffic-map">
           <div style={{ position: 'absolute', top: '0px', right: nodeToShowDetails || connectionToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
             <Vizceral allowDraggingOfNodes={this.state.displayOptions.allowDraggingOfNodes}
                       filters={this.state.filters}
@@ -679,13 +356,5 @@ class TrafficFlow extends React.Component {
     );
   }
 }
-
-TrafficFlow.propTypes = {
-  backend: React.PropTypes.object
-};
-
-TrafficFlow.defaultProps = {
-  backend: null
-};
 
 export default TrafficFlow;

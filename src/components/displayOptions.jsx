@@ -7,8 +7,7 @@ class DisplayOptions extends React.Component {
     super(props);
     this.state = {
       allowDraggingOfNodes: false,
-      showLabels: true,
-      dateTimeSliderVisibility: 'auto'
+      showLabels: true
     };
   }
 
@@ -25,14 +24,6 @@ class DisplayOptions extends React.Component {
     this.props.changedCallback(newState);
   }
 
-  _onDateTimeSliderVisibilityChanged(event) {
-    let newState = {
-      dateTimeSliderVisibility: event.target.value,
-    };
-    this.setState(newState);
-    this.props.changedCallback(newState);
-  }
-
   render () {
     const allowDraggingOfNodes = this.state.allowDraggingOfNodes;
     const showLabels = this.state.showLabels;
@@ -45,14 +36,6 @@ class DisplayOptions extends React.Component {
         <div>
           <input id="showLabels" type="checkbox" checked={showLabels} onChange={event => this._onCheckBoxChanged(event)}/>
           <label htmlFor="showLabels">Show Labels</label>
-        </div>
-        <div style={{whiteSpace: 'nowrap'}}>
-          <label htmlFor="dateTimeSliderVisibility">Timeline slider visibility</label>
-          <select value={this.state.dateTimeSliderVisibility} id="dateTimeSliderVisibility" onChange={event => this._onDateTimeSliderVisibilityChanged(event)}>
-            <option value="auto">Auto</option>
-            <option value="collapsed">Collapsed</option>
-            <option value="visible">Visible</option>
-          </select>
         </div>
       </div>
     );
