@@ -6,17 +6,21 @@ import Promise from 'bluebird';
 import React from 'react'; // eslint-disable-line no-unused-vars
 import ReactDOM from 'react-dom';
 import WebFont from 'webfontloader';
-import TrafficFlow from './components/trafficFlow';
-import './app.css';
 
-// Used in backendWithHistory.js
+import './app.css';
+import { AppConstants } from './appConstants';
+import { ServerWithHistoricalData } from './data/serverWithHistoricalData';
+import TrafficFlow from './components/trafficFlow';
+
+// Used in serverWithHistoricalData.js
 Promise.config({
   cancellation: true
 });
 
 function fontsActive () {
+  const backend = new ServerWithHistoricalData(AppConstants.backendUrl);
   ReactDOM.render(
-    <TrafficFlow />,
+    <TrafficFlow backend={backend} />,
     document.getElementById('traffic')
   );
 }

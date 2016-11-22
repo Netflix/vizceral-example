@@ -1,7 +1,7 @@
 'use strict';
 
 import AppDispatcher from '../appDispatcher';
-import AppConstants from '../appConstants';
+import { AppConstants } from '../appConstants';
 
 export default {
   updateFilter: (filters) => {

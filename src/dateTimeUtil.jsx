@@ -35,7 +35,7 @@ function DateTime_floorToGranularity(dt, granularityInMinutes) {
   return dt_truncSubMinutes.minus(minOfHour - minOfHour_floorToGranularity, ChronoUnit.MINUTES);
 }
 
-function DateTime_isOfGranularity(dt, granularityInMinutes) {
+function DateTime_doesRespectGranularity(dt, granularityInMinutes) {
   validateGranularity(granularityInMinutes, "granularityInMinutes");
   if (dt.get(ChronoField.NANO_OF_SECOND) !== 0) {
     return false;
@@ -61,6 +61,6 @@ function ZonedDateTime_parse(s, format) {
 }
 
 exports.DateTime_floorToGranularity = DateTime_floorToGranularity;
-exports.DateTime_isOfGranularity = DateTime_isOfGranularity;
+exports.DateTime_doesRespectGranularity = DateTime_doesRespectGranularity;
 exports.validateGranularity = validateGranularity;
 exports.ZonedDateTime_parse = ZonedDateTime_parse;

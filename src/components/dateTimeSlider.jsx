@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import { ZonedDateTime, Duration, ChronoField, ChronoUnit, ZoneOffset } from 'js-joda';
-import { DateTime_floorToGranularity, DateTime_isOfGranularity, validateGranularity } from '../dateTimeUtil';
+import { DateTime_floorToGranularity, DateTime_doesRespectGranularity, validateGranularity } from '../dateTimeUtil';
 import './dateTimeSlider.css';
 
 const Console = console;
@@ -228,11 +228,11 @@ class DateTimeSlider extends React.Component {
     } else {
       let c = maxExcl.compareTo(v);
       if (allowEqualToMaxExcl) {
-        if (0 < c) {
+        if (c < 0) {
           throw new Error("The value for field '" + name + "' is too large: " + v + " must not be greater than " + maxExcl + ". This error can occur when setting the field '" + name + "' or 'maxExcl'");
         }
       } else {
-        if (0 <= c) {
+        if (c <= 0) {
           throw new Error("The value for field '" + name + "' is too large: " + v + " must not be greater than or equal to " + maxExcl + ". This error can occur when setting the field '" + name + "' or 'maxExcl'");
         }
       }
@@ -258,7 +258,7 @@ class DateTimeSlider extends React.Component {
       }
     }
     let validationMin = newMin !== null ? newMin : this.state.min;
-    if (!DateTime_isOfGranularity(validationMin, validationSelectionGranularityInMinutes)) {
+    if (!DateTime_doesRespectGranularity(validationMin, validationSelectionGranularityInMinutes)) {
       throw getIllegalGranularityError(validationMin, "min", validationSelectionGranularityInMinutes);
     }
     let newMaxExcl = null;
@@ -269,11 +269,12 @@ class DateTimeSlider extends React.Component {
       }
     }
     let validationMaxExcl = newMaxExcl !== null ? newMaxExcl : this.state.maxExcl;
-    if (!DateTime_isOfGranularity(validationMaxExcl, validationSelectionGranularityInMinutes)) {
+    if (!DateTime_doesRespectGranularity(validationMaxExcl, validationSelectionGranularityInMinutes)) {
       throw getIllegalGranularityError(validationMaxExcl, "maxExcl", validationSelectionGranularityInMinutes);
     }
-    if ((newMaxExcl !== null || newMin !== null) && 0 < validationMaxExcl.compareTo(validationMin)) {
-      throw new Error("min cannot be greater than maxExcl");
+    let c = validationMin.compareTo(validationMaxExcl);
+    if ((newMaxExcl !== null || newMin !== null) && c > 0) {
+      throw new Error("min (" + validationMin + ") cannot be greater than maxExcl (" + validationMaxExcl + ")");
     }
     let newValue = null;
     if (hasOwnPropertyFunc.call(newState, "value")) {
@@ -281,7 +282,7 @@ class DateTimeSlider extends React.Component {
     }
     let validationValue = newValue !== null ? newValue : this.state.value;
 
-    if (!DateTime_isOfGranularity(validationValue, validationSelectionGranularityInMinutes)) {
+    if (!DateTime_doesRespectGranularity(validationValue, validationSelectionGranularityInMinutes)) {
       throw getIllegalGranularityError(validationValue, "value", validationSelectionGranularityInMinutes);
     }
     this._validateIsWithinMinMax(validationValue, "value", validationMin, validationMaxExcl, false);
@@ -289,8 +290,8 @@ class DateTimeSlider extends React.Component {
     if (hasOwnPropertyFunc.call(newState, "startOfDangerTime")) {
       newStartOfDangerTime = newState.startOfDangerTime;
     }
-    let validationStartOfDangerTime = null;
-    if (!DateTime_isOfGranularity(validationStartOfDangerTime, validationSelectionGranularityInMinutes)) {
+    let validationStartOfDangerTime = newStartOfDangerTime !== null ? newStartOfDangerTime : this.state.startOfDangerTime;
+    if (!DateTime_doesRespectGranularity(validationStartOfDangerTime, validationSelectionGranularityInMinutes)) {
       throw getIllegalGranularityError(validationStartOfDangerTime, "startOfDangerTime", validationSelectionGranularityInMinutes);
     }
     this._validateIsWithinMinMax(validationStartOfDangerTime, "startOfDangerTime", validationMin, validationMaxExcl, true);
