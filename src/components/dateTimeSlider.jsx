@@ -301,7 +301,7 @@ class DateTimeSlider extends React.Component {
     let minChanged = newMin !== null && !this.state.min.equals(newMin);
     let maxExclChanged = newMaxExcl !== null && !this.state.maxExcl.equals(newMaxExcl);
     let selectionGranularityInMinutesChanged = newSelectionGranularityInMinutes !== null && newSelectionGranularityInMinutes !== this.state.selectionGranularityInMinutes;
-    if (minChanged) this.state.min = min;
+    if (minChanged) this.state.min = newMin;
     if (maxExclChanged) this.state.maxExcl = newMaxExcl;
     if (selectionGranularityInMinutesChanged) this.state.selectionGranularityInMinutes = newSelectionGranularityInMinutes;
 
