@@ -13,10 +13,9 @@ const AppConstants = {
     RESET_FILTERS: null,
     CLEAR_FILTERS: null
   }),
-  backendUrl: 'http://dcspa15l.unix.anz:9998/',
-  // backendUrl: 'http://localhost:9998/',
+  backendUrl: 'http://localhost:9998/',
   dateTimeSlider: {
-    timeBetweenMinAndMaxExcl: Duration.ofHours(48),
+    timeBetweenMinAndMaxExcl: Duration.ofHours(24),
     selectionGranularityInMinutes: 5
   }
 };

@@ -89,10 +89,11 @@ class TrafficFlow extends React.Component {
         startOfDangerTime: dtSlider_min,
         value: dtSlider_val,
       },
-      dateTimeSlider_hidden: true,
+      isDateTimeSliderCollapsedAuto: true,
       isHistoryChunkAvailabilityLoading: false,
       displayOptions: {
         allowDraggingOfNodes: false,
+        dateTimeSliderVisibility: 'auto',
         showLabels: true
       },
       currentGraph_physicsOptions: {
@@ -175,7 +176,7 @@ class TrafficFlow extends React.Component {
   }
   
   _onNewBackend(newState) {
-    newState.dateTimeSlider_hidden = this._backend === null || !this._backend.supportsHistory();
+    newState.isDateTimeSliderCollapsedAuto = this._backend === null || !this._backend.supportsHistory();
     if (this._backend !== null) {
       this._backend.on('historyChunkAvailabilityChanged', this._onBackendHistoryChunkAvailabilityChanged_func);
     }
@@ -609,7 +610,24 @@ class TrafficFlow extends React.Component {
       };
     }
     const selectedDateTime = this.state.dateTimeSlider.value;
-
+    let isDateTimeSliderCollapsed;
+    let dateTimeSliderVisibility = this.state.displayOptions.dateTimeSliderVisibility;
+    switch (dateTimeSliderVisibility) {
+      case 'auto':  
+        isDateTimeSliderCollapsed = this.state.isDateTimeSliderCollapsedAuto;
+        break;
+      case 'collapsed':
+        isDateTimeSliderCollapsed = true;
+        break;
+      case 'visible':
+        isDateTimeSliderCollapsed = false;
+        break;
+      default:
+        Console.warn('displayOptions.dateTimeSliderVisibility was expected to be one of [\'auto\', \'collapsed\', \'visible\'], but got: ', dateTimeSliderVisibility);
+        isDateTimeSliderCollapsed = true;
+        break;
+    }
+    const serviceTrafficMapTop = 87 - (isDateTimeSliderCollapsed ? 45 : 0);
 
     return (
       <div className="vizceral-container">
@@ -620,8 +638,10 @@ class TrafficFlow extends React.Component {
         : undefined }
         <div className="subheader">
           <Breadcrumbs rootTitle="global" navigationStack={this.state.currentView || []} navigationCallback={this.navigationCallback} />
-          <UpdateStatus status={this.state.regionUpdateStatus} baseOffset={this.state.timeOffset} warnThreshold={180000} />
-          <span className="selected-formatted-date-time">
+          <div style={{display: isDateTimeSliderCollapsed ? 'inline-block': 'none'}}>
+            <UpdateStatus status={this.state.regionUpdateStatus} baseOffset={this.state.timeOffset} warnThreshold={180000} />
+          </div>
+          <span className="selected-formatted-date-time" style={{ padding: '0 7px', display: isDateTimeSliderCollapsed ? 'none' : '' }}>
             Showing data from {formatUtcAsLocalDateTime(selectedDateTime)} to {formatUtcAsLocalDateTime(selectedDateTime.plus(5, ChronoUnit.MINUTES))}
           </span>
           <div style={{ float: 'right', paddingTop: '4px' }}>
@@ -632,7 +652,7 @@ class TrafficFlow extends React.Component {
             <a role="button" className="reset-layout-link" onClick={this.resetLayoutButtonClicked}>Reset Layout</a>
           </div>
         </div>
-        <div className="date-time-slider-container" style={{display: this.state.dateTimeSlider_hidden ? 'none' : ''}}>
+        <div className="date-time-slider-container" style={{display: isDateTimeSliderCollapsed ? 'none' : ''}}>
           <DateTimeSlider
             ref={(c) => this._setDateTimeSlider(c)}
             value={this.state.dateTimeSlider.value}
@@ -643,7 +663,7 @@ class TrafficFlow extends React.Component {
             selectedValueChanged={(oldValue, newValue) => this._onDateTimeSliderValueChanged(newValue)}>
           </DateTimeSlider>
         </div>
-        <div className="service-traffic-map">
+        <div className="service-traffic-map" style={{ top: serviceTrafficMapTop + 'px'}}>
           <div style={{ position: 'absolute', top: '0px', right: nodeToShowDetails || connectionToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
             <Vizceral allowDraggingOfNodes={this.state.displayOptions.allowDraggingOfNodes}
                       filters={this.state.filters}

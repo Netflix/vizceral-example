@@ -6,9 +6,9 @@ class SimpleServer extends Backend {
   getLatestChunk() {
     let l = location;
     return doRequest({
-        baseUrl: l.protocol + '://' + l.hostname,
+        baseUrl: l.protocol + '//' + l.host,
         path: 'sample_data.json'
-    });
+    }).then(response => response.body);
   }
 }
 

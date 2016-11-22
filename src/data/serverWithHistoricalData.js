@@ -91,9 +91,7 @@ class ServerWithHistoricalData extends Backend {
       queryString: [
         ['dt', ZonedDateTime_formatForServer(zdt)]
       ]
-    }).then(response => {
-      return response.body;
-    });
+    }).then(response => response.body);
   }
 
   // Returns the latest available chunk of data.

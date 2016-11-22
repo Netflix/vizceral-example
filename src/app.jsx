@@ -10,6 +10,7 @@ import WebFont from 'webfontloader';
 import './app.css';
 import { AppConstants } from './appConstants';
 import { ServerWithHistoricalData } from './data/serverWithHistoricalData';
+import { SimpleServer } from './data/simpleServer';
 import TrafficFlow from './components/trafficFlow';
 
 // Used in serverWithHistoricalData.js
@@ -18,7 +19,8 @@ Promise.config({
 });
 
 function fontsActive () {
-  const backend = new ServerWithHistoricalData(AppConstants.backendUrl);
+  const backend = new SimpleServer();
+  // const backend = new ServerWithHistoricalData(AppConstants.backendUrl);
   ReactDOM.render(
     <TrafficFlow backend={backend} />,
     document.getElementById('traffic')
