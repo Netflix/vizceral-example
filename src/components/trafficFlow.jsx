@@ -87,19 +87,15 @@ class TrafficFlow extends React.Component {
     
     // Keyboard interactivity
     listener.simple_combo('esc', () => {
-      // TODO: cancel dragging of the date time slider if it is dragging!
       if (this.state.detailedNode) {
         this.setState({ detailedNode: undefined });
       } else if (this.state.currentView.length > 0) {
         this.setState({ currentView: this.state.currentView.slice(0, -1) });
       }
     });
-    this._onNewBackend(this.state);
   }
 
   handlePopState () {
-    // TODO: store the selected date time in history, but don't spam the history log with every change.
-    // Probably a solution based on the query string is better.
     const state = window.history.state || {};
     this.poppedState = true;
     this.setState({ currentView: state.selected, objectToHighlight: state.highlighted });
@@ -127,6 +123,10 @@ class TrafficFlow extends React.Component {
     }
     this.setState(changedState);
   }
+  
+  viewUpdated = () => {
+    this.setState({});
+  }
 
   objectHighlighted = (highlightedObject) => {
     // need to set objectToHighlight for diffing on the react component. since it was already highlighted here, it will be a noop
@@ -152,8 +152,21 @@ class TrafficFlow extends React.Component {
     this.setState({ currentView: currentView, objectToHighlight: parsedQuery.highlighted });
   }
 
+  beginSampleData () {
+    this.traffic = { nodes: [], connections: [] };
+    request.get('sample_data.json')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        if (res && res.status === 200) {
+          this.traffic.clientUpdateTime = Date.now();
+          this.updateData(res.body);
+        }
+      });
+    }
+
   componentDidMount () {
     this.checkInitialRoute();
+    this.beginSampleData();
 
     // Listen for changes to the stores
     filterStore.addChangeListener(this.filtersChanged);
@@ -189,7 +202,54 @@ class TrafficFlow extends React.Component {
   }
 
   updateData (newTraffic) {
-   
+    const updatedTraffic = {
+      name: newTraffic.name,
+      renderer: newTraffic.renderer,
+      nodes: [],
+      connections: []
+    };
+
+    _.each(this.state.trafficData.nodes, node => updatedTraffic.nodes.push(node));
+    _.each(this.state.trafficData.connections, connection => updatedTraffic.connections.push(connection));
+
+    let modified = false;
+    if (newTraffic) {
+      modified = true;
+      // Update the traffic graphs with the new state
+      _.each(newTraffic.nodes, (node) => {
+        const existingNodeIndex = _.findIndex(updatedTraffic.nodes, { name: node.name });
+        if (existingNodeIndex !== -1) {
+          if (node.nodes && node.nodes.length > 0) {
+            node.updated = node.updated || updatedTraffic.nodes[existingNodeIndex].updated;
+            updatedTraffic.nodes[existingNodeIndex] = node;
+          }
+        } else {
+          updatedTraffic.nodes.push(node);
+        }
+      });
+      _.each(newTraffic.connections, (connection) => {
+        const existingConnectionIndex = _.findIndex(updatedTraffic.connections, { source: connection.source, target: connection.target });
+        if (existingConnectionIndex !== -1) {
+          updatedTraffic.connections[existingConnectionIndex] = connection;
+        } else {
+          updatedTraffic.connections.push(connection);
+        }
+      });
+    }
+
+    if (modified) {
+      const regionUpdateStatus = _.map(_.filter(updatedTraffic.nodes, n => n.name !== 'INTERNET'), (node) => {
+        const updated = node.updated;
+        return { region: node.name, updated: updated };
+      });
+      const lastUpdatedTime = _.max(_.map(regionUpdateStatus, 'updated'));
+      this.setState({
+        regionUpdateStatus: regionUpdateStatus,
+        timeOffset: newTraffic.clientUpdateTime - newTraffic.serverUpdateTime,
+        lastUpdatedTime: lastUpdatedTime,
+        trafficData: updatedTraffic
+      });
+    }
   }
 
   isSelectedNode () {
@@ -286,7 +346,8 @@ class TrafficFlow extends React.Component {
     let nodeToShowDetails = this.state.currentGraph && this.state.currentGraph.type === 'focused' ? this.state.currentGraph.focusedNode : undefined;
     nodeToShowDetails = nodeToShowDetails || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
     const connectionToShowDetails = this.state.highlightedObject && this.state.highlightedObject.type === 'connection' ? this.state.highlightedObject : undefined;
-    const showLoadingCover = this.state.isHistoryChunkAvailabilityLoading || !this.state.currentGraph;
+    const showLoadingCover = !this.state.currentGraph;
+    
     let matches;
     if (this.state.currentGraph) {
       matches = {
@@ -296,6 +357,7 @@ class TrafficFlow extends React.Component {
         visible: this.state.currentGraph.nodeCounts.visible
       };
     }
+    
     return (
       <div className="vizceral-container">
         { this.state.redirectedFrom ?
@@ -316,18 +378,19 @@ class TrafficFlow extends React.Component {
         </div>
         <div className="service-traffic-map">
           <div style={{ position: 'absolute', top: '0px', right: nodeToShowDetails || connectionToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px' }}>
-            <Vizceral allowDraggingOfNodes={this.state.displayOptions.allowDraggingOfNodes}
-                      filters={this.state.filters}
-                      match={this.state.searchTerm}
-                      matchesFound={this.matchesFound}
-                      modes={this.state.modes}
-                      objectHighlighted={this.objectHighlighted}
-                      objectToHighlight={this.state.objectToHighlight}
-                      nodeContextSizeChanged={this.nodeContextSizeChanged}
-                      showLabels={this.state.displayOptions.showLabels}
-                      traffic={this.state.trafficData}
+            <Vizceral traffic={this.state.trafficData}
                       view={this.state.currentView}
+                      showLabels={this.state.displayOptions.showLabels}
+                      filters={this.state.filters}
                       viewChanged={this.viewChanged}
+                      viewUpdated={this.viewUpdated}
+                      objectHighlighted={this.objectHighlighted}
+                      nodeContextSizeChanged={this.nodeContextSizeChanged}
+                      objectToHighlight={this.state.objectToHighlight}
+                      matchesFound={this.matchesFound}
+                      match={this.state.searchTerm}
+                      modes={this.state.modes}
+                      allowDraggingOfNodes={this.state.displayOptions.allowDraggingOfNodes}
             />
           </div>
           {
@@ -356,5 +419,8 @@ class TrafficFlow extends React.Component {
     );
   }
 }
+
+TrafficFlow.propTypes = {
+};
 
 export default TrafficFlow;
