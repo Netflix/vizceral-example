@@ -1,6 +1,9 @@
 # System
 .DS_Store
 
+# IDE config
+/.idea
+
 # Generated
 /.jshintignore
 /.jshintrc

@@ -10,8 +10,10 @@ import keypress from 'keypress.js';
 import queryString from 'query-string';
 import request from 'superagent';
 
+import './trafficFlow.css';
 import Breadcrumbs from './breadcrumbs';
 import DisplayOptions from './displayOptions';
+import PhysicsOptions from './physicsOptions';
 import FilterControls from './filterControls';
 import DetailsPanelConnection from './detailsPanelConnection';
 import DetailsPanelNode from './detailsPanelNode';
@@ -25,6 +27,8 @@ import filterStore from './filterStore';
 
 const listener = new keypress.Listener();
 
+const hasOwnPropFunc = Object.prototype.hasOwnProperty;
+
 function animate (time) {
   requestAnimationFrame(animate);
   TWEEN.update(time);
@@ -36,12 +40,26 @@ const panelWidth = 400;
 class TrafficFlow extends React.Component {
   constructor (props) {
     super(props);
+
     this.state = {
       currentView: undefined,
       redirectedFrom: undefined,
       selectedChart: undefined,
       displayOptions: {
+        allowDraggingOfNodes: false,
         showLabels: true
+      },
+      currentGraph_physicsOptions: {
+        isEnabled: true,
+        viscousDragCoefficient: 0.2,
+        hooksSprings: {
+          restLength: 50,
+          springConstant: 0.2,
+          dampingConstant: 0.1
+        },
+        particles: {
+          mass: 1
+        }
       },
       labelDimensions: {},
       appliedFilters: filterStore.getChangedFilters(),
@@ -82,7 +100,24 @@ class TrafficFlow extends React.Component {
   }
 
   viewChanged = (data) => {
-    this.setState({ currentView: data.view, currentGraph: data.graph, searchTerm: '', matches: { total: -1, visible: -1 }, redirectedFrom: data.redirectedFrom });
+    const changedState = {
+      currentView: data.view,
+      searchTerm: '',
+      matches: { total: -1, visible: -1 },
+      redirectedFrom: data.redirectedFrom
+    };
+    if (hasOwnPropFunc.call(data, 'graph')) {
+      let oldCurrentGraph = this.state.currentGraph;
+      if (oldCurrentGraph == null) oldCurrentGraph = null;
+      let newCurrentGraph = data.graph;
+      if (newCurrentGraph == null) newCurrentGraph = null;
+      if (oldCurrentGraph !== newCurrentGraph) {
+        changedState.currentGraph = newCurrentGraph;
+        const o = newCurrentGraph === null ? null : newCurrentGraph.getPhysicsOptions();
+        changedState.currentGraph_physicsOptions = o;
+      }
+    }
+    this.setState(changedState);
   }
 
   viewUpdated = () => {
@@ -232,6 +267,15 @@ class TrafficFlow extends React.Component {
     this.setState({ displayOptions: displayOptions });
   }
 
+  physicsOptionsChanged = (physicsOptions) => {
+    this.setState({ currentGraph_physicsOptions: physicsOptions });
+    let currentGraph = this.state.currentGraph;
+    if (currentGraph == null) currentGraph = null;
+    if (currentGraph !== null) {
+      currentGraph.setPhysicsOptions(physicsOptions);
+    }
+  }
+
   navigationCallback = (newNavigationState) => {
     this.setState({ currentView: newNavigationState });
   }
@@ -281,6 +325,13 @@ class TrafficFlow extends React.Component {
     }
   }
 
+  resetLayoutButtonClicked = () => {
+    const g = this.state.currentGraph;
+    if (g != null) {
+      g._relayout();
+    }
+  }
+
   dismissAlert = () => {
     this.setState({ redirectedFrom: undefined });
   }
@@ -317,6 +368,8 @@ class TrafficFlow extends React.Component {
             { (!globalView && matches) && <Locator changeCallback={this.locatorChanged} searchTerm={this.state.searchTerm} matches={matches} clearFilterCallback={this.filtersCleared} /> }
             <OptionsPanel title="Filters"><FilterControls /></OptionsPanel>
             <OptionsPanel title="Display"><DisplayOptions options={this.state.displayOptions} changedCallback={this.displayOptionsChanged} /></OptionsPanel>
+            <OptionsPanel title="Physics"><PhysicsOptions options={this.state.currentGraph_physicsOptions} changedCallback={this.physicsOptionsChanged}/></OptionsPanel>
+            <a role="button" className="reset-layout-link" onClick={this.resetLayoutButtonClicked}>Reset Layout</a>
           </div>
         </div>
         <div className="service-traffic-map">
@@ -333,6 +386,7 @@ class TrafficFlow extends React.Component {
                       matchesFound={this.matchesFound}
                       match={this.state.searchTerm}
                       modes={this.state.modes}
+                      allowDraggingOfNodes={this.state.displayOptions.allowDraggingOfNodes}
             />
           </div>
           {

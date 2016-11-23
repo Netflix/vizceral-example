@@ -1,0 +1,13 @@
+.selected-formatted-date-time,
+.reset-layout-link {
+  display: inline-block;
+  line-height: 24px;
+  color: var(--colorNormalDimmed);
+}
+.reset-layout-link {
+  padding-left: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
