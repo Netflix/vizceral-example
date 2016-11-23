@@ -1,6 +1,5 @@
 'use strict';
 
-import { Duration } from 'js-joda';
 import keymirror from 'keymirror';
 
 const AppConstants = {
@@ -15,4 +14,4 @@ const AppConstants = {
   })
 };
 
-exports.AppConstants = AppConstants;
+export default AppConstants;

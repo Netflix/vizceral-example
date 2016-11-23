@@ -27,8 +27,6 @@ import filterStore from './filterStore';
 
 const listener = new keypress.Listener();
 
-const Console = console;
-const isFiniteAfterCoerceToDouble = isFinite;
 const hasOwnPropFunc = Object.prototype.hasOwnProperty;
 
 function animate (time) {
@@ -81,10 +79,10 @@ class TrafficFlow extends React.Component {
         detailedNode: 'volume'
       }
     };
-    
+
     // Browser history support
     window.addEventListener('popstate', event => this.handlePopState(event.state));
-    
+
     // Keyboard interactivity
     listener.simple_combo('esc', () => {
       if (this.state.detailedNode) {
@@ -108,14 +106,12 @@ class TrafficFlow extends React.Component {
       matches: { total: -1, visible: -1 },
       redirectedFrom: data.redirectedFrom
     };
-    let flag = false;
     if (hasOwnPropFunc.call(data, 'graph')) {
       let oldCurrentGraph = this.state.currentGraph;
       if (oldCurrentGraph == null) oldCurrentGraph = null;
       let newCurrentGraph = data.graph;
       if (newCurrentGraph == null) newCurrentGraph = null;
       if (oldCurrentGraph !== newCurrentGraph) {
-        flag = true;
         changedState.currentGraph = newCurrentGraph;
         const o = newCurrentGraph === null ? null : newCurrentGraph.getPhysicsOptions();
         changedState.currentGraph_physicsOptions = o;
@@ -123,7 +119,7 @@ class TrafficFlow extends React.Component {
     }
     this.setState(changedState);
   }
-  
+
   viewUpdated = () => {
     this.setState({});
   }
@@ -162,7 +158,7 @@ class TrafficFlow extends React.Component {
           this.updateData(res.body);
         }
       });
-    }
+  }
 
   componentDidMount () {
     this.checkInitialRoute();
@@ -347,7 +343,7 @@ class TrafficFlow extends React.Component {
     nodeToShowDetails = nodeToShowDetails || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
     const connectionToShowDetails = this.state.highlightedObject && this.state.highlightedObject.type === 'connection' ? this.state.highlightedObject : undefined;
     const showLoadingCover = !this.state.currentGraph;
-    
+
     let matches;
     if (this.state.currentGraph) {
       matches = {
@@ -357,7 +353,7 @@ class TrafficFlow extends React.Component {
         visible: this.state.currentGraph.nodeCounts.visible
       };
     }
-    
+
     return (
       <div className="vizceral-container">
         { this.state.redirectedFrom ?

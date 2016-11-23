@@ -15,10 +15,10 @@ class DisplayOptions extends React.Component {
     this.setState(nextProps.options);
   }
 
-  _onCheckBoxChanged(event) {
-    let checkBox = event.target;
-    let statePropName = checkBox.id;
-    let newState = {};
+  _onCheckBoxChanged (event) {
+    const checkBox = event.target;
+    const statePropName = checkBox.id;
+    const newState = {};
     newState[statePropName] = checkBox.checked;
     this.setState(newState);
     this.props.changedCallback(newState);
