@@ -9,7 +9,6 @@ module.exports = {
   entry: './src/app.jsx',
   output: {
     path: path.join(__dirname, 'dist'),
-		publicPath: '/',
     filename: 'vizceral.[hash].bundle.js'
   },
   resolve: {
