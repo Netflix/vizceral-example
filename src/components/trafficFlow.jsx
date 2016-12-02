@@ -339,7 +339,7 @@ class TrafficFlow extends React.Component {
   render () {
     const globalView = this.state.currentView && this.state.currentView.length === 0;
     const nodeView = !globalView && this.state.currentView && this.state.currentView[1] !== undefined;
-    let nodeToShowDetails = this.state.currentGraph && this.state.currentGraph.type === 'focused' ? this.state.currentGraph.focusedNode : undefined;
+    let nodeToShowDetails = this.state.currentGraph && this.state.currentGraph.focusedNode;
     nodeToShowDetails = nodeToShowDetails || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
     const connectionToShowDetails = this.state.highlightedObject && this.state.highlightedObject.type === 'connection' ? this.state.highlightedObject : undefined;
     const showLoadingCover = !this.state.currentGraph;
