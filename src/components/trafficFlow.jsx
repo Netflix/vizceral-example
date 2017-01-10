@@ -198,54 +198,17 @@ class TrafficFlow extends React.Component {
   }
 
   updateData (newTraffic) {
-    const updatedTraffic = {
-      name: newTraffic.name,
-      renderer: newTraffic.renderer,
-      nodes: [],
-      connections: []
-    };
-
-    _.each(this.state.trafficData.nodes, node => updatedTraffic.nodes.push(node));
-    _.each(this.state.trafficData.connections, connection => updatedTraffic.connections.push(connection));
-
-    let modified = false;
-    if (newTraffic) {
-      modified = true;
-      // Update the traffic graphs with the new state
-      _.each(newTraffic.nodes, (node) => {
-        const existingNodeIndex = _.findIndex(updatedTraffic.nodes, { name: node.name });
-        if (existingNodeIndex !== -1) {
-          if (node.nodes && node.nodes.length > 0) {
-            node.updated = node.updated || updatedTraffic.nodes[existingNodeIndex].updated;
-            updatedTraffic.nodes[existingNodeIndex] = node;
-          }
-        } else {
-          updatedTraffic.nodes.push(node);
-        }
-      });
-      _.each(newTraffic.connections, (connection) => {
-        const existingConnectionIndex = _.findIndex(updatedTraffic.connections, { source: connection.source, target: connection.target });
-        if (existingConnectionIndex !== -1) {
-          updatedTraffic.connections[existingConnectionIndex] = connection;
-        } else {
-          updatedTraffic.connections.push(connection);
-        }
-      });
-    }
-
-    if (modified) {
-      const regionUpdateStatus = _.map(_.filter(updatedTraffic.nodes, n => n.name !== 'INTERNET'), (node) => {
-        const updated = node.updated;
-        return { region: node.name, updated: updated };
-      });
-      const lastUpdatedTime = _.max(_.map(regionUpdateStatus, 'updated'));
-      this.setState({
-        regionUpdateStatus: regionUpdateStatus,
-        timeOffset: newTraffic.clientUpdateTime - newTraffic.serverUpdateTime,
-        lastUpdatedTime: lastUpdatedTime,
-        trafficData: updatedTraffic
-      });
-    }
+    const regionUpdateStatus = _.map(_.filter(newTraffic.nodes, n => n.name !== 'INTERNET'), (node) => {
+      const updated = node.updated;
+      return { region: node.name, updated: updated };
+    });
+    const lastUpdatedTime = _.max(_.map(regionUpdateStatus, 'updated'));
+    this.setState({
+      regionUpdateStatus: regionUpdateStatus,
+      timeOffset: newTraffic.clientUpdateTime - newTraffic.serverUpdateTime,
+      lastUpdatedTime: lastUpdatedTime,
+      trafficData: newTraffic
+    });
   }
 
   isSelectedNode () {
