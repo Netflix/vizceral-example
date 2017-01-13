@@ -21,6 +21,7 @@
         },
         {
           "name": "proxy-prod",
+          "metadata": {},
           "renderer": "focusedChild",
           "class": "normal"
         }
