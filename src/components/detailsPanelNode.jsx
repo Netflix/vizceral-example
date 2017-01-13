@@ -51,7 +51,7 @@ class DetailsPanelNode extends React.Component {
         </div>
         <Notices notices={notices} />
         { node && !node.isEntryNode() ?
-          <DetailsSubpanelClusters discovery={node.metadata.discovery} clusters={node.clusters} region={this.state.region} />
+          <DetailsSubpanelClusters clusters={node.clusters} region={this.state.region} />
         : undefined }
         { node && !node.isEntryNode() ?
         <DetailsSubpanel title="Incoming Connections">
