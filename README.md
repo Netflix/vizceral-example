@@ -8,7 +8,7 @@ For more details about using vizceral in your own projects with your own data, r
 1. Get source, install deps, and run demo server.
 
    ```sh
-   git clone git@github.com:Netflix/vizceral-example.git
+   git clone https://github.com/Netflix/vizceral-example.git
    cd vizceral-example
    npm install
    npm run dev
