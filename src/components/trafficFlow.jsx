@@ -135,15 +135,19 @@ class TrafficFlow extends React.Component {
 
   checkInitialRoute () {
     // Check the location bar for any direct routing information
-    const pathArray = window.location.pathname.split('/');
+    var parts = window.location.hash.split('?');
+    var location = parts[0].split('#')[1];
     const currentView = [];
-    if (pathArray[1]) {
-      currentView.push(pathArray[1]);
-      if (pathArray[2]) {
-        currentView.push(pathArray[2]);
+    if (location) {
+      const pathArray = location.split('/');
+      if (pathArray[1]) {
+        currentView.push(pathArray[1]);
+        if (pathArray[2]) {
+          currentView.push(pathArray[2]);
+        }
       }
     }
-    const parsedQuery = queryString.parse(window.location.search);
+    const parsedQuery = queryString.parse(parts[1]);
 
     this.setState({ currentView: currentView, objectToHighlight: parsedQuery.highlighted });
   }
@@ -187,7 +191,7 @@ class TrafficFlow extends React.Component {
         const highlightedObjectName = nextState.highlightedObject && nextState.highlightedObject.getName();
         const state = {
           title: document.title,
-          url: nextState.currentView.join('/') + (highlightedObjectName ? `?highlighted=${highlightedObjectName}` : ''),
+          url: '#/' + nextState.currentView.join('/') + (highlightedObjectName ? `?highlighted=${highlightedObjectName}` : ''),
           selected: nextState.currentView,
           highlighted: highlightedObjectName
         };
