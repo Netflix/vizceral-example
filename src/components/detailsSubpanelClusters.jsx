@@ -23,7 +23,7 @@ class DetailsSubpanelClusters extends React.Component {
 
   render () {
     return (
-      <DetailsSubpanel title="Clusters" expanded={true}>
+      <DetailsSubpanel title="Clusters" expanded={this.props.expanded} badge={this.state.clusters.length}>
         { this.state.clusters ?
         <div>
           <div className="details-panel-subtitle"><span style={{ fontWeight: 600 }}>Traffic by Cluster</span></div>

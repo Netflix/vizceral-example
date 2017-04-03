@@ -2,16 +2,16 @@
 
 import React from 'react';
 
-class NodeDetailsSubpanel extends React.Component {
+class DetailsSubpanel extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      expanded: this.props.expanded ? this.props.expanded : false
+      expanded: props.expanded ? props.expanded : false
     };
   }
 
-  changeState (newState) {
-    this.setState(newState);
+  componentWillReceiveProps (nextProps) {
+    this.setState({ expanded: nextProps.expanded });
   }
 
   render () {
@@ -31,7 +31,7 @@ class NodeDetailsSubpanel extends React.Component {
         <div className="panel panel-default">
           <div className="panel-heading" role="tab" id={headingId}>
             <h4 className="panel-title">
-              <a role="button" data-toggle="collapse" href={`#${collapseId}`} aria-controls={collapseId} className={`accordion-toggle${expanded ? '' : ' collapsed'}`} onClick={() => this.changeState({ expanded: !expanded })}>
+              <a role="button" data-toggle="collapse" href={`#${collapseId}`} aria-controls={collapseId} className={`accordion-toggle${expanded ? '' : ' collapsed'}`} onClick={() => this.setState({ expanded: !expanded })}>
                 <span className={iconClass} style={iconStyle}></span> {this.props.title.toUpperCase()} {badge ? <span className="badge">{badge}</span> : undefined}
               </a>
             </h4>
@@ -49,10 +49,10 @@ class NodeDetailsSubpanel extends React.Component {
   }
 }
 
-NodeDetailsSubpanel.propTypes = {
+DetailsSubpanel.propTypes = {
   title: React.PropTypes.string.isRequired,
   expanded: React.PropTypes.bool,
   badge: React.PropTypes.number
 };
 
-export default NodeDetailsSubpanel;
+export default DetailsSubpanel;
