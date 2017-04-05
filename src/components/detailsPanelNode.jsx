@@ -51,14 +51,14 @@ class DetailsPanelNode extends React.Component {
         </div>
         <Notices notices={notices} />
         { node && !node.isEntryNode() ?
-          <DetailsSubpanelClusters clusters={node.clusters} region={this.state.region} />
+          <DetailsSubpanelClusters clusters={node.clusters} region={this.state.region} expanded={true} />
         : undefined }
         { node && !node.isEntryNode() ?
-        <DetailsSubpanel title="Incoming Connections">
+        <DetailsSubpanel title="Incoming Connections" badge={node.incomingConnections.length}>
           <ConnectionList key={node.getName()} connections={node.incomingConnections} direction="incoming" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
         </DetailsSubpanel>
         : undefined }
-        <DetailsSubpanel title="Outgoing Connections">
+        <DetailsSubpanel title="Outgoing Connections" badge={node.outgoingConnections.length}>
           <ConnectionList key={node.getName()} connections={node.outgoingConnections} direction="outgoing" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
         </DetailsSubpanel>
       </div>
