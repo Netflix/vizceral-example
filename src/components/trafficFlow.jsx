@@ -46,7 +46,7 @@ class TrafficFlow extends React.Component {
       redirectedFrom: undefined,
       selectedChart: undefined,
       displayOptions: {
-        allowDraggingOfNodes: false,
+        allowDraggingOfNodes: true,
         showLabels: true
       },
       currentGraph_physicsOptions: {
@@ -149,15 +149,20 @@ class TrafficFlow extends React.Component {
   }
 
   beginSampleData () {
-    this.traffic = { nodes: [], connections: [] };
-    request.get('sample_data.json')
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        if (res && res.status === 200) {
-          this.traffic.clientUpdateTime = Date.now();
-          this.updateData(res.body);
-        }
-      });
+      
+      this.traffic = { nodes: [], connections: [] };
+      setInterval( _ =>{
+      request.get("http://13.59.199.101:8091")
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          if (res && res.status === 200) {
+            this.traffic.clientUpdateTime = Date.now();
+            this.updateData(res.body);
+          }
+        });
+      console.log("refreshing...");
+      }, 2000 )
+      
   }
 
   componentDidMount () {
@@ -198,8 +203,9 @@ class TrafficFlow extends React.Component {
   }
 
   updateData (newTraffic) {
+      
     const regionUpdateStatus = _.map(_.filter(newTraffic.nodes, n => n.name !== 'INTERNET'), (node) => {
-      const updated = node.updated;
+        const updated = node.updated;
       return { region: node.name, updated: updated };
     });
     const lastUpdatedTime = _.max(_.map(regionUpdateStatus, 'updated'));
