@@ -47,20 +47,20 @@ const sorters = {
   }
 };
 
-class ClusterList extends React.Component {
+class SubNodeList extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      clusters: props.clusters,
+      nodes: props.nodes,
       sortBy: 'totalPercent',
       sortDirection: SortDirection.ASC
     };
 
-    this.linkPopover = (cluster) => {
+    this.linkPopover = (node) => {
       const atlasBackend = this.props.region ? `&backend=http:%2F%2Fatlas-main.${this.props.region}.prod.netflix.net:7001` : '';
-      const atlasLink = `http://atlasui.prod.netflix.net/ui/graph?g.q=nf.cluster,${cluster.name},:eq,name,RequestStats-all-requests-_Num,:re,:and,:sum,(,name,),:by&g.e=now-1m&g.s=e-3h&g.tz=US%2FPacific&mode=png&vsplit=520px&sel=expr.0.0${atlasBackend}`;
+      const atlasLink = `http://atlasui.prod.netflix.net/ui/graph?g.q=nf.cluster,${node.name},:eq,name,RequestStats-all-requests-_Num,:re,:and,:sum,(,name,),:by&g.e=now-1m&g.s=e-3h&g.tz=US%2FPacific&mode=png&vsplit=520px&sel=expr.0.0${atlasBackend}`;
       const spinnakerRegion = this.props.region ? `&reg=${this.props.region}` : '';
-      const spinnakerLink = `https://spinnaker.prod.netflix.net/#/applications/${cluster.app}/clusters?acct=prod&q=cluster:${cluster.name}${spinnakerRegion}`;
+      const spinnakerLink = `https://spinnaker.prod.netflix.net/#/applications/${node.app}/clusters?acct=prod&q=cluster:${node.name}${spinnakerRegion}`;
       return (
         <Popover id="links-popover">
           <div className="links-popover-title">OPEN IN</div>
@@ -81,7 +81,7 @@ class ClusterList extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     this.setState({
-      clusters: nextProps.clusters
+      nodes: nextProps.nodes
     });
   }
 
@@ -89,11 +89,11 @@ class ClusterList extends React.Component {
     const headerHeight = 30;
     let estimatedRowHeight = 25;
     const maxTableHeight = 300;
-    const trafficTotal = _.sum(_.flatten(_.map(this.state.clusters, c => _.values(c.metrics))));
-    const clusterRows = _.map(this.state.clusters, (cluster) => {
-      const total = _.sum(_.values(cluster.metrics));
+    const trafficTotal = _.sum(_.flatten(_.map(this.state.nodes, c => _.values(c.metrics))));
+    const nodeRows = _.map(this.state.nodes, (node) => {
+      const total = _.sum(_.values(node.metrics));
       const totalPercent = total / trafficTotal;
-      const errors = (cluster.metrics && cluster.metrics.danger) || 0;
+      const errors = (node.metrics && node.metrics.danger) || 0;
       const errorRate = errors / total;
       let colorName;
       if (errorRate > 0.1) {
@@ -104,36 +104,36 @@ class ClusterList extends React.Component {
       const className = colorName ? `color-${colorName}` : '';
 
       return {
-        name: cluster.name,
+        name: node.name,
         errors: errors,
         total: total,
         errorRate: errorRate,
         totalPercent: totalPercent,
-        app: cluster.app,
+        app: node.app,
         className: className
       };
     });
 
-    clusterRows.sort(sorters[this.state.sortBy]);
-    if (this.state.sortDirection !== SortDirection.ASC) { _.reverse(clusterRows); }
+    nodeRows.sort(sorters[this.state.sortBy]);
+    if (this.state.sortDirection !== SortDirection.ASC) { _.reverse(nodeRows); }
 
     if (this.refs.flexTable && this.refs.flexTable.props.estimatedRowSize) {
       estimatedRowHeight = this.refs.flexTable.props.estimatedRowSize - 4;
     }
-    const tableHeight = Math.min(maxTableHeight, (estimatedRowHeight * clusterRows.length) + headerHeight);
+    const tableHeight = Math.min(maxTableHeight, (estimatedRowHeight * nodeRows.length) + headerHeight);
 
 
     return (
-      clusterRows.length > 0 ?
-      <div className="cluster-list">
+      nodeRows.length > 0 ?
+      <div className="node-list">
         <Table
           ref="flexTable"
           width={300}
           height={tableHeight}
           headerHeight={headerHeight}
           rowHeight={25}
-          rowCount={clusterRows.length}
-          rowGetter={({ index }) => clusterRows[index]}
+          rowCount={nodeRows.length}
+          rowGetter={({ index }) => nodeRows[index]}
           sortBy={this.state.sortBy}
           sortDirection={this.state.sortDirection}
           sort={this.sort}
@@ -153,9 +153,9 @@ class ClusterList extends React.Component {
   }
 }
 
-ClusterList.propTypes = {
-  clusters: React.PropTypes.array.isRequired,
+SubNodeList.propTypes = {
+  nodes: React.PropTypes.array.isRequired,
   region: React.PropTypes.string
 };
 
-export default ClusterList;
+export default SubNodeList;

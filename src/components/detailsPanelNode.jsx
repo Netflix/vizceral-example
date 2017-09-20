@@ -4,7 +4,7 @@ import React from 'react';
 
 import ConnectionList from './connectionList';
 import DetailsSubpanel from './detailsSubpanel';
-import DetailsSubpanelClusters from './detailsSubpanelClusters';
+import DetailsSubpanelSubNodes from './detailsSubpanelSubNodes';
 import Notices from './notices';
 
 import './detailsPanel.css';
@@ -51,7 +51,7 @@ class DetailsPanelNode extends React.Component {
         </div>
         <Notices notices={notices} />
         { node && !node.isEntryNode() ?
-          <DetailsSubpanelClusters clusters={node.clusters} region={this.state.region} expanded={true} />
+          <DetailsSubpanelSubNodes nodes={node.nodes} region={this.state.region} expanded={true} />
         : undefined }
         { node && !node.isEntryNode() ?
         <DetailsSubpanel title="Incoming Connections" badge={node.incomingConnections.length}>
