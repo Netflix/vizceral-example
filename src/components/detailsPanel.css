@@ -78,7 +78,7 @@
   border-bottom: none;
 }
 
-.connection-list .table-container, .cluster-list .table-container {
+.connection-list .table-container, .subnode-list .table-container {
   max-height: 200px;
   overflow: auto;
 }

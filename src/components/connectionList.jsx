@@ -119,7 +119,7 @@ class ConnectionList extends React.Component {
           sortDirection={this.state.sortDirection}
           sort={this.sort}
         >
-          <Column label="Cluster" dataKey="name" cellRenderer={nameRenderer} width={220} />
+          <Column label="Sub Nodes" dataKey="name" cellRenderer={nameRenderer} width={220} />
           <Column label="Errors" dataKey="errorRate" cellRenderer={errorRenderer} width={70}/>
         </Table>
       </div>
