@@ -13,6 +13,9 @@ module.exports = {
     filename: 'vizceral.[hash].bundle.js'
   },
   resolve: {
+    alias: {
+      react: path.resolve('node_modules/react'),
+    },
     extensions: ['.jsx', '.js'],
     modules: ['node_modules'],
   },
