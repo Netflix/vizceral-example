@@ -71,12 +71,11 @@ class SubNodeList extends React.Component {
     };
 
 
-    this.linkRenderer = data =>
-      (data.rowData.app ? (
-        <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={this.linkPopover({ app: data.rowData.app, name: data.rowData.name })}>
-          <div className={data.rowData.className} style={{ display: 'inline-block', cursor: 'pointer' }}><span className="glyphicon glyphicon-share"></span></div>
-        </OverlayTrigger>
-        ) : undefined);
+    this.linkRenderer = data => (data.rowData.app ? (
+      <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={this.linkPopover({ app: data.rowData.app, name: data.rowData.name })}>
+        <div className={data.rowData.className} style={{ display: 'inline-block', cursor: 'pointer' }}><span className="glyphicon glyphicon-share"></span></div>
+      </OverlayTrigger>
+    ) : undefined);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -124,27 +123,27 @@ class SubNodeList extends React.Component {
 
 
     return (
-      nodeRows.length > 0 ?
-      <div className="node-list">
-        <Table
-          ref="flexTable"
-          width={300}
-          height={tableHeight}
-          headerHeight={headerHeight}
-          rowHeight={25}
-          rowCount={nodeRows.length}
-          rowGetter={({ index }) => nodeRows[index]}
-          sortBy={this.state.sortBy}
-          sortDirection={this.state.sortDirection}
-          sort={this.sort}
-        >
-          <Column label="Name" dataKey="name" cellRenderer={nameRenderer} width={220} />
-          <Column label="Errors" dataKey="errorRate" cellRenderer={errorRenderer} width={82}/>
-          <Column label="Total" dataKey="totalPercent" cellRenderer={totalRenderer} width={70}/>
-          <Column label="" dataKey="name" cellRenderer={this.linkRenderer} width={50}/>
-        </Table>
-      </div>
-      : <span>None.</span>
+      nodeRows.length > 0
+        ? <div className="node-list">
+          <Table
+            ref="flexTable"
+            width={300}
+            height={tableHeight}
+            headerHeight={headerHeight}
+            rowHeight={25}
+            rowCount={nodeRows.length}
+            rowGetter={({ index }) => nodeRows[index]}
+            sortBy={this.state.sortBy}
+            sortDirection={this.state.sortDirection}
+            sort={this.sort}
+          >
+            <Column label="Name" dataKey="name" cellRenderer={nameRenderer} width={220} />
+            <Column label="Errors" dataKey="errorRate" cellRenderer={errorRenderer} width={82}/>
+            <Column label="Total" dataKey="totalPercent" cellRenderer={totalRenderer} width={70}/>
+            <Column label="" dataKey="name" cellRenderer={this.linkRenderer} width={50}/>
+          </Table>
+        </div>
+        : <span>None.</span>
     );
   }
 

@@ -38,13 +38,11 @@ class Breadcrumbs extends React.Component {
     return (
       <div className="breadcrumbs">
         <ol>
-            {
-              navStack.map((state, index) =>
-                ((index !== navStack.length - 1) ?
-                <li key={index + state}><a className="clickable" onClick={() => { this.handleClick(index - 1); }}>{ state }</a></li> :
-                <li key={index + state}>{ state }</li>)
-              )
-            }
+          {
+            navStack.map((state, index) => ((index !== navStack.length - 1)
+              ? <li key={index + state}><a className="clickable" onClick={() => { this.handleClick(index - 1); }}>{ state }</a></li>
+              : <li key={index + state}>{ state }</li>))
+          }
         </ol>
       </div>
     );

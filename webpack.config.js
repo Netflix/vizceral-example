@@ -1,37 +1,35 @@
 /* globals __dirname process */
 'use strict';
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
   entry: './src/app.jsx',
   output: {
-    path: path.join(__dirname, 'dist'),
-		publicPath: '/',
+    path: path.resolve(__dirname, 'dist'),
+    // publicPath: '/',
     filename: 'vizceral.[hash].bundle.js'
   },
   resolve: {
-    extensions: ['', '.jsx', '.js'],
-    modulesDirectories: ['node_modules'],
-    fallback: path.join(__dirname, 'node_modules')
+    extensions: ['.jsx', '.js'],
+    modules: ['node_modules'],
   },
-  resolveLoader: { fallback: path.join(__dirname, 'node_modules') },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        loader: 'babel'
       },
-      { test: /\.woff2?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff' },
-      { test: /\.otf$/, loader: 'file-loader' },
-      { test: /\.ttf$/, loader: 'file-loader' },
-      { test: /\.eot$/, loader: 'file-loader' },
-      { test: /\.svg$/, loader: 'file-loader' },
-      { test: /\.html$/, loader: 'html' },
-      { test: /\.css$/, loader: 'style-loader!css-loader' }
+      { test: /\.woff2?$/, use: 'url-loader?limit=10000&mimetype=application/font-woff' },
+      { test: /\.otf$/, use: 'file-loader' },
+      { test: /\.ttf$/, use: 'file-loader' },
+      { test: /\.eot$/, use: 'file-loader' },
+      { test: /\.svg$/, use: 'file-loader' },
+      { test: /\.html$/, use: 'html-loader' },
+      { test: /\.css$/, use: [{ loader: 'style-loader' }, { loader: 'css-loader' }] }
     ]
   },
   plugins: [

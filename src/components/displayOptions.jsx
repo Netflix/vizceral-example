@@ -25,8 +25,7 @@ class DisplayOptions extends React.Component {
   }
 
   render () {
-    const allowDraggingOfNodes = this.state.allowDraggingOfNodes;
-    const showLabels = this.state.showLabels;
+    const { allowDraggingOfNodes, showLabels } = this.state;
     return (
       <div>
         <div>

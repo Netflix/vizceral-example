@@ -27,7 +27,7 @@ class DetailsPanelConnection extends React.Component {
   }
 
   render () {
-    const connection = this.state.connection;
+    const { connection } = this.state;
     const notices = (connection && connection.notices) || [];
 
     return (

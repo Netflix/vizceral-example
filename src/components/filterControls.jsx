@@ -42,15 +42,15 @@ class FilterControls extends React.Component {
     const defaultFilters = filterStore.isDefault();
 
     return (
-        <div className="vizceral-controls-panel">
-          <div className="vizceral-control">
-            <span>RPS</span>
-            <Stepper steps={this.state.states.rps} selectedStep={filterStore.getStepFromValue('rps')} changeCallback={(step) => { this.rpsChanged(step); }} />
-          </div>
-          <div className="vizceral-control">
-            <button type="button" className="btn btn-default btn-block btn-xs" disabled={defaultFilters} onClick={this.resetFilters.bind(this)}>Reset Filters</button>
-          </div>
+      <div className="vizceral-controls-panel">
+        <div className="vizceral-control">
+          <span>RPS</span>
+          <Stepper steps={this.state.states.rps} selectedStep={filterStore.getStepFromValue('rps')} changeCallback={(step) => { this.rpsChanged(step); }} />
         </div>
+        <div className="vizceral-control">
+          <button type="button" className="btn btn-default btn-block btn-xs" disabled={defaultFilters} onClick={this.resetFilters.bind(this)}>Reset Filters</button>
+        </div>
+      </div>
     );
   }
 }

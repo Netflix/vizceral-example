@@ -15,12 +15,12 @@ class DetailsSubpanel extends React.Component {
   }
 
   render () {
-    const badge = this.props.badge;
+    const { badge } = this.props;
     const title = this.props.title.replace(/\s/g, '_');
     const headingId = `${title}Heading`;
     const collapseId = `collapse${title}`;
 
-    const expanded = this.state.expanded;
+    const { expanded } = this.state;
     const iconClass = `glyphicon ${expanded ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'}`;
     const iconStyle = {
       fontSize: '12px',

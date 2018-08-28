@@ -24,11 +24,11 @@ class DetailsSubpanelSubNodes extends React.Component {
   render () {
     return (
       <DetailsSubpanel title="Sub Nodes" expanded={this.props.expanded} badge={this.state.nodes.length}>
-        { this.state.nodes ?
-        <div>
-          <div className="details-panel-subtitle"><span style={{ fontWeight: 600 }}>Traffic by Sub Node</span></div>
-          <SubNodeList nodes={this.state.nodes} region={this.state.region} />
-        </div> : undefined }
+        { this.state.nodes
+          ? <div>
+            <div className="details-panel-subtitle"><span style={{ fontWeight: 600 }}>Traffic by Sub Node</span></div>
+            <SubNodeList nodes={this.state.nodes} region={this.state.region} />
+          </div> : undefined }
       </DetailsSubpanel>
     );
   }

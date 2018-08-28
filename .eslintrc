@@ -9,10 +9,6 @@
   "extends": [
     "airbnb-base"
   ],
-  "ecmaFeatures": {
-    "modules": false,
-    "jsx": true
-  },
   "rules": {
     "indent": [
       2,

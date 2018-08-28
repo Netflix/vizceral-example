@@ -63,7 +63,7 @@ class FilterStore extends EventEmitter {
     this.requests = {};
 
     AppDispatcher.register((payload) => {
-      const action = payload.action;
+      const { action } = payload;
       switch (action.actionType) {
       case AppConstants.ActionTypes.UPDATE_FILTER:
         this.updateFilters(action.data);

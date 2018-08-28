@@ -68,14 +68,12 @@ class UpdateStatus extends React.Component {
         <table className="table table-condensed table-borderless">
           <tbody>
             {
-              this.props.status.map(status =>
-                (
-                  <tr key={status.region}>
-                    <td>{status.region}:</td>
-                    <td><span className={status.fresh ? 'severity0' : 'severity1'}>{ msToTimeAgo(now - status.updated) }</span></td>
-                  </tr>
-                )
-              )
+              this.props.status.map(status => (
+                <tr key={status.region}>
+                  <td>{status.region}:</td>
+                  <td><span className={status.fresh ? 'severity0' : 'severity1'}>{ msToTimeAgo(now - status.updated) }</span></td>
+                </tr>
+              ))
             }
           </tbody>
         </table>

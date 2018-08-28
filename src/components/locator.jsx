@@ -39,8 +39,8 @@ class Locator extends React.Component {
     return (
       <div style={style}>
         <div style={listStyle}>{totalServices} services / {filteredServices} filtered &nbsp;
-          { filteredServices > 0 ?
-            <span className="clickable" onClick={this.clearFilterClicked.bind(this)}>(show)</span>
+          { filteredServices > 0
+            ? <span className="clickable" onClick={this.clearFilterClicked.bind(this)}>(show)</span>
             : undefined
           }
         </div>

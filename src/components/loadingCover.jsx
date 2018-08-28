@@ -5,7 +5,7 @@ import TWEEN from 'tween.js';
 
 import './loadingCover.css';
 
-const logo = require('url!./vizceral-mark.png'); // eslint-disable-line import/no-extraneous-dependencies
+const logo = require('url-loader!./vizceral-mark.png'); // eslint-disable-line import/no-extraneous-dependencies
 
 const helperStyles = {
   display: 'inline-block',
@@ -66,12 +66,12 @@ class LoadingCover extends React.Component {
       <div className="loading-cover-wrapper" style={wrapperStyles}>
         { this.state.showing
           ? <div className="loading-cover" style={coverStyles}>
-              <span style={helperStyles}></span>
-              <div style={loaderStyles}>
-                <img className="loading-image" src={logo} />
+            <span style={helperStyles}></span>
+            <div style={loaderStyles}>
+              <img className="loading-image" src={logo} />
                 Loading...
-              </div>
             </div>
+          </div>
           : undefined
         }
       </div>

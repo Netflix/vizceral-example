@@ -33,7 +33,7 @@ class DetailsPanelNode extends React.Component {
   }
 
   render () {
-    const node = this.state.node;
+    const { node } = this.state;
     const notices = (node && node.notices) || [];
     let zoomClassName = 'glyphicon clickable zoom-icon ';
     zoomClassName += this.props.nodeSelected ? 'glyphicon-log-out' : 'glyphicon-log-in';
@@ -50,14 +50,14 @@ class DetailsPanelNode extends React.Component {
           </div>
         </div>
         <Notices notices={notices} />
-        { node && !node.isEntryNode() && node.nodes ?
-          <DetailsSubpanelSubNodes nodes={node.nodes} region={this.state.region} expanded={true} />
-        : undefined }
-        { node && !node.isEntryNode() ?
-        <DetailsSubpanel title="Incoming Connections" badge={node.incomingConnections.length}>
-          <ConnectionList key={node.getName()} connections={node.incomingConnections} direction="incoming" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
-        </DetailsSubpanel>
-        : undefined }
+        { node && !node.isEntryNode() && node.nodes
+          ? <DetailsSubpanelSubNodes nodes={node.nodes} region={this.state.region} expanded={true} />
+          : undefined }
+        { node && !node.isEntryNode()
+          ? <DetailsSubpanel title="Incoming Connections" badge={node.incomingConnections.length}>
+            <ConnectionList key={node.getName()} connections={node.incomingConnections} direction="incoming" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
+          </DetailsSubpanel>
+          : undefined }
         <DetailsSubpanel title="Outgoing Connections" badge={node.outgoingConnections.length}>
           <ConnectionList key={node.getName()} connections={node.outgoingConnections} direction="outgoing" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
         </DetailsSubpanel>

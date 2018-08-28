@@ -31,8 +31,7 @@ class PhysicsOptions extends React.Component {
   }
 
   render () {
-    const isEnabled = this.state.isEnabled;
-    const jaspersReplusionBetweenParticles = this.state.jaspersReplusionBetweenParticles;
+    const { isEnabled, jaspersReplusionBetweenParticles } = this.state;
     return (
       <div className="physics-options">
         <div>
