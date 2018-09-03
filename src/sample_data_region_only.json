@@ -1,0 +1,2948 @@
+{
+  "renderer": "region",
+  "name": "us-east-1",
+  "displayName": "US-EAST-1",
+  "updated": 1477690448572,
+  "nodes": [
+    {
+      "name": "viraemic",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "tetrabrach",
+          "metrics": {
+            "normal": 41515.944,
+            "danger": 66.144
+          }
+        },
+        {
+          "name": "colloidal",
+          "metrics": {
+            "danger": 0.166,
+            "normal": 126.34000000000002
+          }
+        },
+        {
+          "name": "wardrobers"
+        },
+        {
+          "name": "yplast"
+        },
+        {
+          "name": "benet",
+          "metrics": {
+            "danger": 0.22400000000000003,
+            "normal": 130.17600000000002
+          }
+        },
+        {
+          "name": "imping",
+          "metrics": {
+            "danger": 0.22000000000000003,
+            "normal": 130.19000000000003
+          }
+        },
+        {
+          "name": "virility",
+          "metrics": {
+            "danger": 0.18600000000000003,
+            "normal": 130.158
+          }
+        },
+        {
+          "name": "eng",
+          "metrics": {
+            "danger": 0.244,
+            "normal": 129.494
+          }
+        },
+        {
+          "name": "use",
+          "metrics": {
+            "danger": 0.2,
+            "normal": 126.536
+          }
+        },
+        {
+          "name": "racegoings",
+          "metrics": {
+            "danger": 0.06999999999999999,
+            "normal": 43.19200000000001
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "foetal",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "amperzands",
+          "metrics": {
+            "danger": 0.006,
+            "normal": 18187.73
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "buglers",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "blamer",
+          "metrics": {
+            "danger": 4.220000000000001,
+            "normal": 12450.862000000001
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "lassoing",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "jumbies",
+          "metrics": {
+            "danger": 9429.436,
+            "normal": 124.54400000000001
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "proletarianised",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "prefocuses",
+          "metrics": {
+            "danger": 1,
+            "normal": 7877.054
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "neuritics",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "difference",
+          "metrics": {
+            "normal": 6652.246000000001
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "nymphae",
+          "metrics": {
+            "normal": 4804.088,
+            "danger": 0.264
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "risks",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "decreasingly",
+          "metrics": {
+            "normal": 3919.876
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "wickyups",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "reformings",
+          "metrics": {
+            "danger": 0.036,
+            "normal": 3147.704
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "disenthral",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "unaligned",
+          "metrics": {
+            "normal": 3954.196
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "macrurous",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "tsesarevich",
+          "metrics": {
+            "danger": 2095.25,
+            "normal": 146.374
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "parrocks",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "hoarded",
+          "metrics": {
+            "normal": 4063.334
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "yuppifies",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "lanterning",
+          "metrics": {
+            "danger": 0.18000000000000002,
+            "normal": 4572.996
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "commanderies",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "fructiferous",
+          "metrics": {
+            "normal": 1918.0560000000003
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "malvasias",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "langered",
+          "metrics": {
+            "danger": 0.03,
+            "normal": 1853.6560000000002
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "perfectibilians",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "undercapitalize",
+          "metrics": {
+            "normal": 1786.8860000000002
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "nanuas",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "launches",
+          "metrics": {
+            "normal": 1809.534
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "overburning",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "epistolised",
+          "metrics": {
+            "danger": 1.234,
+            "normal": 3651.6760000000004
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "veniremen",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "salix",
+          "metrics": {
+            "normal": 38.160000000000004
+          }
+        },
+        {
+          "name": "ossifrage",
+          "metrics": {
+            "normal": 38.142
+          }
+        },
+        {
+          "name": "incandesce",
+          "metrics": {
+            "normal": 1526.7520000000002
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "quittors",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "modernised",
+          "metrics": {
+            "danger": 12.940000000000001,
+            "normal": 2329.168
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "gainfully",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "thewiest",
+          "metrics": {
+            "normal": 1159.382
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "unapproachabilities",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "shikari",
+          "metrics": {
+            "normal": 1110.976
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "arabesk",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "villous",
+          "metrics": {
+            "danger": 0.03,
+            "normal": 976.5799999999999
+          }
+        },
+        {
+          "name": "silvan",
+          "metrics": {
+            "normal": 24.682000000000002
+          }
+        },
+        {
+          "name": "yechs",
+          "metrics": {
+            "normal": 24.974000000000004
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "mispricing",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "pleas",
+          "metrics": {
+            "danger": 0.022000000000000002,
+            "normal": 828.868
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "majordomo",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "astones",
+          "metrics": {
+            "normal": 6.038
+          }
+        },
+        {
+          "name": "blamelessnesses",
+          "metrics": {
+            "danger": 0.004,
+            "normal": 1092.528
+          }
+        },
+        {
+          "name": "grouched",
+          "metrics": {
+            "normal": 6.038
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "tanrec",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "dogships",
+          "metrics": {
+            "normal": 926.2660000000001
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "semitropics",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "metrifier",
+          "metrics": {
+            "normal": 692.9520000000001,
+            "danger": 0.06999999999999999
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "legwork",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "relocator",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "coho",
+          "metrics": {
+            "danger": 0.008,
+            "normal": 635.724
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "spuds",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "flamethrowers",
+          "metrics": {
+            "normal": 540.194
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "schemozzling",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "garnishes",
+          "metrics": {
+            "danger": 0.05,
+            "normal": 1264.71
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "profulgent",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "cockieleekies",
+          "metrics": {
+            "normal": 1078.5700000000002
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "brazed",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "invulnerableness",
+          "metrics": {
+            "normal": 429.798
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "gerents",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "rehabbed",
+          "metrics": {
+            "normal": 204.92
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "infectivities",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "slimy",
+          "metrics": {
+            "danger": 39.67400000000001,
+            "normal": 443.384
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "shidduchim",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "powhiris",
+          "metrics": {
+            "danger": 0.004,
+            "normal": 527.11
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "prickliest",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "lampadary",
+          "metrics": {
+            "normal": 287.28200000000004
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "imbalmers",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "imposthumated",
+          "metrics": {
+            "danger": 0.004,
+            "normal": 292.37800000000004
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "blastodiscs",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "tawiest",
+          "metrics": {
+            "normal": 286.03200000000004
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "uraei",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "pashed",
+          "metrics": {
+            "normal": 283.108
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "multiracialisms",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "cauterises",
+          "metrics": {
+            "danger": 1.9000000000000001,
+            "normal": 289.13000000000005
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "cylindricalness",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "steen",
+          "metrics": {
+            "danger": 6.188000000000001,
+            "normal": 182.4
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "compellation",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "malleolar",
+          "metrics": {
+            "normal": 34.352,
+            "danger": 153.10999999999999
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "microparasites",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "ribbonwoods",
+          "metrics": {
+            "danger": 1.5460000000000003,
+            "normal": 848.7139999999999
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "immedicably",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "remit",
+          "metrics": {
+            "normal": 185.476
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "commerce",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "gimmes",
+          "metrics": {
+            "normal": 180.044
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "alignment",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "madronos",
+          "metrics": {
+            "normal": 156.94000000000003,
+            "danger": 0.006
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "methadone",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "fraicheurs",
+          "metrics": {
+            "danger": 0.020000000000000004,
+            "normal": 130.428
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "remarkableness",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "hydrocortisones",
+          "metrics": {
+            "danger": 0.21600000000000003,
+            "normal": 110.20400000000001
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "reoxidize",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "trapan",
+          "metrics": {
+            "normal": 99.77600000000001,
+            "danger": 4.946000000000001
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "salvability",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "belons",
+          "metrics": {
+            "danger": 0.148,
+            "normal": 97.73200000000001
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "playlisted",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "karroos",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "kitschified",
+          "metrics": {
+            "danger": 0.8340000000000001,
+            "normal": 80.06
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "accounts",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "disfranchise",
+          "metrics": {
+            "normal": 72.478,
+            "danger": 20.21
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "hounding",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "priviest",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "espiers",
+          "metrics": {
+            "danger": 0.654,
+            "normal": 62.326
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "lycee",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "cybersquattings",
+          "metrics": {
+            "normal": 62.026
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "concatenates",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "versionings",
+          "metrics": {
+            "normal": 60.43600000000001
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "oiks",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "unacquainted",
+          "metrics": {
+            "danger": 0.014000000000000002,
+            "normal": 972.9639999999999
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "nicompoops",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "metabolised",
+          "metrics": {
+            "danger": 2.068,
+            "normal": 41.752
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "corfhouses",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "anthoid",
+          "metrics": {
+            "normal": 0.22200000000000003
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "overdosed",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "localizable",
+          "metrics": {
+            "normal": 0.638
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "rummlegumptions",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "misprinting",
+          "metrics": {
+            "danger": 0.014000000000000002,
+            "normal": 121.306
+          }
+        },
+        {
+          "name": "revoiced",
+          "metrics": {
+            "normal": 4.332
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "precited",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "radiations",
+          "metrics": {}
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "previsionary",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "sklenting",
+          "metrics": {
+            "danger": 0.6240000000000001,
+            "normal": 22.904
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "kaoliangs",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "allographs",
+          "metrics": {
+            "normal": 22.882
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "bypath",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "hydroxyureas",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "turms",
+          "metrics": {
+            "normal": 18.126
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "gradine",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "smirches",
+          "metrics": {
+            "normal": 12.21
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "atma",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "palpebrae",
+          "metrics": {
+            "normal": 433.92600000000004
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "cleavage",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "rezzes"
+        },
+        {
+          "name": "montre",
+          "metrics": {
+            "normal": 105.25999999999999
+          }
+        },
+        {
+          "name": "alibis",
+          "metrics": {
+            "danger": 0.004,
+            "normal": 105.17200000000001
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "name": "appropriable",
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [
+        {
+          "name": "talkathon",
+          "metrics": {
+            "normal": 613.17,
+            "danger": 0.006
+          }
+        }
+      ],
+      "renderer": "focusedChild"
+    },
+    {
+      "metadata": {
+        "streaming": 1
+      },
+      "nodes": [],
+      "name": "INTERNET",
+      "renderer": "focusedChild"
+    }
+  ],
+  "connections": [
+    {
+      "source": "INTERNET",
+      "target": "proxy-prod",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 97.98200000000001,
+        "normal": 32456.61
+      }
+    },
+    {
+      "source": "INTERNET",
+      "target": "buglers",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 18.094,
+        "normal": 11850.946000000002
+      }
+    },
+    {
+      "source": "INTERNET",
+      "target": "proxy-log",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "warning": 0.006,
+        "danger": 1.218,
+        "normal": 8232.9
+      }
+    },
+    {
+      "source": "quittors",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.022000000000000002,
+        "normal": 117.234
+      }
+    },
+    {
+      "source": "accounts",
+      "target": "salvability",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.288,
+        "normal": 71.542
+      }
+    },
+    {
+      "source": "accounts",
+      "target": "infectivities",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.002,
+        "normal": 74.566
+      }
+    },
+    {
+      "source": "reoxidize",
+      "target": "nicompoops",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 41.47
+      }
+    },
+    {
+      "source": "reoxidize",
+      "target": "playlisted",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 94.49000000000001
+      }
+    },
+    {
+      "source": "reoxidize",
+      "target": "precited",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 37.038000000000004
+      }
+    },
+    {
+      "source": "unapproachabilities",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.028000000000000004,
+        "normal": 133.47
+      }
+    },
+    {
+      "source": "unapproachabilities",
+      "target": "cylindricalness",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 1.1340000000000001,
+        "normal": 183.386
+      }
+    },
+    {
+      "source": "unapproachabilities",
+      "target": "infectivities",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.016,
+        "normal": 10.14
+      }
+    },
+    {
+      "source": "lassoing",
+      "target": "spuds",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.004,
+        "normal": 27.386000000000003
+      }
+    },
+    {
+      "source": "lassoing",
+      "target": "immedicably",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.016,
+        "normal": 11.846
+      }
+    },
+    {
+      "source": "lassoing",
+      "target": "foetal",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 43.642,
+        "normal": 7428.756
+      }
+    },
+    {
+      "source": "lassoing",
+      "target": "neuritics",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 29.874000000000002,
+        "normal": 1947.2400000000002
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.006,
+        "normal": 13.984000000000002
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "tanrec",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.002,
+        "normal": 134.15
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "semitropics",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 105.06600000000002,
+        "danger": 0.006
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "spuds",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.05600000000000001,
+        "normal": 178.37400000000002
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "disenthral",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 655.186
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "rummlegumptions",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.256,
+        "normal": 32.978
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "overdosed",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.256,
+        "normal": 32.978
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "corfhouses",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.256,
+        "normal": 32.978
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "immedicably",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.118,
+        "normal": 109.57600000000001
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "multiracialisms",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.066,
+        "normal": 11.408000000000001
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "proletarianised",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 7.202
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "gainfully",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.012,
+        "normal": 1017.616
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "overburning",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.9720000000000001,
+        "normal": 160.19000000000003
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "foetal",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 3.814,
+        "normal": 634.038
+      }
+    },
+    {
+      "source": "macrurous",
+      "target": "relocator",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 2.064,
+        "normal": 87.34
+      }
+    },
+    {
+      "source": "perfectibilians",
+      "target": "disenthral",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 244.97600000000003
+      }
+    },
+    {
+      "source": "perfectibilians",
+      "target": "rummlegumptions",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.054000000000000006,
+        "normal": 6.184000000000001
+      }
+    },
+    {
+      "source": "perfectibilians",
+      "target": "overdosed",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.054000000000000006,
+        "normal": 6.184000000000001
+      }
+    },
+    {
+      "source": "perfectibilians",
+      "target": "corfhouses",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.054000000000000006,
+        "normal": 6.184000000000001
+      }
+    },
+    {
+      "source": "perfectibilians",
+      "target": "overburning",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 7.18,
+        "normal": 1576.49
+      }
+    },
+    {
+      "source": "karroos",
+      "target": "tanrec",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 19.136000000000003
+      }
+    },
+    {
+      "source": "karroos",
+      "target": "viraemic",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.022000000000000002,
+        "normal": 19.558000000000003
+      }
+    },
+    {
+      "source": "karroos",
+      "target": "proletarianised",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 19.632
+      }
+    },
+    {
+      "source": "cylindricalness",
+      "target": "parrocks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.008,
+        "normal": 69.866
+      }
+    },
+    {
+      "source": "arabesk",
+      "target": "risks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.024,
+        "normal": 152.236
+      }
+    },
+    {
+      "source": "arabesk",
+      "target": "schemozzling",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 12.118000000000002
+      }
+    },
+    {
+      "source": "arabesk",
+      "target": "proletarianised",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.012,
+        "normal": 12.094000000000001
+      }
+    },
+    {
+      "source": "arabesk",
+      "target": "quittors",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 3.7460000000000004,
+        "normal": 483.74600000000004
+      }
+    },
+    {
+      "source": "atma",
+      "target": "hydroxyureas",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 11.316
+      }
+    },
+    {
+      "source": "atma",
+      "target": "bypath",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.08600000000000001,
+        "normal": 20.008000000000003
+      }
+    },
+    {
+      "source": "atma",
+      "target": "schemozzling",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.004,
+        "normal": 441.646
+      }
+    },
+    {
+      "source": "atma",
+      "target": "profulgent",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.022000000000000002,
+        "normal": 423.578
+      }
+    },
+    {
+      "source": "atma",
+      "target": "majordomo",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.978,
+        "normal": 422.79600000000005
+      }
+    },
+    {
+      "source": "commerce",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.008,
+        "normal": 212.75400000000002
+      }
+    },
+    {
+      "source": "commerce",
+      "target": "shidduchim",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.008,
+        "normal": 212.75400000000002
+      }
+    },
+    {
+      "source": "commerce",
+      "target": "accounts",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.020000000000000004,
+        "normal": 29.962000000000003
+      }
+    },
+    {
+      "source": "commerce",
+      "target": "kaoliangs",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 21.488
+      }
+    },
+    {
+      "source": "commerce",
+      "target": "lycee",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 59.08
+      }
+    },
+    {
+      "source": "commerce",
+      "target": "semitropics",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 16.512,
+        "danger": 0.002
+      }
+    },
+    {
+      "source": "commerce",
+      "target": "hounding",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.012,
+        "normal": 38.32
+      }
+    },
+    {
+      "source": "commerce",
+      "target": "spuds",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.03,
+        "normal": 26.060000000000002
+      }
+    },
+    {
+      "source": "commerce",
+      "target": "priviest",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 21.996000000000002
+      }
+    },
+    {
+      "source": "commerce",
+      "target": "parrocks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.002,
+        "normal": 29.468000000000004
+      }
+    },
+    {
+      "source": "hydroxyureas",
+      "target": "risks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.004,
+        "normal": 6.998000000000001
+      }
+    },
+    {
+      "source": "hydroxyureas",
+      "target": "schemozzling",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.038000000000000006,
+        "normal": 13.176
+      }
+    },
+    {
+      "source": "hydroxyureas",
+      "target": "quittors",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.084,
+        "normal": 11.338000000000001
+      }
+    },
+    {
+      "source": "hydroxyureas",
+      "target": "brazed",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.014000000000000002,
+        "normal": 8.328000000000001
+      }
+    },
+    {
+      "source": "overburning",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.036,
+        "normal": 165.91
+      }
+    },
+    {
+      "source": "priviest",
+      "target": "shidduchim",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.028000000000000004,
+        "normal": 94.644
+      }
+    },
+    {
+      "source": "priviest",
+      "target": "accounts",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.012,
+        "normal": 42.330000000000005
+      }
+    },
+    {
+      "source": "priviest",
+      "target": "salvability",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.010000000000000002,
+        "normal": 13.772
+      }
+    },
+    {
+      "source": "priviest",
+      "target": "commerce",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 58.394000000000005
+      }
+    },
+    {
+      "source": "priviest",
+      "target": "hounding",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.006,
+        "normal": 18.84
+      }
+    },
+    {
+      "source": "salvability",
+      "target": "reoxidize",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.10200000000000001,
+        "normal": 94.808
+      }
+    },
+    {
+      "source": "methadone",
+      "target": "quittors",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 1.2220000000000002,
+        "normal": 130.43800000000002
+      }
+    },
+    {
+      "source": "malvasias",
+      "target": "risks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.072,
+        "normal": 584.736
+      }
+    },
+    {
+      "source": "malvasias",
+      "target": "oiks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.010000000000000002,
+        "normal": 9.88
+      }
+    },
+    {
+      "source": "malvasias",
+      "target": "uraei",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.002,
+        "normal": 11.422
+      }
+    },
+    {
+      "source": "alignment",
+      "target": "tanrec",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.020000000000000004,
+        "normal": 60.664
+      }
+    },
+    {
+      "source": "alignment",
+      "target": "viraemic",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.10200000000000001,
+        "normal": 143.788
+      }
+    },
+    {
+      "source": "alignment",
+      "target": "immedicably",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.052000000000000005,
+        "normal": 35.242000000000004
+      }
+    },
+    {
+      "source": "alignment",
+      "target": "neuritics",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 2.152,
+        "normal": 143.71
+      }
+    },
+    {
+      "source": "veniremen",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 205.9,
+        "danger": 0.052000000000000005
+      }
+    },
+    {
+      "source": "neuritics",
+      "target": "disenthral",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.006,
+        "normal": 952.8299999999999
+      }
+    },
+    {
+      "source": "neuritics",
+      "target": "yuppifies",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 2.9440000000000004,
+        "normal": 473.774
+      }
+    },
+    {
+      "source": "infectivities",
+      "target": "spuds",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.012,
+        "normal": 19.762
+      }
+    },
+    {
+      "source": "commanderies",
+      "target": "wickyups",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 4.296,
+        "normal": 3108.2200000000003
+      }
+    },
+    {
+      "source": "commanderies",
+      "target": "parrocks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.034,
+        "normal": 13.826
+      }
+    },
+    {
+      "source": "gainfully",
+      "target": "mispricing",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.35200000000000004,
+        "normal": 813.974
+      }
+    },
+    {
+      "source": "gainfully",
+      "target": "parrocks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.04000000000000001,
+        "normal": 51.568
+      }
+    },
+    {
+      "source": "relocator",
+      "target": "disenthral",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 432.53000000000003
+      }
+    },
+    {
+      "source": "relocator",
+      "target": "yuppifies",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.782,
+        "normal": 107.24400000000001
+      }
+    },
+    {
+      "source": "profulgent",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.27799999999999997,
+        "normal": 1125.488
+      }
+    },
+    {
+      "source": "profulgent",
+      "target": "risks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.17800000000000002,
+        "normal": 1024.164
+      }
+    },
+    {
+      "source": "profulgent",
+      "target": "uraei",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.032,
+        "normal": 242.24400000000003
+      }
+    },
+    {
+      "source": "profulgent",
+      "target": "concatenates",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.008,
+        "normal": 25.538
+      }
+    },
+    {
+      "source": "profulgent",
+      "target": "proletarianised",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.6120000000000001,
+        "normal": 107.134
+      }
+    },
+    {
+      "source": "gerents",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.05600000000000001,
+        "normal": 204.30200000000002
+      }
+    },
+    {
+      "source": "gerents",
+      "target": "risks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.026000000000000002,
+        "normal": 87.44200000000001
+      }
+    },
+    {
+      "source": "gerents",
+      "target": "uraei",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 10.922
+      }
+    },
+    {
+      "source": "gerents",
+      "target": "brazed",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.17400000000000002,
+        "normal": 204.236
+      }
+    },
+    {
+      "source": "gradine",
+      "target": "infectivities",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 8.93
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 732.346,
+        "danger": 0.126
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "compellation",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 180.482
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "risks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.268,
+        "normal": 1447.2420000000002
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "tanrec",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.042,
+        "normal": 82.05000000000001
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "commerce",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.004,
+        "normal": 110.86400000000002
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "remarkableness",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.254,
+        "normal": 104.708
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "nanuas",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.37200000000000005,
+        "normal": 1767.798
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "semitropics",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 533.23,
+        "danger": 0.05
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "blastodiscs",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 281.146
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "prickliest",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.828,
+        "normal": 279.064
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "disenthral",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.002,
+        "normal": 37.564
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "priviest",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.028000000000000004,
+        "normal": 20.408
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "veniremen",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.118,
+        "normal": 242.05
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "arabesk",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 3.1300000000000003,
+        "normal": 821.4280000000001
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "methadone",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.072,
+        "normal": 128.96400000000003
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "perfectibilians",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 1814.65,
+        "danger": 2.5220000000000002
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "multiracialisms",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.7000000000000001,
+        "normal": 174.942
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "proletarianised",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 1.3820000000000001,
+        "normal": 6140.146000000001
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "commanderies",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.41600000000000004,
+        "normal": 1858.862
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "gainfully",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.198,
+        "normal": 97.298
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "malvasias",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 1.69,
+        "normal": 1827.1240000000003
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "foetal",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 58.584,
+        "normal": 10003.208
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "neuritics",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 67.046,
+        "normal": 4505.166
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "legwork",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 1.6420000000000003,
+        "normal": 647.144
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "relocator",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 9.032,
+        "normal": 502.846
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "brazed",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.382,
+        "normal": 187.06400000000002
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "unapproachabilities",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 2.7420000000000004,
+        "normal": 1089.852
+      }
+    },
+    {
+      "source": "viraemic",
+      "target": "parrocks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.544,
+        "normal": 1640.478
+      }
+    },
+    {
+      "source": "uraei",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 6.04
+      }
+    },
+    {
+      "source": "nanuas",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.34,
+        "normal": 1742.8400000000001
+      }
+    },
+    {
+      "source": "microparasites",
+      "target": "viraemic",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 4.266,
+        "normal": 617.72
+      }
+    },
+    {
+      "source": "foetal",
+      "target": "disenthral",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 716.644
+      }
+    },
+    {
+      "source": "foetal",
+      "target": "yuppifies",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 7.944,
+        "normal": 1307.4440000000002
+      }
+    },
+    {
+      "source": "imbalmers",
+      "target": "risks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.004,
+        "normal": 20.524
+      }
+    },
+    {
+      "source": "imbalmers",
+      "target": "veniremen",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.04000000000000001,
+        "normal": 65.924
+      }
+    },
+    {
+      "source": "imbalmers",
+      "target": "quittors",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.46799999999999997,
+        "normal": 65.568
+      }
+    },
+    {
+      "source": "imbalmers",
+      "target": "majordomo",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.002,
+        "normal": 278.42600000000004
+      }
+    },
+    {
+      "source": "rummlegumptions",
+      "target": "spuds",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.18600000000000003,
+        "normal": 258.168
+      }
+    },
+    {
+      "source": "semitropics",
+      "target": "disseat",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 1.478,
+        "normal": 7.978000000000001
+      },
+      "class": "danger"
+    },
+    {
+      "source": "semitropics",
+      "target": "tanrec",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.20800000000000002,
+        "normal": 485.086
+      }
+    },
+    {
+      "source": "semitropics",
+      "target": "spuds",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.008,
+        "normal": 8.76
+      }
+    },
+    {
+      "source": "semitropics",
+      "target": "infectivities",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.564,
+        "normal": 223.76999999999998
+      }
+    },
+    {
+      "source": "semitropics",
+      "target": "previsionary",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.034,
+        "normal": 22.124000000000002
+      }
+    },
+    {
+      "source": "schemozzling",
+      "target": "risks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.004,
+        "normal": 26.160000000000004
+      }
+    },
+    {
+      "source": "schemozzling",
+      "target": "proletarianised",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.286,
+        "normal": 6.328
+      }
+    },
+    {
+      "source": "majordomo",
+      "target": "risks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 414.49399999999997,
+        "danger": 0.08000000000000002
+      }
+    },
+    {
+      "source": "majordomo",
+      "target": "concatenates",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 23.726,
+        "danger": 0.002
+      }
+    },
+    {
+      "source": "majordomo",
+      "target": "veniremen",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.45199999999999996,
+        "normal": 971.8940000000001
+      }
+    },
+    {
+      "source": "majordomo",
+      "target": "proletarianised",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 68.152,
+        "danger": 0.17600000000000002
+      }
+    },
+    {
+      "source": "majordomo",
+      "target": "quittors",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 4.526,
+        "normal": 567.88
+      }
+    },
+    {
+      "source": "cleavage",
+      "target": "proletarianised",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.004,
+        "normal": 50.62200000000001
+      }
+    },
+    {
+      "source": "cleavage",
+      "target": "gerents",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 51.966
+      }
+    },
+    {
+      "source": "cleavage",
+      "target": "majordomo",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 10.456000000000001
+      }
+    },
+    {
+      "source": "cleavage",
+      "target": "parrocks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 7.609999999999999
+      }
+    },
+    {
+      "source": "appropriable",
+      "target": "oiks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 9.846
+      }
+    },
+    {
+      "source": "appropriable",
+      "target": "proletarianised",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.006,
+        "normal": 139.922
+      }
+    },
+    {
+      "source": "appropriable",
+      "target": "gerents",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 153.304
+      }
+    },
+    {
+      "source": "appropriable",
+      "target": "majordomo",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "normal": 30.445999999999998
+      }
+    },
+    {
+      "source": "appropriable",
+      "target": "parrocks",
+      "metadata": {
+        "streaming": 1
+      },
+      "metrics": {
+        "danger": 0.006,
+        "normal": 21.97
+      }
+    }
+  ],
+  "maxVolume": 96035.538,
+  "props": {
+    "maxSemaphores": [
+      {
+        "targetRegion": "eu-west-1",
+        "region": "us-east-1",
+        "value": "20"
+      },
+      {
+        "targetRegion": "us-west-2",
+        "region": "eu-west-1",
+        "value": "20"
+      },
+      {
+        "targetRegion": "us-west-2",
+        "region": "us-east-1",
+        "value": "200"
+      },
+      {
+        "targetRegion": "us-east-1",
+        "region": "us-west-2",
+        "value": "160"
+      },
+      {
+        "targetRegion": "us-east-1",
+        "region": "eu-west-1",
+        "value": "20"
+      }
+    ]
+  },
+  "metadata": {},
+  "class": "normal",
+  "serverUpdateTime": 1477691777441
+}
