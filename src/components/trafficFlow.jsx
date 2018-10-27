@@ -210,10 +210,6 @@ class TrafficFlow extends React.Component {
     });
   }
 
-  isSelectedNode () {
-    return this.state.currentView && this.state.currentView[1] !== undefined;
-  }
-
   zoomCallback = () => {
     const currentView = _.clone(this.state.currentView);
     if (currentView.length === 1 && this.state.focusedNode) {
@@ -243,13 +239,29 @@ class TrafficFlow extends React.Component {
   }
 
   detailsClosed = () => {
-    // If there is a selected node, deselect the node
-    if (this.isSelectedNode()) {
-      this.setState({ currentView: [this.state.currentView[0]] });
+    const { currentGraph, currentView } = this.state;
+    const newState = {};
+    // If the current graph type is a focused graph
+    if (currentGraph.type === 'focused') {
+      // If there is a parent graph, navigate to parent view.
+      if (currentGraph.parentGraph) {
+        if (currentView.length > 0) {
+          const newView = Array.from(currentView);
+          newView.pop();
+          newState.currentView = newView;
+        }
+        // If there is a parent graph that is _not_ a focused graph, close the panel
+        if (currentGraph.parentGraph.type !== 'focused') {
+          newState.focusedNode = undefined;
+          newState.highlightedObject = undefined;
+        }
+      }
     } else {
-      // If there is just a detailed node, remove the detailed node.
-      this.setState({ focusedNode: undefined, highlightedObject: undefined });
+      newState.focusedNode = undefined;
+      newState.highlightedObject = undefined;
     }
+
+    this.setState(newState);
   }
 
   filtersChanged = () => {
