@@ -211,13 +211,21 @@ class TrafficFlow extends React.Component {
   }
 
   zoomCallback = () => {
-    const currentView = _.clone(this.state.currentView);
-    if (currentView.length === 1 && this.state.focusedNode) {
-      currentView.push(this.state.focusedNode.name);
-    } else if (currentView.length === 2) {
-      currentView.pop();
+    const newState = {
+      currentView: this.state.currentView.slice()
+    };
+
+    if (this.state.highlightedObject) {
+      // zooming in
+      newState.currentView.push(this.state.highlightedObject.name);
+      newState.objectToHighlight = undefined;
+    } else if (newState.currentView.length > 0) {
+      // zooming out
+      const nodeName = newState.currentView.pop();
+      newState.objectToHighlight = nodeName;
     }
-    this.setState({ currentView: currentView });
+
+    this.setState(newState);
   }
 
   displayOptionsChanged = (options) => {
@@ -313,7 +321,7 @@ class TrafficFlow extends React.Component {
   render () {
     const globalView = this.state.currentView && this.state.currentView.length === 0;
     const nodeView = !globalView && this.state.currentView && this.state.currentView[1] !== undefined;
-    let nodeToShowDetails = this.state.currentGraph && this.state.currentGraph.focusedNode;
+    let nodeToShowDetails = this.state.currentGraph && this.state.currentGraph.focusedNode; // a node is focused in a focused graph
     nodeToShowDetails = nodeToShowDetails || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
     const connectionToShowDetails = this.state.highlightedObject && this.state.highlightedObject.type === 'connection' ? this.state.highlightedObject : undefined;
     const showLoadingCover = !this.state.currentGraph;
