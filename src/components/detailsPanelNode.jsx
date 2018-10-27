@@ -34,10 +34,11 @@ class DetailsPanelNode extends React.Component {
 
   render () {
     const { node } = this.state;
+    const isZoomOut = node.graphRenderer === 'focused';
     const notices = (node && node.notices) || [];
     let zoomClassName = 'glyphicon clickable zoom-icon ';
-    zoomClassName += this.props.nodeSelected ? 'glyphicon-log-out' : 'glyphicon-log-in';
-    const zoomTitle = `Zoom ${this.props.nodeSelected ? 'out of' : 'into'} node view`;
+    zoomClassName += isZoomOut ? 'glyphicon-log-out' : 'glyphicon-log-in';
+    const zoomTitle = `Zoom ${isZoomOut ? 'out of' : 'into'} node view`;
 
     return (
       <div className="details-panel">
