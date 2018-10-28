@@ -319,12 +319,13 @@ class TrafficFlow extends React.Component {
   }
 
   render () {
-    const globalView = this.state.currentView && this.state.currentView.length === 0;
-    const nodeView = !globalView && this.state.currentView && this.state.currentView[1] !== undefined;
-    let nodeToShowDetails = this.state.currentGraph && this.state.currentGraph.focusedNode; // a node is focused in a focused graph
-    nodeToShowDetails = nodeToShowDetails || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
+    const { trafficData } = this.state;
+    const focusedNode = this.state.currentGraph && this.state.currentGraph.focusedNode;
+    const nodeToShowDetails = focusedNode || (this.state.highlightedObject && this.state.highlightedObject.type === 'node' ? this.state.highlightedObject : undefined);
     const connectionToShowDetails = this.state.highlightedObject && this.state.highlightedObject.type === 'connection' ? this.state.highlightedObject : undefined;
     const showLoadingCover = !this.state.currentGraph;
+    const showBreadcrumbs = trafficData && trafficData.nodes && trafficData.nodes.length > 0;
+    const breadcrumbsRoot = _.get(trafficData, 'name', 'root');
 
     let matches;
     if (this.state.currentGraph) {
@@ -344,10 +345,10 @@ class TrafficFlow extends React.Component {
           </Alert>
           : undefined }
         <div className="subheader">
-          <Breadcrumbs rootTitle="global" navigationStack={this.state.currentView || []} navigationCallback={this.navigationCallback} />
-          <UpdateStatus status={this.state.regionUpdateStatus} baseOffset={this.state.timeOffset} warnThreshold={180000} />
+          {showBreadcrumbs && <Breadcrumbs rootTitle={breadcrumbsRoot} navigationStack={this.state.currentView || []} navigationCallback={this.navigationCallback} />}
+          {showBreadcrumbs && <UpdateStatus status={this.state.regionUpdateStatus} baseOffset={this.state.timeOffset} warnThreshold={180000} />}
           <div style={{ float: 'right', paddingTop: '4px' }}>
-            { (!globalView && matches) && <Locator changeCallback={this.locatorChanged} searchTerm={this.state.searchTerm} matches={matches} clearFilterCallback={this.filtersCleared} /> }
+            { (!focusedNode && matches) && <Locator changeCallback={this.locatorChanged} searchTerm={this.state.searchTerm} matches={matches} clearFilterCallback={this.filtersCleared} /> }
             <OptionsPanel title="Filters"><FilterControls /></OptionsPanel>
             <OptionsPanel title="Display"><DisplayOptions options={this.state.displayOptions} changedCallback={this.displayOptionsChanged} /></OptionsPanel>
             <OptionsPanel title="Physics"><PhysicsOptions options={this.state.currentGraph_physicsOptions} changedCallback={this.physicsOptionsChanged}/></OptionsPanel>
@@ -358,7 +359,7 @@ class TrafficFlow extends React.Component {
           <div style={{
             position: 'absolute', top: '0px', right: nodeToShowDetails || connectionToShowDetails ? '380px' : '0px', bottom: '0px', left: '0px'
           }}>
-            <Vizceral traffic={this.state.trafficData}
+            <Vizceral traffic={trafficData}
               view={this.state.currentView}
               showLabels={this.state.displayOptions.showLabels}
               filters={this.state.filters}
@@ -376,7 +377,6 @@ class TrafficFlow extends React.Component {
           {
             !!nodeToShowDetails
             && <DetailsPanelNode node={nodeToShowDetails}
-              nodeSelected={nodeView}
               region={this.state.currentView[0]}
               width={panelWidth}
               zoomCallback={this.zoomCallback}
