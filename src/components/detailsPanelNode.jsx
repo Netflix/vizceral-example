@@ -72,7 +72,6 @@ DetailsPanelNode.propTypes = {
   zoomCallback: React.PropTypes.func.isRequired,
   node: React.PropTypes.object.isRequired,
   nodeClicked: React.PropTypes.func,
-  nodeSelected: React.PropTypes.bool.isRequired,
   region: React.PropTypes.string
 };
 

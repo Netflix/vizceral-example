@@ -189,7 +189,7 @@ class TrafficFlow extends React.Component {
         const highlightedObjectName = nextState.highlightedObject && nextState.highlightedObject.getName();
         const state = {
           title: document.title,
-          url: nextState.currentView.join('/') + (highlightedObjectName ? `?highlighted=${highlightedObjectName}` : ''),
+          url: `/${nextState.currentView.join('/')}${highlightedObjectName ? `?highlighted=${highlightedObjectName}` : ''}`,
           selected: nextState.currentView,
           highlighted: highlightedObjectName
         };
