@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './optionsPanel.css';
 
@@ -92,7 +93,7 @@ class OptionsPanel extends React.Component {
 }
 
 OptionsPanel.propTypes = {
-  title: React.PropTypes.string.isRequired
+  title: PropTypes.string.isRequired
 };
 
 export default OptionsPanel;

@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import TWEEN from 'tween.js';
 
 import './loadingCover.css';
@@ -80,7 +81,7 @@ class LoadingCover extends React.Component {
 }
 
 LoadingCover.propTypes = {
-  show: React.PropTypes.bool.isRequired
+  show: PropTypes.bool.isRequired
 };
 
 export default LoadingCover;

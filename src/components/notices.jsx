@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Notices extends React.Component {
   constructor (props) {
@@ -34,7 +35,7 @@ class Notices extends React.Component {
 }
 
 Notices.propTypes = {
-  notices: React.PropTypes.array.isRequired
+  notices: PropTypes.array.isRequired
 };
 
 export default Notices;

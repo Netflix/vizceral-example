@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './locator.css';
 
@@ -54,14 +55,14 @@ class Locator extends React.Component {
 }
 
 Locator.propTypes = {
-  searchTerm: React.PropTypes.string.isRequired,
-  changeCallback: React.PropTypes.func.isRequired,
-  clearFilterCallback: React.PropTypes.func,
-  matches: React.PropTypes.shape({
-    total: React.PropTypes.number,
-    totalMatches: React.PropTypes.number,
-    visible: React.PropTypes.number,
-    visibleMatches: React.PropTypes.number
+  searchTerm: PropTypes.string.isRequired,
+  changeCallback: PropTypes.func.isRequired,
+  clearFilterCallback: PropTypes.func,
+  matches: PropTypes.shape({
+    total: PropTypes.number,
+    totalMatches: PropTypes.number,
+    visible: PropTypes.number,
+    visibleMatches: PropTypes.number
   })
 };
 

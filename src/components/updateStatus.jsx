@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 import './updateStatus.css';
@@ -90,12 +91,12 @@ class UpdateStatus extends React.Component {
 }
 
 UpdateStatus.propTypes = {
-  status: React.PropTypes.arrayOf(React.PropTypes.shape({
-    region: React.PropTypes.string,
-    updated: React.PropTypes.number
+  status: PropTypes.arrayOf(PropTypes.shape({
+    region: PropTypes.string,
+    updated: PropTypes.number
   })),
-  warnThreshold: React.PropTypes.number,
-  baseOffset: React.PropTypes.number
+  warnThreshold: PropTypes.number,
+  baseOffset: PropTypes.number
 };
 
 export default UpdateStatus;

@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Stepper extends React.Component {
   constructor (props) {
@@ -35,9 +36,9 @@ class Stepper extends React.Component {
 }
 
 Stepper.propTypes = {
-  steps: React.PropTypes.array.isRequired,
-  selectedStep: React.PropTypes.number.isRequired,
-  changeCallback: React.PropTypes.func.isRequired
+  steps: PropTypes.array.isRequired,
+  selectedStep: PropTypes.number.isRequired,
+  changeCallback: PropTypes.func.isRequired
 };
 
 export default Stepper;
