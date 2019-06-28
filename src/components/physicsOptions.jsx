@@ -1,6 +1,8 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './physicsOptions.css';
 
 class PhysicsOptions extends React.Component {
@@ -68,8 +70,8 @@ class PhysicsOptions extends React.Component {
 }
 
 PhysicsOptions.propTypes = {
-  options: React.PropTypes.object,
-  changedCallback: React.PropTypes.func.isRequired
+  options: PropTypes.object,
+  changedCallback: PropTypes.func.isRequired
 };
 
 export default PhysicsOptions;

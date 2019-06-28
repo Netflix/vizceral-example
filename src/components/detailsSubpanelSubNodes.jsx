@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SubNodeList from './subNodeList';
 import DetailsSubpanel from './detailsSubpanel';
@@ -35,8 +36,8 @@ class DetailsSubpanelSubNodes extends React.Component {
 }
 
 DetailsSubpanelSubNodes.propTypes = {
-  nodes: React.PropTypes.array,
-  region: React.PropTypes.string.isRequired
+  nodes: PropTypes.array,
+  region: PropTypes.string.isRequired
 
 };
 

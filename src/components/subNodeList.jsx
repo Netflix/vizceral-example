@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { Table, Column, SortDirection } from 'react-virtualized';
 import numeral from 'numeral';
@@ -153,8 +154,8 @@ class SubNodeList extends React.Component {
 }
 
 SubNodeList.propTypes = {
-  nodes: React.PropTypes.array.isRequired,
-  region: React.PropTypes.string
+  nodes: PropTypes.array.isRequired,
+  region: PropTypes.string
 };
 
 export default SubNodeList;

@@ -3,6 +3,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Notices from './notices';
 
@@ -46,10 +47,10 @@ class DetailsPanelConnection extends React.Component {
 }
 
 DetailsPanelConnection.propTypes = {
-  closeCallback: React.PropTypes.func.isRequired,
-  connection: React.PropTypes.object.isRequired,
-  nodeClicked: React.PropTypes.func,
-  region: React.PropTypes.string
+  closeCallback: PropTypes.func.isRequired,
+  connection: PropTypes.object.isRequired,
+  nodeClicked: PropTypes.func,
+  region: PropTypes.string
 };
 
 DetailsPanelConnection.defaultProps = {
