@@ -3,7 +3,7 @@
 import _ from 'lodash';
 import { Alert } from 'react-bootstrap';
 import React from 'react';
-import TWEEN from 'tween.js'; // Start TWEEN updates for sparklines and loading screen fading out
+import TWEEN from '@tweenjs/tween.js'; // Start TWEEN updates for sparklines and loading screen fading out
 import Vizceral from 'vizceral-react';
 import 'vizceral-react/dist/vizceral.css';
 import keypress from 'keypress.js';

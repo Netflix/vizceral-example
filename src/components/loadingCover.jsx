@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import TWEEN from 'tween.js';
+import TWEEN from '@tweenjs/tween.js';
 
 import './loadingCover.css';
 
