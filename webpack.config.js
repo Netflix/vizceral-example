@@ -1,5 +1,7 @@
-/* globals __dirname process */
+/* globals __dirname process module */
+
 'use strict';
+
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -9,7 +11,6 @@ module.exports = {
   entry: './src/app.jsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    // publicPath: '/',
     filename: 'vizceral.[hash].bundle.js'
   },
   resolve: {
