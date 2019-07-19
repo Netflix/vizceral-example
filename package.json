@@ -8,7 +8,7 @@
     "lint": "eslint src --ext .js --ext .jsx --fix",
     "copy:fonts": "cpx \"./node_modules/source-sans-pro/**/*\" ./dist/fonts",
     "copy:json": "cpx \"./src/*.json\" ./dist",
-    "dev-server": "webpack-dev-server --host=0.0.0.0 --content-base dist/ --history-api-fallback",
+    "dev-server": "webpack-dev-server --host=0.0.0.0 --content-base dist/ --history-api-fallback --color",
     "dev": "npm-run-all clean --parallel copy:* dev-server",
     "validate": "npm ls"
   },
@@ -47,7 +47,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "cpx": "^1.5.0",
-    "css-loader": "^0.28.11",
+    "css-loader": "^1.0.0",
     "eslint": "^5.4.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-loader": "^2.1.0",
@@ -62,9 +62,10 @@
     "precommit-hook": "^3.0.0",
     "rimraf": "^2.5.4",
     "style-loader": "^0.23.0",
-    "url-loader": "^0.6.2",
-    "webpack": "^2.7.0",
-    "webpack-dev-server": "^2.11.3"
+    "url-loader": "^1.1.1",
+    "webpack": "^4.36.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
   },
   "repository": {
     "type": "git",
